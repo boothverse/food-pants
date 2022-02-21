@@ -10,6 +10,8 @@ automatically track what ingredients you have!
 <h1>Documents</h1>
 <a href="https://trello.com/b/7aSPYcU2/product-backlog">Product Backlog (Trello Requirements)</a>
 <br/>
+<a href="https://trello.com/b/NX1l7UQG">Progress and Hours Report</a>
+<br/>
 <a href="https://drive.google.com/drive/folders/1EHClLRvtw7LCZs-vXJ_1DoT07q69cPGX?usp=sharing">Analysis Files</a>
 <br/>
 <a href="https://github.com/boothverse/food-pants/issues">Issue Tracking</a>
