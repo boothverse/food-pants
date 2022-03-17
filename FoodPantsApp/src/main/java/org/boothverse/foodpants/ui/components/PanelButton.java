@@ -16,5 +16,4 @@ public class PanelButton extends StandardButton {
         setPreferredSize(MAX_SIZE);
     }
 
-    
 }

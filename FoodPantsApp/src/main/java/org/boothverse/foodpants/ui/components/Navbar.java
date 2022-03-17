@@ -1,8 +1,6 @@
 package org.boothverse.foodpants.ui.components;
-import org.boothverse.foodpants.ui.AppFrame;
 import org.boothverse.foodpants.ui.GUIController;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.pages.NutritionPage;
 
 import javax.swing.*;
 import java.awt.*;

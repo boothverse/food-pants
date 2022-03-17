@@ -11,7 +11,6 @@ public class AppFrame {
     private static final Dimension MIN_SIZE = new Dimension(800, 500);
     private static JFrame frame;
     private static PageViewer pageFrame;
-    private static Navbar nav;
 
     private static void setupWindow() {
         frame = new JFrame();
@@ -24,7 +23,7 @@ public class AppFrame {
 
     private static void setupChildren() {
         // Add Navbar
-        nav = new Navbar();
+        Navbar nav = new Navbar();
         frame.add(nav, BorderLayout.WEST);
 
         // Add Interface Panel (scroll pane)
