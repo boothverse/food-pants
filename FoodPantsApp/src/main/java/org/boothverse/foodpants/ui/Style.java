@@ -17,5 +17,8 @@ public class Style {
     public static final Color GREY_4 = new Color(163, 161, 161);
     public static final Color GREY_5 = new Color(185, 182, 182);
 
-    public static final Color PRESS_BUTTON = RED.brighter();
+    public static final Color TRANSPARENT = new Color(1,1,1, 0);
+
+    public static final Color PRESS_NAV_BUTTON = RED.brighter();
+
 }

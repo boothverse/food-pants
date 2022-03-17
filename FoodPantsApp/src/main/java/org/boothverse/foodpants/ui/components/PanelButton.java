@@ -5,7 +5,7 @@ import org.boothverse.foodpants.ui.Style;
 import java.awt.*;
 
 public class PanelButton extends StandardButton {
-    public static final Dimension MAX_SIZE = new Dimension(60, 60);
+    public static final Dimension MAX_SIZE = new Dimension(70, 70);
     
     public PanelButton(String label) {
         super(label);
