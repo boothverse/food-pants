@@ -1,11 +1,14 @@
 package org.boothverse.foodpants.ui;
 
+import org.boothverse.foodpants.ui.components.Navbar;
+import org.boothverse.foodpants.ui.pages.StandardPage;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class AppFrame {
-    private static JFrame frame;
     private static final Dimension MIN_SIZE = new Dimension(800, 500);
+    private static JFrame frame;
 
     private static void setupWindow() {
         frame = new JFrame();
@@ -16,14 +19,19 @@ public class AppFrame {
         frame.setLayout(new BorderLayout());
     }
 
-    private static void createAndShowGUI() {
-        setupWindow();
-
+    private static void setupChildren() {
         // Add Navbar
         Navbar nav = new Navbar();
         frame.add(nav, BorderLayout.WEST);
 
-        // Add Scrollpane
+        // Add Interface Panel
+        InterfacePanel interPanel = new InterfacePanel(new StandardPage());
+        frame.add(interPanel, BorderLayout.EAST);
+    }
+
+    private static void createAndShowGUI() {
+        setupWindow();
+        setupChildren();
     }
 
     public static void main(String[] args) {

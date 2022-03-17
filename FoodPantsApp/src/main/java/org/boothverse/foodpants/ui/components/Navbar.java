@@ -1,4 +1,5 @@
-package org.boothverse.foodpants.ui;
+package org.boothverse.foodpants.ui.components;
+import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,14 +9,14 @@ import java.awt.event.ActionListener;
 public class Navbar extends JPanel implements ActionListener {
     protected static final String[] navButtons = {"Pantry", "Recipes", "Nutrition", "Shopping List"};
 
-    Navbar() {
+    public Navbar() {
         setLayout(new GridLayout(4,1));
         initButtons();
     }
 
     private void initButtons() {
         for (String label : navButtons) {
-            NavButton navButton = new NavButton(label);
+            StandardButton navButton = new StandardButton(label);
             add(navButton);
             navButton.addActionListener(this);
         }
@@ -26,6 +27,6 @@ public class Navbar extends JPanel implements ActionListener {
         for (Component c : getComponents()) {
             c.setBackground(Style.RED);
         }
-        ((NavButton) e.getSource()).setBackground(Style.PRESS_BUTTON);
+        ((StandardButton) e.getSource()).setBackground(Style.PRESS_BUTTON);
     }
 }

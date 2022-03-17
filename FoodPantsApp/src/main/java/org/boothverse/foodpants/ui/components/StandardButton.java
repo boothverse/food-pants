@@ -1,12 +1,12 @@
-package org.boothverse.foodpants.ui;
+package org.boothverse.foodpants.ui.components;
+import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
-public class NavButton extends JButton {
-    NavButton(String label) {
+public class StandardButton extends JButton {
+    public StandardButton(String label) {
         super(label);
 
         // Override default press and focus operations
@@ -16,14 +16,18 @@ public class NavButton extends JButton {
         // Set default colors
         setBackground(Style.RED);
         setForeground(Style.PLATINUM);
-        setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
-                                                     BorderFactory.createEmptyBorder(5,5,5,5)));
+
+        // Construct Border
+        setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+                BorderFactory.createEmptyBorder(5,5,5,5)
+        ));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         if (getModel().isPressed()) {
-            g.setColor(Style.PRESS_BUTTON);
+            g.setColor(getBackground().brighter());
         }
         else {
             g.setColor(getBackground());
