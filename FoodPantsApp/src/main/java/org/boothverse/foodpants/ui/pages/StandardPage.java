@@ -20,8 +20,12 @@ public class StandardPage extends JPanel {
     }
 
     private void initButtons() {
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BorderLayout());
+        buttonPane.setBackground(getBackground());
+        add(buttonPane, BorderLayout.EAST);
         buttons = new PanelMenu(buttonLabels);
-        add(buttons, BorderLayout.WEST);
+        buttonPane.add(buttons, BorderLayout.NORTH);
     }
 
 }

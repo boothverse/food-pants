@@ -26,7 +26,7 @@ public class AppFrame {
 
         // Add Interface Panel
         InterfacePanel interPanel = new InterfacePanel(new StandardPage());
-        frame.add(interPanel, BorderLayout.EAST);
+        frame.add(interPanel);
     }
 
     private static void createAndShowGUI() {
