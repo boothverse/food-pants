@@ -28,9 +28,9 @@ public class Page extends JPanel {
         buttonPane.setBackground(Style.TRANSPARENT);
 
         // Add buttons to the top-right side of the screen
-        add(buttonPane, BorderLayout.NORTH);
+        add(buttonPane, BorderLayout.EAST);
         buttons = new PanelMenu(buttonLabels);
-        buttonPane.add(buttons, BorderLayout.EAST);
+        buttonPane.add(buttons, BorderLayout.NORTH);
     }
 
 }

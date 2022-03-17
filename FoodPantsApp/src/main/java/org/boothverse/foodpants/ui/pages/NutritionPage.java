@@ -5,7 +5,6 @@ import org.boothverse.foodpants.ui.components.StandardButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NutritionPage extends Page {
@@ -37,6 +36,6 @@ public class NutritionPage extends Page {
             timeButton.setPreferredSize(new Dimension(150, 30));
             timeContainer.add(timeButton);
         }
-        buttonPane.add(timeWrapper, BorderLayout.NORTH);
+        add(timeWrapper, BorderLayout.NORTH);
     }
 }
