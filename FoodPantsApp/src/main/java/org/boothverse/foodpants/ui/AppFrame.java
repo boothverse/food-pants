@@ -32,6 +32,12 @@ public class AppFrame {
     }
 
     private static void createAndShowGUI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("Unable to set LookAndFeel");
+        }
+
         setupWindow();
         setupChildren();
     }

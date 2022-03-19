@@ -25,6 +25,7 @@ public class ShoppingPage extends Page {
         listWrapper.add(shoppingList);
         listWrapper.setBackground(Style.TRANSPARENT);
 
+        // TODO: These are placeholders, also need to left align
         for (int i = 0; i < 10; i++) {
             addListItem("New Item", i);
         }

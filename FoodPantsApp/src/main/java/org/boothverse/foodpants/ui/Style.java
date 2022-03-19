@@ -1,5 +1,8 @@
 package org.boothverse.foodpants.ui;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 public class Style {
@@ -21,4 +24,9 @@ public class Style {
 
     public static final Color PRESS_NAV_BUTTON = RED.brighter();
 
+    public static final Border BORDER_1 = BorderFactory.createCompoundBorder(
+            BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
+            BorderFactory.createEmptyBorder(5,5,5,5));
+
+    public static final Font ARIAL = new Font("Arial", Font.PLAIN, 14);
 }

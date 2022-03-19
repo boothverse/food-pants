@@ -2,7 +2,6 @@ package org.boothverse.foodpants.ui.components;
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 public class StandardButton extends JButton {
@@ -18,10 +17,10 @@ public class StandardButton extends JButton {
         setForeground(Style.PLATINUM);
 
         // Construct Border
-        setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
-                BorderFactory.createEmptyBorder(5,5,5,5)
-        ));
+        setBorder(Style.BORDER_1);
+
+        // Set Font
+        setFont(Style.ARIAL);
     }
 
     @Override

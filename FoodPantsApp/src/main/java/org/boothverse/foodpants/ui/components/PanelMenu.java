@@ -15,6 +15,9 @@ public class PanelMenu extends JPanel implements ActionListener {
     private void initButtons(String[] labels) {
         for (String label: labels) {
             PanelButton button = new PanelButton(label);
+            if (label.length() >= 9) {
+                button.setFont(button.getFont().deriveFont(10f));
+            }
             add(button);
         }
     }
