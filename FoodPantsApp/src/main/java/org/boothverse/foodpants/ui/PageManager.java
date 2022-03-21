@@ -3,7 +3,7 @@ package org.boothverse.foodpants.ui;
 import org.boothverse.foodpants.ui.components.PageViewer;
 import org.boothverse.foodpants.ui.pages.*;
 
-public class GUIController {
+public class PageManager {
     private static Page activePage;
 
     private static final Page pantryPage = new PantryPage();
@@ -12,7 +12,7 @@ public class GUIController {
     private static final Page shoppingPage = new ShoppingPage();
 
     public static void setPage(String pageName) {
-        PageViewer pageViewer = AppFrame.getPageViewer();
+        PageViewer pageViewer = PageRunner.getPageViewer();
 
         switch (pageName) {
             case "Pantry" -> activePage = pantryPage;

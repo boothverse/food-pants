@@ -1,5 +1,5 @@
 package org.boothverse.foodpants.ui.components;
-import org.boothverse.foodpants.ui.GUIController;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
@@ -35,6 +35,6 @@ public class Navbar extends JPanel implements ActionListener {
     }
 
     private void changePage(String pageName) {
-        GUIController.setPage(pageName);
+        PageManager.setPage(pageName);
     }
 }

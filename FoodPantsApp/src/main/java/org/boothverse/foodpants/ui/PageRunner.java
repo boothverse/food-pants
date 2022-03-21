@@ -7,7 +7,7 @@ import org.boothverse.foodpants.ui.pages.Page;
 import javax.swing.*;
 import java.awt.*;
 
-public class AppFrame {
+public class PageRunner {
     private static final Dimension MIN_SIZE = new Dimension(800, 500);
     private static JFrame frame;
     private static PageViewer pageFrame;
@@ -45,7 +45,7 @@ public class AppFrame {
     public static PageViewer getPageViewer() { return pageFrame; }
 
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(AppFrame::createAndShowGUI);
+        javax.swing.SwingUtilities.invokeLater(PageRunner::createAndShowGUI);
     }
 
 }
