@@ -28,5 +28,9 @@ public class Style {
             BorderFactory.createEtchedBorder(EtchedBorder.LOWERED),
             BorderFactory.createEmptyBorder(5,5,5,5));
 
-    public static final Font ARIAL = new Font("Arial", Font.PLAIN, 14);
+    private static final int headerSize = 32;
+    private static final int bodySize = 14;
+
+    public static final Font headerStyle = new Font("Arial", Font.BOLD, headerSize);
+    public static final Font bodyStyle = new Font("Arial", Font.PLAIN, bodySize);
 }

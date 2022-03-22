@@ -4,10 +4,10 @@ import org.boothverse.foodpants.ui.Style;
 
 import java.awt.*;
 
-public class PanelButton extends StandardButton {
+public class SideMenuButton extends StandardButton {
     public static final Dimension MAX_SIZE = new Dimension(80, 80);
     
-    public PanelButton(String label) {
+    public SideMenuButton(String label) {
         super(label);
 
         // Setup default colors

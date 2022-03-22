@@ -22,10 +22,10 @@ public class ListItem extends JPanel {
         checkBox = new StandardCheckbox();
         add(checkBox);
         itemName = new JLabel(name);
-        itemName.setFont(Style.ARIAL);
+        itemName.setFont(Style.bodyStyle);
         add(itemName);
         quantity = new JLabel(amt + "");
-        quantity.setFont(Style.ARIAL);
+        quantity.setFont(Style.bodyStyle);
         add(quantity);
     }
 

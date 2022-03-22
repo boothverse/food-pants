@@ -1,13 +1,13 @@
 package org.boothverse.foodpants.ui.pages;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.PanelMenu;
+import org.boothverse.foodpants.ui.components.SideMenu;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Page extends JPanel {
-    protected PanelMenu buttons;
-    protected JPanel buttonPane;
+    protected SideMenu sideMenu;
+    protected JPanel sidePanel;
 
     public Page() {
         super();
@@ -23,14 +23,14 @@ public class Page extends JPanel {
 
     private void initButtons(String[] buttonLabels) {
         // Create invisible panel to be on the right side
-        buttonPane = new JPanel();
-        buttonPane.setLayout(new BorderLayout());
-        buttonPane.setBackground(Style.TRANSPARENT);
+        sidePanel = new JPanel();
+        sidePanel.setLayout(new BorderLayout());
+        sidePanel.setBackground(Style.TRANSPARENT);
 
-        // Add buttons to the top-right side of the screen
-        add(buttonPane, BorderLayout.EAST);
-        buttons = new PanelMenu(buttonLabels);
-        buttonPane.add(buttons, BorderLayout.NORTH);
+        // Add button panel to the top-right side of the screen
+        add(sidePanel, BorderLayout.EAST);
+        sideMenu = new SideMenu(buttonLabels);
+        sidePanel.add(sideMenu, BorderLayout.NORTH);
     }
 
 }

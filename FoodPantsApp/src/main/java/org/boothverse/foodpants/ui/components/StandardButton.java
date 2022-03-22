@@ -20,7 +20,7 @@ public class StandardButton extends JButton {
         setBorder(Style.BORDER_1);
 
         // Set Font
-        setFont(Style.ARIAL);
+        setFont(Style.bodyStyle);
     }
 
     @Override
