@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.ui.Style;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,6 +14,7 @@ public abstract class StandardForm extends JFrame {
     super();
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+    setBackground(Style.PLATINUM);
     setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
   }
 
