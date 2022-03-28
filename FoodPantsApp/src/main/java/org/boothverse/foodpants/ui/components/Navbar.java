@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components;
 import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.StandardButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,12 @@ public class Navbar extends JPanel implements ActionListener {
         for (String label : PAGES) {
             StandardButton navButton = new StandardButton(label);
             add(navButton);
+
+            // Initialize pantry button to selected
+            if (label.equals("Pantry")) {
+                navButton.setBackground(Style.PRESS_NAV_BUTTON);
+            }
+
             navButton.addActionListener(this);
             navButton.setActionCommand(label);
         }

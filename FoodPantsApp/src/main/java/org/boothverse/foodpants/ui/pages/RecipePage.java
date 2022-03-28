@@ -2,20 +2,13 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.forms.RecipeForm;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class RecipePage extends Page implements ActionListener {
+public class RecipePage extends Page {
     private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
 
     public RecipePage() {
         super(labels);
-
-        for (String label : labels) {
-            sideMenu.buttonMap.get(label).setActionCommand(label);
-            sideMenu.buttonMap.get(label).addActionListener(this);
-        }
     }
 
     @Override

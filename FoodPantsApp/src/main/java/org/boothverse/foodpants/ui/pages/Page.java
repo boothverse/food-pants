@@ -4,8 +4,10 @@ import org.boothverse.foodpants.ui.components.SideMenu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Page extends JPanel {
+public class Page extends JPanel implements ActionListener {
     protected SideMenu sideMenu;
     protected JPanel sidePanel;
 
@@ -19,6 +21,11 @@ public class Page extends JPanel {
     public Page(String[] buttonLabels) {
         this();
         initButtons(buttonLabels);
+
+        for (String label : buttonLabels) {
+            sideMenu.buttonMap.get(label).setActionCommand(label);
+            sideMenu.buttonMap.get(label).addActionListener(this);
+        }
     }
 
     private void initButtons(String[] buttonLabels) {
@@ -33,4 +40,6 @@ public class Page extends JPanel {
         sidePanel.add(sideMenu, BorderLayout.NORTH);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {}
 }

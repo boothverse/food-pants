@@ -1,20 +1,19 @@
 package org.boothverse.foodpants.ui.components;
 
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.StandardCheckbox;
+import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 
 import javax.swing.*;
 
-public class ListItem extends JPanel {
+public class ShoppingPanel extends StandardPanel {
+
     protected JLabel itemName;
     protected JLabel quantity;
     protected JCheckBox checkBox;
 
-    public ListItem(String name, int quantity) {
+    public ShoppingPanel(String name, int quantity) {
         super();
-        setBackground(Style.WHITE);
-        setForeground(Style.BLACK);
-        setBorder(Style.BORDER_1);
-
         initChildren(name, quantity);
     }
 
@@ -28,5 +27,4 @@ public class ListItem extends JPanel {
         quantity.setFont(Style.bodyStyle);
         add(quantity);
     }
-
 }

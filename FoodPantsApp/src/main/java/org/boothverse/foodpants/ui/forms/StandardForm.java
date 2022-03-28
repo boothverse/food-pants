@@ -6,21 +6,34 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class StandardForm extends JFrame {
-
-  private static final int DEFAULT_WIDTH = 500;
-  private static final int DEFAULT_HEIGHT = 500;
+  // Form panel
+  JPanel boxPanel;
 
   public StandardForm() {
     super();
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
     setBackground(Style.PLATINUM);
-    setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
+    boxPanel = new JPanel(new GridBagLayout());
+
+    // Flowlayout panel
+    JPanel panel = new JPanel(new FlowLayout());
+
+    // Form initialization
+    initForm(panel);
+
+    this.add(panel);
+  }
+
+  void initFormHeader(String header, final JPanel panel) {
+    JLabel createHeader = new JLabel(header);
+    createHeader.setFont(Style.headerStyle);
+    panel.add(createHeader);
   }
 
   abstract void initForm(final JPanel panel);
 
-  void addLeftComponent(final JPanel panel, Component c, int row) {
+  void addLeftComponent(Component c, int row) {
     GridBagConstraints gbc = new GridBagConstraints();
 
     gbc.gridwidth = 1;
@@ -32,10 +45,10 @@ public abstract class StandardForm extends JFrame {
     gbc.weightx = 1.0;
     gbc.weighty = 1.0;
 
-    panel.add(c, gbc);
+    boxPanel.add(c, gbc);
   }
 
-  void addRightComponent(final JPanel panel, Component c, int row) {
+  void addRightComponent(Component c, int row) {
     GridBagConstraints gbc = new GridBagConstraints();
 
     gbc.gridwidth = 1;
@@ -47,6 +60,6 @@ public abstract class StandardForm extends JFrame {
     gbc.weightx = 1.0;
     gbc.weighty = 1.0;
 
-    panel.add(c, gbc);
+    boxPanel.add(c, gbc);
   }
 }

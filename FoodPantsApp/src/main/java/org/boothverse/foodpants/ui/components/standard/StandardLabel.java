@@ -1,4 +1,4 @@
-package org.boothverse.foodpants.ui.components;
+package org.boothverse.foodpants.ui.components.standard;
 
 import org.boothverse.foodpants.ui.Style;
 

@@ -1,7 +1,7 @@
 package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.ListItem;
+import org.boothverse.foodpants.ui.components.ShoppingPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +32,6 @@ public class ShoppingPage extends Page {
     }
 
     public void addListItem(String item, int quantity) {
-        shoppingList.add(new ListItem(item, quantity));
+        shoppingList.add(new ShoppingPanel(item, quantity));
     }
 }

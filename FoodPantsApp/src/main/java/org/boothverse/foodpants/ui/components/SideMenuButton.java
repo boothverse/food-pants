@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components;
 
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.StandardButton;
 
 import java.awt.*;
 
