@@ -14,12 +14,19 @@ public class PantryPanel extends StandardPanel {
   protected int WIDTH = 250;
   protected int HEIGHT = 50;
 
+  private JButton editButton, deleteButton;
+
   public PantryPanel(String name, int amt) {
     super();
 
     setLayout(new BorderLayout());
     setPreferredSize(new Dimension(WIDTH, HEIGHT));
     initChildren(name, amt);
+  }
+
+  public void setModification(boolean status) {
+    editButton.setVisible(status);
+    deleteButton.setVisible(status);
   }
 
   private void initChildren(String name, int amt) {
@@ -29,17 +36,17 @@ public class PantryPanel extends StandardPanel {
     itemName = new StandardLabel(name);
     quantity = new StandardLabel(amt + "");
 
-    JButton editBtn = new StandardButton("Edit");
-    editBtn.addActionListener(e ->
+    editButton = new StandardButton("Edit");
+    editButton.addActionListener(e ->
             new EditPantryForm("Edit Item").setVisible(true));
-    editBtn.setFont(Style.bodyStyle);
+    editButton.setVisible(false);
 
-    JButton deleteBtn = new StandardButton("Delete");
-    editBtn.setFont(Style.bodyStyle);
+    deleteButton = new StandardButton("Delete");
+    deleteButton.setVisible(false);
 
     panel.add(quantity);
-    panel.add(editBtn);
-    panel.add(deleteBtn);
+    panel.add(editButton);
+    panel.add(deleteButton);
 
     add(itemName, BorderLayout.WEST);
     add(panel, BorderLayout.EAST);

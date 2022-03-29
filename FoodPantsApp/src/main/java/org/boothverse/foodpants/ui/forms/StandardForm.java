@@ -12,6 +12,7 @@ public abstract class StandardForm extends JFrame {
   public StandardForm(String header) {
     super();
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    this.setLocationRelativeTo(null);
     setBackground(Style.PLATINUM);
 
     boxPanel = new JPanel(new GridBagLayout());
