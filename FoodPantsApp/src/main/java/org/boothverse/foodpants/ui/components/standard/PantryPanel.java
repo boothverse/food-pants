@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components.standard;
 
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.forms.EditPantryForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,8 @@ public class PantryPanel extends StandardPanel {
     quantity = new StandardLabel(amt + "");
 
     JButton editBtn = new StandardButton("Edit");
+    editBtn.addActionListener(e ->
+            new EditPantryForm("Edit Item").setVisible(true));
     editBtn.setFont(Style.bodyStyle);
 
     JButton deleteBtn = new StandardButton("Delete");

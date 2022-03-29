@@ -29,10 +29,10 @@ public class PantryPage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                new AddPantryForm().setVisible(true);
+                new AddPantryForm("Add Item").setVisible(true);
                 break;
-            case "Edit":
             case "Search":
+                JOptionPane.showInputDialog(null, "Search");
                 break;
         }
     }

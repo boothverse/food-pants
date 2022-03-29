@@ -9,7 +9,7 @@ public abstract class StandardForm extends JFrame {
   // Form panel
   JPanel boxPanel;
 
-  public StandardForm() {
+  public StandardForm(String header) {
     super();
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBackground(Style.PLATINUM);
@@ -20,9 +20,12 @@ public abstract class StandardForm extends JFrame {
     JPanel panel = new JPanel(new FlowLayout());
 
     // Form initialization
+    initFormHeader(header, panel);
     initForm(panel);
 
     this.add(panel);
+    setTitle(header);
+    setSize(WIDTH, HEIGHT);
   }
 
   void initFormHeader(String header, final JPanel panel) {
