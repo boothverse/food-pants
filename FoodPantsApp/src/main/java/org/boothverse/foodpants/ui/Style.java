@@ -19,6 +19,8 @@ public class Style {
     public static final Color GREY_3 = new Color(144, 142, 142);
     public static final Color GREY_4 = new Color(163, 161, 161);
     public static final Color GREY_5 = new Color(185, 182, 182);
+    public static final Color GREY_6 = new Color(205, 202, 202);
+    public static final Color GREY_7 = new Color(225, 222, 222);
 
     public static final Color TRANSPARENT = new Color(1,1,1, 0);
 
