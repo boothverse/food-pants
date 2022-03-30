@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.components.standard;
 
+import org.boothverse.foodpants.ui.ImageIconGenerator;
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
@@ -23,8 +24,8 @@ public class StandardCheckbox extends JCheckBox {
     }
 
     private void resizeCheckbox() {
-        unselected = new ImageIcon("src/main/resources/icons/uncheck.png");
-        selected = new ImageIcon("src/main/resources/icons/check.png");
+        unselected = ImageIconGenerator.unselected;
+        selected = ImageIconGenerator.selected;
         setIcon(unselected);
         setSelectedIcon( selected );
     }

@@ -17,6 +17,7 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     protected JLabel itemName;
     protected JTextField quantity;
     protected StandardCheckbox checkBox;
+    protected ImageIcon icon;
     protected JButton deleteButton;
     protected JButton editButton;
 
@@ -29,6 +30,16 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     }
 
     private void initChildren(String name, int amt) {
+        //Add right hand side formatter
+        JPanel rightFormat = new JPanel();
+        rightFormat.setBackground(Style.TRANSPARENT);
+        add(rightFormat, BorderLayout.EAST);
+
+        // Add left hand side formatter
+        JPanel leftFormat = new JPanel();
+        rightFormat.setBackground(Style.TRANSPARENT);
+        add(leftFormat, BorderLayout.WEST);
+
         // Setup Checkbox
         checkBox = new StandardCheckbox();
         add(checkBox, BorderLayout.WEST);
@@ -37,11 +48,6 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         itemName = new JLabel(name);
         itemName.setFont(Style.bodyStyle);
         add(itemName);
-
-        //Add right hand side formatter
-        JPanel rightFormat = new JPanel();
-        rightFormat.setBackground(Style.TRANSPARENT);
-        add(rightFormat, BorderLayout.EAST);
 
         // Set up quantity text field
         quantity = new JFormattedTextField(NumberFormat.getIntegerInstance());
@@ -63,6 +69,7 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         deleteButton = new StandardButton("Delete");
         rightFormat.add(deleteButton);
         deleteButton.setVisible(false);
+        deleteButton.setActionCommand(name);
         deleteButton.addActionListener(this);
     }
 
@@ -74,6 +81,9 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     public StandardCheckbox getCheckBox() {
         return checkBox;
     }
+    public String getName() {
+        return itemName.getText();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -83,7 +93,8 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
             form.setVisible(true);
         }
         else if (e.getSource() == deleteButton) {
-
+            System.out.println("asdadada");
+            firePropertyChange("deleteItem", e.getActionCommand(), null);
         }
     }
 }
