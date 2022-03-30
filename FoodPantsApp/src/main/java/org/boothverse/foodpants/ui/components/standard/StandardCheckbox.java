@@ -23,7 +23,6 @@ public class StandardCheckbox extends JCheckBox {
     }
 
     private void resizeCheckbox() {
-        // Icons are placeholders rn, ideally these would be smaller (30px,30px) and look less bad lol
         unselected = new ImageIcon("src/main/resources/icons/uncheck.png");
         selected = new ImageIcon("src/main/resources/icons/check.png");
         setIcon(unselected);

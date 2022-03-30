@@ -56,9 +56,7 @@ public class ShoppingPage extends Page {
             }
         };
 
-        sideMenu.buttonMap.forEach((name, button) -> {
-            button.addActionListener(shoppingListener);
-        });
+        sideMenu.buttonMap.forEach((name, button) -> button.addActionListener(shoppingListener));
     }
 
     private void initList() {

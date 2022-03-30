@@ -13,12 +13,15 @@ public abstract class StandardForm extends JFrame {
     super();
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setLocationRelativeTo(null);
-    setBackground(Style.PLATINUM);
+    setBackground(Style.LIGHT_PLATINUM);
+    setResizable(false);
 
     boxPanel = new JPanel(new GridBagLayout());
+    boxPanel.setBackground(Style.TRANSPARENT);
 
     // Flowlayout panel
     JPanel panel = new JPanel(new FlowLayout());
+    panel.setBackground(Style.TRANSPARENT);
 
     // Form initialization
     initFormHeader(header, panel);
