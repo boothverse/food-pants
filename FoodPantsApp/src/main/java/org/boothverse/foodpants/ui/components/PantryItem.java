@@ -1,12 +1,16 @@
-package org.boothverse.foodpants.ui.components.standard;
+package org.boothverse.foodpants.ui.components;
 
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.components.standard.StandardLabel;
+import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 import org.boothverse.foodpants.ui.forms.EditPantryForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class PantryPanel extends StandardPanel {
+public class PantryItem extends StandardPanel {
 
   protected JLabel itemName;
   protected JLabel quantity;
@@ -16,7 +20,7 @@ public class PantryPanel extends StandardPanel {
 
   private JButton editButton, deleteButton;
 
-  public PantryPanel(String name, int amt) {
+  public PantryItem(String name, int amt) {
     super();
 
     setLayout(new BorderLayout());
@@ -37,8 +41,11 @@ public class PantryPanel extends StandardPanel {
     quantity = new StandardLabel(amt + "");
 
     editButton = new StandardButton("Edit");
-    editButton.addActionListener(e ->
-            new EditPantryForm("Edit Item").setVisible(true));
+    editButton.addActionListener(e -> {
+      StandardForm form =  new EditPantryForm("Edit Item");
+      form.setLocationRelativeTo(this);
+      form.setVisible(true);
+    });
     editButton.setVisible(false);
 
     deleteButton = new StandardButton("Delete");

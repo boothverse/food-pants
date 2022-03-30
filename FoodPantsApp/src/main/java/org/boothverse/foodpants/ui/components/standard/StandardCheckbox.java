@@ -3,8 +3,6 @@ package org.boothverse.foodpants.ui.components.standard;
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
-import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
 public class StandardCheckbox extends JCheckBox {

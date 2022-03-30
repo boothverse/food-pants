@@ -1,8 +1,9 @@
 package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.standard.PantryPanel;
+import org.boothverse.foodpants.ui.components.PantryItem;
 import org.boothverse.foodpants.ui.forms.AddPantryForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class PantryPage extends Page {
     private static final String[] tempNames = {"Banana", "Muffin", "Apple"}; // FOR PROTOTYPE, REMOVE LATER
     private static final int[] tempQuants = {3, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
 
-    private static List<PantryPanel> pantryItems;
+    private static List<PantryItem> pantryItems;
 
     private static boolean modifyingPantry;
 
@@ -26,10 +27,12 @@ public class PantryPage extends Page {
         modifyingPantry = false;
 
         JPanel listWrapper = new JPanel(new FlowLayout());
+        listWrapper.setBackground(Style.TRANSPARENT);
         JPanel panel = new JPanel(new GridLayout(2, 2));
+        panel.setBackground(Style.TRANSPARENT);
 
         for (int i = 0; i < tempNames.length; i++) {
-            PantryPanel newItem = new PantryPanel(tempNames[i], tempQuants[i]);
+            PantryItem newItem = new PantryItem(tempNames[i], tempQuants[i]);
 
             pantryItems.add(newItem);
             panel.add(newItem);
@@ -43,10 +46,12 @@ public class PantryPage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                new AddPantryForm("Add Item").setVisible(true);
+                StandardForm form =  new AddPantryForm("Add Item");
+                form.setLocationRelativeTo(this);
+                form.setVisible(true);
                 break;
             case "Search":
-                JOptionPane.showInputDialog(null, "Search");
+                JOptionPane.showInputDialog(this, "Search");
                 break;
             case "Modify":
                 JButton modifyBtn = (JButton) e.getSource();
@@ -58,7 +63,7 @@ public class PantryPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                for (PantryPanel pantryPanel : pantryItems) {
+                for (PantryItem pantryPanel : pantryItems) {
                     pantryPanel.setModification(modifyingPantry);
                 }
 

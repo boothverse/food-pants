@@ -27,6 +27,9 @@ public abstract class StandardForm extends JFrame {
     this.add(panel);
     setTitle(header);
     setSize(WIDTH, HEIGHT);
+    if (getParent() != null) {
+      setLocationRelativeTo(getParent());
+    }
   }
 
   void initFormHeader(String header, final JPanel panel) {

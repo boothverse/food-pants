@@ -4,15 +4,21 @@ import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardCheckbox;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
+import org.boothverse.foodpants.ui.forms.EditShoppingForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-public class ShoppingItem extends StandardPanel {
+public class ShoppingItem extends StandardPanel implements ActionListener {
     protected JLabel itemName;
     protected JTextField quantity;
     protected StandardCheckbox checkBox;
+    protected JButton deleteButton;
+    protected JButton editButton;
 
 
     public ShoppingItem(String name, int quantity) {
@@ -32,17 +38,52 @@ public class ShoppingItem extends StandardPanel {
         itemName.setFont(Style.bodyStyle);
         add(itemName);
 
+        //Add right hand side formatter
+        JPanel rightFormat = new JPanel();
+        rightFormat.setBackground(Style.TRANSPARENT);
+        add(rightFormat, BorderLayout.EAST);
+
         // Set up quantity text field
         quantity = new JFormattedTextField(NumberFormat.getIntegerInstance());
         quantity.setText(amt + "");
         quantity.setFont(Style.bodyStyle);
         quantity.setHorizontalAlignment(JLabel.RIGHT);
-        quantity.setBackground(Style.GREY_6);
+        quantity.setBackground(Style.PLATINUM);
+        quantity.setBorder(Style.BORDER_1);
         quantity.setPreferredSize(new Dimension(40, 40));
-        add(quantity, BorderLayout.EAST);
+        rightFormat.add(quantity);
+
+        // Add edit button
+        editButton = new StandardButton("Edit");
+        rightFormat.add(editButton);
+        editButton.setVisible(false);
+        editButton.addActionListener(this);
+
+        // Add delete button
+        deleteButton = new StandardButton("Delete");
+        rightFormat.add(deleteButton);
+        deleteButton.setVisible(false);
+        deleteButton.addActionListener(this);
+    }
+
+    public void setModification(boolean status) {
+        editButton.setVisible(status);
+        deleteButton.setVisible(status);
     }
 
     public StandardCheckbox getCheckBox() {
         return checkBox;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == editButton) {
+            StandardForm form =  new EditShoppingForm("Edit Item");
+            form.setLocationRelativeTo(this);
+            form.setVisible(true);
+        }
+        else if (e.getSource() == deleteButton) {
+
+        }
     }
 }

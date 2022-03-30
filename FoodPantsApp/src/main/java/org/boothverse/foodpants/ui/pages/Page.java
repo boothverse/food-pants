@@ -13,7 +13,7 @@ public class Page extends JPanel implements ActionListener {
 
     public Page() {
         super();
-        setBackground(Style.PLATINUM);
+        setBackground(Style.LIGHT_PLATINUM);
         setVisible(true);
         setLayout(new BorderLayout());
     }
