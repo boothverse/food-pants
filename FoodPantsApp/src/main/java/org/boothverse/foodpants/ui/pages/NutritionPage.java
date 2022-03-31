@@ -17,10 +17,7 @@ public class NutritionPage extends Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Timeline" -> {
-                System.out.println("Timeline clicked");
-                PageManager.setPage("Nutrition");
-            }
+            case "Timeline" -> PageManager.setPage("Nutrition");
             case "Goals" -> PageManager.setPage("Goals");
             case "Report" -> PageManager.setPage("Report");
         }
