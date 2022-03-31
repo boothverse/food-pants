@@ -12,6 +12,4 @@ automatically track what ingredients you have!
 <br/>
 <a href="https://trello.com/b/NX1l7UQG">Progress and Hours Report</a>
 <br/>
-<a href="https://drive.google.com/drive/folders/1EHClLRvtw7LCZs-vXJ_1DoT07q69cPGX?usp=sharing">Analysis Files</a>
-<br/>
 <a href="https://github.com/boothverse/food-pants/issues">Issue Tracking</a>
