@@ -1,7 +1,11 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.RecipeItem;
 import org.boothverse.foodpants.ui.forms.RecipeForm;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class RecipePage extends Page {
@@ -9,6 +13,11 @@ public class RecipePage extends Page {
 
     public RecipePage() {
         super(labels);
+
+        JPanel listWrapper = new JPanel(new FlowLayout());
+        add(listWrapper);
+        listWrapper.add(new RecipeItem());
+        listWrapper.setBackground(Style.TRANSPARENT);
     }
 
     @Override

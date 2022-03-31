@@ -8,6 +8,14 @@
     <artifactId>FoodPants</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.pushing-pixels</groupId>
+            <artifactId>radiance-common</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

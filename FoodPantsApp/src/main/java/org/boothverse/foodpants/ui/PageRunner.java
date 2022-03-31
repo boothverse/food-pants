@@ -37,6 +37,7 @@ public class PageRunner {
     private static void createAndShowGUI() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //System.setProperty("sun.java2d.uiScale","1.0");
         } catch (Exception e) {
             System.out.println("Unable to set LookAndFeel");
         }
