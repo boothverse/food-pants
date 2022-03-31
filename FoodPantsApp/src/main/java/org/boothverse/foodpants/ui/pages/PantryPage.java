@@ -14,8 +14,9 @@ import java.util.List;
 public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
 
-    private static final String[] tempNames = {"Banana", "Muffin", "Apple"}; // FOR PROTOTYPE, REMOVE LATER
-    private static final int[] tempQuants = {3, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
+    private static final String[] tempNames = {"Banana", "Muffin", "Apple", "Ribeye", "Oreos", "Bread Flour", "Vanilla Extract", "Eggs",
+                                                "Sugar", "Chocolate", "Melon"}; // FOR PROTOTYPE, REMOVE LATER
+    private static final int[] tempQuants = {3, 1, 2, 4, 5, 1, 2, 1, 10, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
 
     private static List<PantryItem> pantryItems;
 
@@ -28,7 +29,7 @@ public class PantryPage extends Page {
 
         JPanel listWrapper = new JPanel(new FlowLayout());
         listWrapper.setBackground(Style.TRANSPARENT);
-        JPanel panel = new JPanel(new GridLayout(2, 2));
+        JPanel panel = new JPanel(new GridLayout(0, 2));
         panel.setBackground(Style.TRANSPARENT);
 
         for (int i = 0; i < tempNames.length; i++) {
@@ -45,29 +46,24 @@ public class PantryPage extends Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "+":
-                StandardForm form =  new AddPantryForm("Add Item");
+            case "+" -> {
+                StandardForm form = new AddPantryForm("Add Item");
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
-                break;
-            case "Search":
-                JOptionPane.showInputDialog(this, "Search");
-                break;
-            case "Modify":
+            }
+            case "Search" -> JOptionPane.showInputDialog(this, "Search");
+            case "Modify" -> {
                 JButton modifyBtn = (JButton) e.getSource();
                 modifyingPantry = !modifyingPantry;
-
                 if (modifyingPantry) {
                     modifyBtn.setBackground(Style.GREY_0);
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
-
                 for (PantryItem pantryPanel : pantryItems) {
                     pantryPanel.setModification(modifyingPantry);
                 }
-
-                break;
+            }
         }
     }
 }
