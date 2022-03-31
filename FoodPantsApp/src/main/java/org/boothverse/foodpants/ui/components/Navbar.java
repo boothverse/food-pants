@@ -41,7 +41,5 @@ public class Navbar extends JPanel implements ActionListener {
         changePage(e.getActionCommand());
     }
 
-    private void changePage(String pageName) {
-        PageManager.setPage(pageName);
-    }
+    private void changePage(String pageName) { PageManager.setPage(pageName); }
 }
