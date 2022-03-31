@@ -3,7 +3,7 @@ package org.boothverse.foodpants.ui;
 import javax.swing.*;
 
 public class ImageIconGenerator {
-    public static String path = "src/main/resources/";
+    public static String path = "target/classes/images/";
 
     // Checkmark icons
     public static ImageIcon unselected = new ImageIcon(path + "checkmark/uncheck.png");

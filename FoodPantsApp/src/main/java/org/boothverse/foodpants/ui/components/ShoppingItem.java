@@ -36,9 +36,9 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         add(rightFormat, BorderLayout.EAST);
 
         // Add left hand side formatter
-        JPanel leftFormat = new JPanel();
-        rightFormat.setBackground(Style.TRANSPARENT);
-        add(leftFormat, BorderLayout.WEST);
+//        JPanel leftFormat = new JPanel();
+//        rightFormat.setBackground(Style.TRANSPARENT);
+//        add(leftFormat, BorderLayout.WEST);
 
         // Setup Checkbox
         checkBox = new StandardCheckbox();
