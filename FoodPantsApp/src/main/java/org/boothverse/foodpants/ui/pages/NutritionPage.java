@@ -17,11 +17,6 @@ public class NutritionPage extends Page {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "+" -> {
-                StandardForm form = new AddNutritionForm("Add Nutrition Item");
-                form.setLocationRelativeTo(this);
-                form.setVisible(true);
-            }
             case "Timeline" -> {
                 System.out.println("Timeline clicked");
                 PageManager.setPage("Nutrition");
