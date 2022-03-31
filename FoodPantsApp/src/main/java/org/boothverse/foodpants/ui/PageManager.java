@@ -9,6 +9,7 @@ public class PageManager {
     private static final Page pantryPage = new PantryPage();
     private static final Page recipePage = new RecipePage();
     private static final Page shoppingPage = new ShoppingPage();
+
     //Three subpages of NutritionPage, timeline is default
     private static final Page timelinePage = new NutritionTimelinePage();
     private static final Page goalsPage = new NutritionGoalsPage();
