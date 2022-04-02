@@ -18,6 +18,7 @@ public class PageRunner {
         frame.setMinimumSize(MIN_SIZE);
         frame.setTitle("FoodPants");
         frame.setVisible(true);
+        frame.setIconImage(ImageIconGenerator.logo.getImage());
         frame.setLayout(new BorderLayout());
     }
 

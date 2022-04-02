@@ -24,7 +24,9 @@ public class RecipePage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                new RecipeForm("Create Recipe").setVisible(true);
+                RecipeForm form = new RecipeForm("Create Recipe");
+               form.setLocationRelativeTo(this);
+               form.setVisible(true);
                 break;
             case "Recommend":
             case "Nutrition":

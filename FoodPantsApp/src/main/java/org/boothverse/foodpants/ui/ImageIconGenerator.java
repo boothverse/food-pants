@@ -18,4 +18,5 @@ public class ImageIconGenerator {
     public static ImageIcon meat = new ImageIcon(path + "icons/meat.png");
 
     public static ImageIcon timeline = new ImageIcon(path + "icons/timeline.png");
+    public static ImageIcon logo = new ImageIcon(path + "icons/logo.png");
 }
