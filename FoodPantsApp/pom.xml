@@ -14,6 +14,21 @@
             <artifactId>radiance-common</artifactId>
             <version>5.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>javax.measure</groupId>
+            <artifactId>unit-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+        </dependency>
+        <dependency>
+            <groupId>tec.units</groupId>
+            <artifactId>unit-ri</artifactId>
+            <version>1.0.3</version>
+        </dependency>
     </dependencies>
 
     <properties>
