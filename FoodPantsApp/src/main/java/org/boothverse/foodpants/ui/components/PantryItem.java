@@ -12,50 +12,50 @@ import java.awt.*;
 
 public class PantryItem extends StandardPanel {
 
-  protected JLabel itemName;
-  protected JLabel quantity;
+    protected JLabel itemName;
+    protected JLabel quantity;
 
-  protected int WIDTH = 250;
-  protected int HEIGHT = 50;
+    protected int WIDTH = 250;
+    protected int HEIGHT = 50;
 
-  private JButton editButton, deleteButton;
+    private JButton editButton, deleteButton;
 
-  public PantryItem(String name, int amt) {
-    super();
+    public PantryItem(String name, int amt) {
+        super();
 
-    setLayout(new BorderLayout());
-    setPreferredSize(new Dimension(WIDTH, HEIGHT));
-    initChildren(name, amt);
-  }
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        initChildren(name, amt);
+    }
 
-  public void setModification(boolean status) {
-    editButton.setVisible(status);
-    deleteButton.setVisible(status);
-  }
+    public void setModification(boolean status) {
+        editButton.setVisible(status);
+        deleteButton.setVisible(status);
+    }
 
-  private void initChildren(String name, int amt) {
-    JPanel panel = new JPanel();
-    panel.setBackground(Style.WHITE);
+    private void initChildren(String name, int amt) {
+        JPanel panel = new JPanel();
+        panel.setBackground(Style.WHITE);
 
-    itemName = new StandardLabel(name);
-    quantity = new StandardLabel(amt + "");
+        itemName = new StandardLabel(name);
+        quantity = new StandardLabel(amt + "");
 
-    editButton = new StandardButton("Edit");
-    editButton.addActionListener(e -> {
-      StandardForm form =  new EditPantryForm("Edit Item");
-      form.setLocationRelativeTo(this);
-      form.setVisible(true);
-    });
-    editButton.setVisible(false);
+        editButton = new StandardButton("Edit");
+        editButton.addActionListener(e -> {
+            StandardForm form = new EditPantryForm("Edit Item");
+            form.setLocationRelativeTo(this);
+            form.setVisible(true);
+        });
+        editButton.setVisible(false);
 
-    deleteButton = new StandardButton("Delete");
-    deleteButton.setVisible(false);
+        deleteButton = new StandardButton("Delete");
+        deleteButton.setVisible(false);
 
-    panel.add(quantity);
-    panel.add(editButton);
-    panel.add(deleteButton);
+        panel.add(quantity);
+        panel.add(editButton);
+        panel.add(deleteButton);
 
-    add(itemName, BorderLayout.WEST);
-    add(panel, BorderLayout.EAST);
-  }
+        add(itemName, BorderLayout.WEST);
+        add(panel, BorderLayout.EAST);
+    }
 }

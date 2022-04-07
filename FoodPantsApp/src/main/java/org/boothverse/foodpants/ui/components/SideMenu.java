@@ -17,7 +17,7 @@ public class SideMenu extends JPanel {
     }
 
     private void initButtons(String[] labels) {
-        for (String label: labels) {
+        for (String label : labels) {
             SideMenuButton button = new SideMenuButton(label);
             if (label.length() >= 9) {
                 button.setFont(button.getFont().deriveFont(10f));

@@ -81,6 +81,7 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     public StandardCheckbox getCheckBox() {
         return checkBox;
     }
+
     public String getName() {
         return itemName.getText();
     }
@@ -88,11 +89,10 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
-            StandardForm form =  new EditShoppingForm("Edit Item");
+            StandardForm form = new EditShoppingForm("Edit Item");
             form.setLocationRelativeTo(this);
             form.setVisible(true);
-        }
-        else if (e.getSource() == deleteButton) {
+        } else if (e.getSource() == deleteButton) {
             System.out.println("asdadada");
             firePropertyChange("deleteItem", e.getActionCommand(), null);
         }

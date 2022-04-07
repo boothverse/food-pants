@@ -15,7 +15,7 @@ public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
 
     private static final String[] tempNames = {"Banana", "Muffin", "Apple", "Ribeye", "Oreos", "Bread Flour", "Vanilla Extract", "Eggs",
-                                                "Sugar", "Chocolate", "Melon"}; // FOR PROTOTYPE, REMOVE LATER
+        "Sugar", "Chocolate", "Melon"}; // FOR PROTOTYPE, REMOVE LATER
     private static final int[] tempQuants = {3, 1, 2, 4, 5, 1, 2, 1, 10, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
 
     private static List<PantryItem> pantryItems;

@@ -6,6 +6,6 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 import java.util.Map;
 
 public abstract class FoodInstanceService {
-  @Getter
-  protected Map<String, FoodInstance> items;
+    @Getter
+    protected Map<String, FoodInstance> items;
 }

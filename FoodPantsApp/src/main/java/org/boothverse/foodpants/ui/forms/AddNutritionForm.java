@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNutritionForm extends StandardForm{
+public class AddNutritionForm extends StandardForm {
     protected final int WIDTH = 384;
     protected final int HEIGHT = 256;
     protected final int TXT_FIELD_WIDTH = 25;

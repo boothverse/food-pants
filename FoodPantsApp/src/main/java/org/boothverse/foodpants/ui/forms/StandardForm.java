@@ -6,70 +6,70 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class StandardForm extends JFrame {
-  // Form panel
-  JPanel boxPanel;
+    // Form panel
+    JPanel boxPanel;
 
-  public StandardForm(String header) {
-    super();
-    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    this.setLocationRelativeTo(null);
-    setBackground(Style.LIGHT_PLATINUM);
-    setResizable(false);
+    public StandardForm(String header) {
+        super();
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        setBackground(Style.LIGHT_PLATINUM);
+        setResizable(false);
 
-    boxPanel = new JPanel(new GridBagLayout());
-    boxPanel.setBackground(Style.TRANSPARENT);
+        boxPanel = new JPanel(new GridBagLayout());
+        boxPanel.setBackground(Style.TRANSPARENT);
 
-    // Flowlayout panel
-    JPanel panel = new JPanel(new FlowLayout());
-    panel.setBackground(Style.TRANSPARENT);
+        // Flowlayout panel
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(Style.TRANSPARENT);
 
-    // Form initialization
-    initFormHeader(header, panel);
-    initForm(panel);
+        // Form initialization
+        initFormHeader(header, panel);
+        initForm(panel);
 
-    this.add(panel);
-    setTitle(header);
-    setSize(WIDTH, HEIGHT);
-    if (getParent() != null) {
-      setLocationRelativeTo(getParent());
+        this.add(panel);
+        setTitle(header);
+        setSize(WIDTH, HEIGHT);
+        if (getParent() != null) {
+            setLocationRelativeTo(getParent());
+        }
     }
-  }
 
-  void initFormHeader(String header, final JPanel panel) {
-    JLabel createHeader = new JLabel(header);
-    createHeader.setFont(Style.headerStyle);
-    panel.add(createHeader);
-  }
+    void initFormHeader(String header, final JPanel panel) {
+        JLabel createHeader = new JLabel(header);
+        createHeader.setFont(Style.headerStyle);
+        panel.add(createHeader);
+    }
 
-  abstract void initForm(final JPanel panel);
+    abstract void initForm(final JPanel panel);
 
-  void addLeftComponent(Component c, int row) {
-    GridBagConstraints gbc = new GridBagConstraints();
+    void addLeftComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
 
-    gbc.gridwidth = 1;
-    gbc.gridheight = 1;
-    gbc.gridx = 0;
-    gbc.gridy = row;
-    gbc.anchor = GridBagConstraints.WEST;
-    gbc.fill = GridBagConstraints.BOTH;
-    gbc.weightx = 1.0;
-    gbc.weighty = 1.0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
 
-    boxPanel.add(c, gbc);
-  }
+        boxPanel.add(c, gbc);
+    }
 
-  void addRightComponent(Component c, int row) {
-    GridBagConstraints gbc = new GridBagConstraints();
+    void addRightComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
 
-    gbc.gridwidth = 1;
-    gbc.gridheight = 1;
-    gbc.gridx = 1;
-    gbc.gridy = row;
-    gbc.anchor = GridBagConstraints.EAST;
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.weightx = 1.0;
-    gbc.weighty = 1.0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        gbc.gridy = row;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
 
-    boxPanel.add(c, gbc);
-  }
+        boxPanel.add(c, gbc);
+    }
 }

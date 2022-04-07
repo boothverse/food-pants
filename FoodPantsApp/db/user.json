@@ -1,0 +1,12 @@
+{
+  "name" : "Gandhi",
+  "gender" : "M",
+  "height" : {
+    "unit" : "m",
+    "value" : 1.65
+  },
+  "weight" : {
+    "unit" : "kg",
+    "value" : 60
+  }
+}

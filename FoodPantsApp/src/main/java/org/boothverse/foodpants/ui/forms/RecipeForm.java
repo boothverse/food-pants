@@ -7,39 +7,39 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RecipeForm extends StandardForm {
-  protected final int WIDTH = 640;
-  protected final int HEIGHT = 480;
-  protected final int TXT_FIELD_WIDTH = 25;
+    protected final int WIDTH = 640;
+    protected final int HEIGHT = 480;
+    protected final int TXT_FIELD_WIDTH = 25;
 
-  public RecipeForm(String header) {
-    super(header);
-    setSize(WIDTH, HEIGHT);
-  }
-
-  @Override
-  void initForm(final JPanel panel) {
-    String[] textLabels = new String[]{"Name", "Servings"};
-
-    int i;
-    for (i = 0; i < textLabels.length; i++) {
-      JLabel lbl = new StandardLabel(textLabels[i]);
-      JTextField txtField = new JTextField(TXT_FIELD_WIDTH);
-
-      addLeftComponent(lbl, i + 1);
-      addRightComponent(txtField, i + 1);
+    public RecipeForm(String header) {
+        super(header);
+        setSize(WIDTH, HEIGHT);
     }
 
-    JLabel ingredients = new StandardLabel("Ingredients");
-    TextArea ingredArea = new TextArea();
+    @Override
+    void initForm(final JPanel panel) {
+        String[] textLabels = new String[]{"Name", "Servings"};
 
-    addLeftComponent(ingredients, ++i);
-    addRightComponent(ingredArea, ++i);
+        int i;
+        for (i = 0; i < textLabels.length; i++) {
+            JLabel lbl = new StandardLabel(textLabels[i]);
+            JTextField txtField = new JTextField(TXT_FIELD_WIDTH);
 
-    JButton submitBtn = new StandardButton("Submit");
-    submitBtn.addActionListener(e -> this.dispose());
+            addLeftComponent(lbl, i + 1);
+            addRightComponent(txtField, i + 1);
+        }
 
-    addRightComponent(submitBtn, ++i);
+        JLabel ingredients = new StandardLabel("Ingredients");
+        TextArea ingredArea = new TextArea();
 
-    panel.add(boxPanel, BorderLayout.CENTER);
-  }
+        addLeftComponent(ingredients, ++i);
+        addRightComponent(ingredArea, ++i);
+
+        JButton submitBtn = new StandardButton("Submit");
+        submitBtn.addActionListener(e -> this.dispose());
+
+        addRightComponent(submitBtn, ++i);
+
+        panel.add(boxPanel, BorderLayout.CENTER);
+    }
 }

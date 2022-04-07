@@ -19,7 +19,9 @@ public class NutritionTimelinePage extends NutritionPage {
 
     protected static final ActionListener holdColor = e -> {
         // Handle button color change
-        for (Component c : timeContainer.getComponents()) { c.setBackground(Style.GREY_3); }
+        for (Component c : timeContainer.getComponents()) {
+            c.setBackground(Style.GREY_3);
+        }
         ((StandardButton) e.getSource()).setBackground(((StandardButton) e.getSource()).getBackground().darker());
     };
 
@@ -30,12 +32,12 @@ public class NutritionTimelinePage extends NutritionPage {
     }
 
     private void initTimeView() {
-        timeContainer = new JPanel(new GridLayout(1,timeViews.length + 1));
+        timeContainer = new JPanel(new GridLayout(1, timeViews.length + 1));
         JPanel timeWrapper = new JPanel(new FlowLayout());
         timeWrapper.setBackground(Style.TRANSPARENT);
         timeWrapper.add(timeContainer, FlowLayout.LEFT);
 
-        for (String label: timeViews) {
+        for (String label : timeViews) {
             StandardButton timeButton = new StandardButton(label);
             timeButton.setBackground(Style.GREY_3);
             timeButton.addActionListener(holdColor);
@@ -52,7 +54,7 @@ public class NutritionTimelinePage extends NutritionPage {
                 StandardForm form = new AddNutritionForm("Add Nutrition Item");
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
-            break;
+                break;
             default:
                 super.actionPerformed(e);
                 break;

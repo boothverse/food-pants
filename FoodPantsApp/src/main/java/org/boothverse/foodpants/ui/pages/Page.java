@@ -1,4 +1,5 @@
 package org.boothverse.foodpants.ui.pages;
+
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.SideMenu;
 
@@ -41,5 +42,6 @@ public class Page extends JPanel implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+    }
 }

@@ -43,11 +43,9 @@ public class ShoppingPage extends Page {
                 for (ShoppingItem listItem : shoppingItems) {
                     listItem.getCheckBox().setSelected(true);
                 }
-            }
-            else if (e.getActionCommand().equals("Export")) {
+            } else if (e.getActionCommand().equals("Export")) {
 
-            }
-            else if (e.getActionCommand().equals("Modify")) {
+            } else if (e.getActionCommand().equals("Modify")) {
                 JButton modifyBtn = (JButton) e.getSource();
                 modifying = !modifying;
 
@@ -58,10 +56,9 @@ public class ShoppingPage extends Page {
                 }
 
                 for (ShoppingItem listItem : shoppingItems) {
-                        listItem.setModification(modifying);
+                    listItem.setModification(modifying);
                 }
-            }
-            else if (e.getActionCommand().equals("New List")) {
+            } else if (e.getActionCommand().equals("New List")) {
 
             }
         };

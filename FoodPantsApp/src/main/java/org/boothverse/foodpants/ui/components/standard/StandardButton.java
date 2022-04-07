@@ -1,4 +1,5 @@
 package org.boothverse.foodpants.ui.components.standard;
+
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
@@ -27,8 +28,7 @@ public class StandardButton extends JButton {
     protected void paintComponent(Graphics g) {
         if (getModel().isPressed()) {
             g.setColor(getBackground().brighter());
-        }
-        else {
+        } else {
             g.setColor(getBackground());
         }
 

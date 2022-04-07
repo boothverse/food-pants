@@ -27,7 +27,7 @@ public class StandardCheckbox extends JCheckBox {
         unselected = ImageIconGenerator.unselected;
         selected = ImageIconGenerator.selected;
         setIcon(unselected);
-        setSelectedIcon( selected );
+        setSelectedIcon(selected);
     }
 
     @Override

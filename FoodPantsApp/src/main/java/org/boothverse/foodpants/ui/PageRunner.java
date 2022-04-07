@@ -47,7 +47,9 @@ public class PageRunner {
         setupChildren();
     }
 
-    public static PageViewer getPageViewer() { return pageFrame; }
+    public static PageViewer getPageViewer() {
+        return pageFrame;
+    }
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(PageRunner::createAndShowGUI);

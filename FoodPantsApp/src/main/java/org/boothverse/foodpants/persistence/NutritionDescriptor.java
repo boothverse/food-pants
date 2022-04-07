@@ -10,6 +10,6 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter @Setter
 public class NutritionDescriptor {
-  private Map<NutritionType, Quantity> nutritionInfo;
-  private Quantity servingSize;
+    private Map<NutritionType, Quantity> nutritionInfo;
+    private Quantity servingSize;
 }
