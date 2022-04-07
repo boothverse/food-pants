@@ -4,8 +4,8 @@ import java.io.*;
 
 public class FileSingleDAO<T> extends FileDAO<T> {
 
-    public FileSingleDAO(Class<T> t) {
-        super(t);
+    public FileSingleDAO(Class<T> t, String filename) {
+        super(t, filename);
     }
 
     public T load() throws IOException {

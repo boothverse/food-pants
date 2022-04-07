@@ -12,9 +12,9 @@ public abstract class FileDAO<T> {
     protected final ObjectMapper mapper;
     protected final Class<T> type;
 
-    public FileDAO(Class<T> t) {
+    public FileDAO(Class<T> t, String filename) {
         type = t;
-        filename = "db/" + type.getSimpleName() + ".json";
+        this.filename = "db/" + filename;
         mapper = new ObjectMapper();
         mapper.addMixIn(Unit.class, UnitMixin.class);
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
