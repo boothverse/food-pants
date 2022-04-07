@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public abstract class IdObject {
   @Getter
-  private final String id;
+  protected final String id;
 }

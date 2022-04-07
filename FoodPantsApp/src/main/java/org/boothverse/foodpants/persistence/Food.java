@@ -3,18 +3,24 @@ package org.boothverse.foodpants.persistence;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.measure.Quantity;
+
 public class Food extends IdObject {
   @Getter
-  private final String name;
+  protected final String name;
   @Getter
-  private final FoodGroup foodGroup;
+  protected final FoodGroup foodGroup;
   @Getter @Setter
-  private NutritionDescriptor nutrition;
+  protected NutritionDescriptor nutrition;
 
   public Food(String id, String name, FoodGroup foodGroup, NutritionDescriptor nutrition) {
     super(id);
     this.name = name;
     this.foodGroup = foodGroup;
     this.nutrition = nutrition;
+  }
+
+  public FoodInstance createInstance(Quantity quantity) {
+    return new FoodInstance(id, quantity);
   }
 }
