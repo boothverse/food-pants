@@ -8,10 +8,10 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
-public class FileListDAO<T extends IdObject> extends FileDAO {
+public class FileListDAO<T extends IdObject> extends FileDAO<T> {
 
-    public FileListDAO(String filename) {
-        super(filename);
+    public FileListDAO(Class<T> t) {
+        super(t);
     }
 
     public Map<String, T> load() throws IOException {

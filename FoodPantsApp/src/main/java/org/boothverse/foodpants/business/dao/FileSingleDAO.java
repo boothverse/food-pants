@@ -1,19 +1,16 @@
 package org.boothverse.foodpants.business.dao;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import org.boothverse.foodpants.persistence.User;
-
 import java.io.*;
 
-public class FileSingleDAO<T> extends FileDAO {
+public class FileSingleDAO<T> extends FileDAO<T> {
 
-    public FileSingleDAO(String filename) {
-        super(filename);
+    public FileSingleDAO(Class<T> t) {
+        super(t);
     }
 
-    public T load(Class<T> t) throws IOException {
+    public T load() throws IOException {
         try (Reader reader = new FileReader(filename)) {
-            return mapper.readValue(reader, t);
+            return mapper.readValue(reader, type);
         }
     }
 

@@ -7,13 +7,15 @@ import org.boothverse.foodpants.business.dao.serialization.UnitMixin;
 import javax.measure.Quantity;
 import javax.measure.Unit;
 
-public abstract class FileDAO {
+public abstract class FileDAO<T> {
     protected final String filename;
     protected final ObjectMapper mapper;
+    protected final Class<T> type;
 
-    public FileDAO(String filename) {
-        this.filename = "db/" + filename;
-        this.mapper = new ObjectMapper();
+    public FileDAO(Class<T> t) {
+        type = t;
+        filename = "db/" + type.getSimpleName() + ".json";
+        mapper = new ObjectMapper();
         mapper.addMixIn(Unit.class, UnitMixin.class);
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
     }

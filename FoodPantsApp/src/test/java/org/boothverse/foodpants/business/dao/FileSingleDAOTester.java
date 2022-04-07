@@ -18,7 +18,7 @@ public class FileSingleDAOTester {
     @Test
     @Order(1)
     void userSaveTest() throws IOException {
-        FileSingleDAO<User> dao = new FileSingleDAO<>("user.json");
+        FileSingleDAO<User> dao = new FileSingleDAO<>(User.class);
 
         String name = "Gandhi";
         String gender = "M";
@@ -33,9 +33,9 @@ public class FileSingleDAOTester {
     @Test
     @Order(2)
     void userLoadTest() throws IOException {
-        FileSingleDAO<User> dao = new FileSingleDAO<>("user.json");
+        FileSingleDAO<User> dao = new FileSingleDAO<>(User.class);
 
-        User user = dao.load(User.class);
+        User user = dao.load();
 
         assertEquals(user.getName(), "Gandhi");
         assertEquals(user.getHeight().getUnit(), Units.METRE);
