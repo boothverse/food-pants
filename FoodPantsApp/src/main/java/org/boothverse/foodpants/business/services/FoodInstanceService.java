@@ -30,9 +30,10 @@ public abstract class FoodInstanceService {
     /**
      * Adds an item to the service and the database.
      *
-     * @param item
+     * @param id
+     * @param quantity
      */
-    public void addItem(FoodInstance item) {
+    public void addItem(String id, Quantity<?> quantity) {
 
     }
 

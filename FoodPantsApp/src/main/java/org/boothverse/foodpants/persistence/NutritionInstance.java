@@ -12,7 +12,7 @@ public class NutritionInstance extends FoodInstance {
     @Getter @Setter
     private Date consumedAt;
 
-    public NutritionInstance(String id, String foodId, Quantity quantity, Date consumedAt) {
+    public NutritionInstance(String id, String foodId, Quantity<?> quantity, Date consumedAt) {
         super(id, quantity);
         this.foodId = foodId;
         this.consumedAt = consumedAt;
