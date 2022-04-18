@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Getter @NoArgsConstructor
-//@JsonTypeName("reportperiod")
 public class ReportPeriod extends IdObject {
 
-    Date startDate;
-    Date endDate;
+    private Date startDate;
+    private Date endDate;
 
     public ReportPeriod(String id, Date startDate, Date endDate) {
         super(id);

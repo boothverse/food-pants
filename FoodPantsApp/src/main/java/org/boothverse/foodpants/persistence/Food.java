@@ -1,15 +1,17 @@
 package org.boothverse.foodpants.persistence;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.measure.Quantity;
 
+@NoArgsConstructor
 public class Food extends IdObject {
     @Getter
-    protected final String name;
+    protected String name;
     @Getter
-    protected final FoodGroup foodGroup;
+    protected FoodGroup foodGroup;
     @Getter @Setter
     protected NutritionDescriptor nutrition;
 

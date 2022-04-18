@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.persistence;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.boothverse.foodpants.business.services.Services;
 import tec.units.ri.quantity.Quantities;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static tec.units.ri.AbstractUnit.ONE;
 
+@NoArgsConstructor
 @Getter @Setter
 public class Recipe extends Food {
 

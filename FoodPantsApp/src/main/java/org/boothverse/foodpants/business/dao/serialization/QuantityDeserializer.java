@@ -22,10 +22,16 @@ public class QuantityDeserializer extends StdDeserializer<Quantity<?>> {
     @Override
     public Quantity<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         jsonParser.nextValue();
-        String rawUnit = jsonParser.getValueAsString();
-        jsonParser.nextValue();
-        Double rawValue = jsonParser.getValueAsDouble();
+        String raw = jsonParser.getValueAsString();
 
-        return Quantities.getQuantity(rawValue, AbstractUnit.parse(rawUnit));
+        System.out.println(raw);
+
+        try {
+            Quantities.getQuantity(raw);
+        } catch (Exception e) {
+            return Quantities.getQuantity("0 g");
+        }
+
+        return Quantities.getQuantity(raw);
     }
 }
