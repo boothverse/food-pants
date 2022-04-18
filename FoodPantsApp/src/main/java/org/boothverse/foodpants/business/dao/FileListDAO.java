@@ -21,11 +21,14 @@ public class FileListDAO<T extends IdObject> extends FileDAO<T> {
         }
     }
 
+    //Does not work
+    /*
     public void save(T data, Boolean append) throws IOException {
         try (Writer writer = new FileWriter(filename, append)) {
             mapper.writerWithDefaultPrettyPrinter().writeValue(writer, data);
         }
     }
+     */
 
     public void save(List<T> data, Boolean append) throws IOException {
         try (Writer writer = new FileWriter(filename, append)) {
