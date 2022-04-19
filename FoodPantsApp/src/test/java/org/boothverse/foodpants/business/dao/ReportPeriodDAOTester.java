@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.business.dao.fileDAO.FileListDAO;
 import org.boothverse.foodpants.persistence.ReportPeriod;
 import org.junit.jupiter.api.BeforeEach;

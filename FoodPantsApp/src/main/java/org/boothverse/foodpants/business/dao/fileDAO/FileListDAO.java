@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.collect.Maps;
 import org.boothverse.foodpants.persistence.IdObject;
+import org.boothverse.foodpants.persistence.NutritionInstance;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

@@ -1,0 +1,11 @@
+[ {
+  "id" : "0",
+  "quantity" : "50 g",
+  "foodId" : "Banana",
+  "consumedAt" : 1650250927043
+}, {
+  "id" : "0",
+  "quantity" : "50 g",
+  "foodId" : "Banana",
+  "consumedAt" : 1650250927043
+} ]

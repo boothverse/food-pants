@@ -7,6 +7,7 @@ import org.boothverse.foodpants.persistence.NutritionType;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import tec.units.ri.quantity.Quantities;
+import tec.units.ri.unit.Units;
 
 import java.util.Map;
 
@@ -22,10 +23,10 @@ public class FoodDAOTester {
 
         NutritionDescriptor nutrition = new NutritionDescriptor();
         nutrition.setNutritionInfo(Map.of(
-            NutritionType.CALORIES, Quantities.getQuantity(105, tec.units.ri.AbstractUnit.ONE)));
+            NutritionType.CALORIES, Quantities.getQuantity(105, Units.KILOGRAM)));
         nutrition.setServingSize(ONE);
 
-        Food food = new Food("ja2f039jawoiefj029JFA", "Banana", FoodGroup.FRUIT, nutrition);
+        Food food = new Food("ja2f039jawoiefj029JF", "Banana", FoodGroup.FRUIT, nutrition);
 
         dao.save(food);
     }
@@ -38,7 +39,7 @@ public class FoodDAOTester {
         Map<String, Food> foods = dao.load();
         assertEquals(1, foods.size());
 
-        Food food = foods.get("ja2f039jawoiefj029JFA");
+        Food food = foods.get("ja2f039jawoiefj029JF");
         assertEquals(food.getName(), "Banana");
         assertEquals(food.getFoodGroup(), FoodGroup.FRUIT);
     }

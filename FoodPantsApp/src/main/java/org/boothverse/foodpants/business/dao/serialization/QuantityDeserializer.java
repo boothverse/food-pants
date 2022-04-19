@@ -3,6 +3,7 @@ package org.boothverse.foodpants.business.dao.serialization;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import tec.units.ri.AbstractUnit;
 import tec.units.ri.quantity.Quantities;
 
 import javax.measure.Quantity;
@@ -21,16 +22,10 @@ public class QuantityDeserializer extends StdDeserializer<Quantity<?>> {
     @Override
     public Quantity<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         jsonParser.nextValue();
-        String raw = jsonParser.getValueAsString();
+        String rawUnit = jsonParser.getValueAsString();
+        jsonParser.nextValue();
+        Double rawValue = jsonParser.getValueAsDouble();
 
-        System.out.println(raw);
-
-        try {
-            Quantities.getQuantity(raw);
-        } catch (Exception e) {
-            return Quantities.getQuantity("0 g");
-        }
-
-        return Quantities.getQuantity(raw);
+        return Quantities.getQuantity(rawValue, AbstractUnit.parse(rawUnit));
     }
 }
