@@ -1,10 +1,12 @@
 package org.boothverse.foodpants.persistence;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.measure.Quantity;
 
+@NoArgsConstructor
 public class Goal<Q extends Quantity<Q>> extends IdObject {
 
     @Getter @Setter
