@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.business.dao.fileDAO.FileListDAO;
 import org.boothverse.foodpants.persistence.ReportPeriod;
@@ -14,40 +16,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReportPeriodDAOTester {
 
-    protected FileListDAO<ReportPeriod> dao = null;
-    protected List<Date> dates;
-
-    @BeforeEach
-    void init(){
-        dao = new FileListDAO<>(ReportPeriod.class, "ReportPeriods.json");
-        dates = Arrays.asList(new Date(1230000L), new Date(4560000L));
-    }
-
     @Test
     @Order(1)
     void reportPeriodSaveTest() throws IOException {
-        String id = "0";
-        Date startDate = dates.get(0);
-        Date endDate = dates.get(1);
+        ListDAO<ReportPeriod> dao = new ReportDAO();
 
-        ReportPeriod reportPeriod = new ReportPeriod(id, startDate, endDate);
+        Date startDate = new Date(2020, 1, 1) , endDate = new Date(2021, 1, 1);
 
-        List<ReportPeriod> items = new ArrayList<>();
-        items.add(reportPeriod);
+        ReportPeriod reportPeriod = new ReportPeriod("ukB2Ufeabehiu23builb21", startDate, endDate);
 
-        dao.save(items);
+        dao.save(reportPeriod);
     }
 
     @Test
     @Order(2)
     void reportPeriodLoadTest() throws IOException {
-        Map<String, ReportPeriod> items = dao.load();
-        assertEquals(items.size(), 1);
+        ListDAO<ReportPeriod> dao = new ReportDAO();
+        Date startDate = new Date(2020, 1, 1) , endDate = new Date(2021, 1, 1);
 
-        ReportPeriod r = (ReportPeriod) items.values().toArray()[0];
+        Map<String, ReportPeriod> reportPeriods = dao.load();
+        assertEquals(1, reportPeriods.size());
 
-        assertEquals(r.getId(), "0");
-        assertEquals(r.getStartDate(), dates.get(0));
-        assertEquals(r.getEndDate(), dates.get(1));
+        ReportPeriod reportPeriod = reportPeriods.get("ukB2Ufeabehiu23builb21");
+        assertEquals(reportPeriod.getStartDate(), startDate);
+        assertEquals(reportPeriod.getEndDate(), endDate);
     }
 }
