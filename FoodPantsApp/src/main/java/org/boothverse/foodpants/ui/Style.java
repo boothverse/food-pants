@@ -10,7 +10,9 @@ import java.awt.*;
 import java.util.Collections;
 
 public class Style {
-    public static final Color RED = new Color(255, 84, 84);
+    private static final String primaryHex = "#525E75";
+
+    public static final Color PRIMARY = Color.decode(primaryHex);
 
     public static final Color BLACK = new Color(18, 19, 15);
     public static final Color GREY_0 = new Color(82, 80, 80);
@@ -21,7 +23,7 @@ public class Style {
 
     public static final Color TRANSPARENT = new Color(1, 1, 1, 0);
 
-    public static final Color PRESS_NAV_BUTTON = RED.brighter();
+    public static final Color PRESS_NAV_BUTTON = PRIMARY.brighter();
 
     public static Font headerStyle;
 
@@ -43,6 +45,6 @@ public class Style {
     }
 
     private static void setupLafProperties() {
-        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", "#ff5454"));
+        FlatLaf.setGlobalExtraDefaults(Collections.singletonMap("@accentColor", primaryHex));
     }
 }

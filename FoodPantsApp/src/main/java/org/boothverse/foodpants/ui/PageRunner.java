@@ -1,14 +1,11 @@
 package org.boothverse.foodpants.ui;
 
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import org.boothverse.foodpants.ui.components.PageViewer;
 import org.boothverse.foodpants.ui.components.Navbar;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Collections;
 
 public class PageRunner {
     private static final Dimension MIN_SIZE = new Dimension(1000, 800);

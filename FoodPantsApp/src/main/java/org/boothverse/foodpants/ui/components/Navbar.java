@@ -36,7 +36,7 @@ public class Navbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Handle button color change
         for (Component c : getComponents()) {
-            c.setBackground(Style.RED);
+            c.setBackground(Style.PRIMARY);
         }
         ((StandardButton) e.getSource()).setBackground(Style.PRESS_NAV_BUTTON);
 

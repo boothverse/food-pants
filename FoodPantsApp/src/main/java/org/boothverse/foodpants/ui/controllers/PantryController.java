@@ -1,4 +1,4 @@
-package org.boothverse.foodpants.ui.forms.controllers;
+package org.boothverse.foodpants.ui.controllers;
 
 public class PantryController implements FoodInstanceController {
 }

@@ -14,7 +14,7 @@ public class StandardButton extends JButton {
         setFocusPainted(false);
 
         // Set default colors
-        setBackground(Style.RED);
+        setBackground(Style.PRIMARY);
         setForeground(Style.PLATINUM);
     }
 

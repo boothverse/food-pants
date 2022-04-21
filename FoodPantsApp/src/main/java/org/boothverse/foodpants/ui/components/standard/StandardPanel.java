@@ -9,5 +9,6 @@ public abstract class StandardPanel extends JPanel {
     public StandardPanel() {
         super();
         setForeground(Style.BLACK);
+        setBackground(Style.PLATINUM);
     }
 }
