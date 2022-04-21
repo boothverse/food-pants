@@ -1,11 +1,9 @@
 package org.boothverse.foodpants.ui.components;
 
-import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
-import org.boothverse.foodpants.ui.components.standard.StandardCheckbox;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 import org.boothverse.foodpants.ui.forms.EditShoppingForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
@@ -19,8 +17,7 @@ import java.text.NumberFormat;
 public class ShoppingItem extends StandardPanel implements ActionListener {
     protected JLabel itemName;
     protected JTextField quantity;
-    protected StandardCheckbox checkBox;
-    protected ImageIcon icon;
+    protected JCheckBox checkBox;
     protected JButton deleteButton;
     protected JButton editButton;
 
@@ -28,16 +25,17 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     protected FoodInstance item = null;
 
 
-    public ShoppingItem(FoodInstance item) {
+    public ShoppingItem(String name, int amt) {
         super();
         setLayout(new BorderLayout());
-        this.item = item;
-        initChildren(item);
+        //this.item = item;
+        initChildren(name, amt);
         setPreferredSize(new Dimension(400, 60));
     }
 
-    private void initChildren(FoodInstance item) {
-        food = Services.FOOD_SERVICE.getFood(item.getId());
+    private void initChildren(String name, int amt) {
+        //food = Services.FOOD_SERVICE.getFood(item.getId());
+
 
         //Add right hand side formatter
         JPanel rightFormat = new JPanel();
@@ -45,17 +43,17 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         add(rightFormat, BorderLayout.EAST);
 
         // Setup Checkbox
-        checkBox = new StandardCheckbox();
+        checkBox = new JCheckBox();
         add(checkBox, BorderLayout.WEST);
 
         // Setup Name of the item
-        itemName = new JLabel(food.getName());
-        //itemName.setFont(Style.bodyStyle);
+        itemName = new JLabel(name);
         add(itemName);
 
         // Set up quantity text field
         quantity = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        quantity.setText(item.getQuantity().getValue() + " " + item.getQuantity().getUnit());
+        quantity.setEditable(false);
+        quantity.setText(amt + "");
         quantity.setHorizontalAlignment(JLabel.RIGHT);
         quantity.setPreferredSize(new Dimension(40, 40));
         rightFormat.add(quantity);
@@ -70,16 +68,17 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         deleteButton = new StandardButton("Delete");
         rightFormat.add(deleteButton);
         deleteButton.setVisible(false);
-        deleteButton.setActionCommand(food.getName());
+        deleteButton.setActionCommand(name);
         deleteButton.addActionListener(this);
     }
 
     public void setModification(boolean status) {
         editButton.setVisible(status);
         deleteButton.setVisible(status);
+        quantity.setEditable(status);
     }
 
-    public StandardCheckbox getCheckBox() {
+    public JCheckBox getCheckBox() {
         return checkBox;
     }
 

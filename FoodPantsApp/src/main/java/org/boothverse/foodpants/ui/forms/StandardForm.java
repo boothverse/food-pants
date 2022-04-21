@@ -36,6 +36,7 @@ public abstract class StandardForm extends JFrame {
 
     void initFormHeader(String header, final JPanel panel) {
         JLabel createHeader = new JLabel(header);
+        createHeader.setFont(Style.headerStyle);
         panel.add(createHeader);
     }
 

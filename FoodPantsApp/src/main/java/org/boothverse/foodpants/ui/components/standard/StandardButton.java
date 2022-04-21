@@ -16,7 +16,6 @@ public class StandardButton extends JButton {
         // Set default colors
         setBackground(Style.RED);
         setForeground(Style.PLATINUM);
-
     }
 
     @Override

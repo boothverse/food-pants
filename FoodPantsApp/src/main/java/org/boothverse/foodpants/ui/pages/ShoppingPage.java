@@ -95,8 +95,8 @@ public class ShoppingPage extends Page {
     }
 
     protected void addListItem(String item, int quantity) {
-        //ShoppingItem thisItem = new ShoppingItem();
-        //shoppingItems.add(thisItem);
+        ShoppingItem thisItem = new ShoppingItem(item, quantity);
+        shoppingItems.add(thisItem);
     }
 
     protected void removeShoppingItem(String name) {

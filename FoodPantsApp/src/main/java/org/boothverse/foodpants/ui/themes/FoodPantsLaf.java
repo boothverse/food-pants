@@ -1,4 +1,4 @@
-package org.boothverse.foodpants.ui.theme;
+package org.boothverse.foodpants.ui.themes;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
