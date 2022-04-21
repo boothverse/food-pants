@@ -17,11 +17,6 @@ public class StandardButton extends JButton {
         setBackground(Style.RED);
         setForeground(Style.PLATINUM);
 
-        // Construct Border
-        setBorder(Style.BORDER_1);
-
-        // Set Font
-        setFont(Style.bodyStyle);
     }
 
     @Override

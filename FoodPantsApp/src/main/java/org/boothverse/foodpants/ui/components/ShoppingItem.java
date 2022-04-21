@@ -1,5 +1,8 @@
 package org.boothverse.foodpants.ui.components;
 
+import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardCheckbox;
@@ -21,41 +24,39 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
     protected JButton deleteButton;
     protected JButton editButton;
 
+    protected Food food = null;
+    protected FoodInstance item = null;
 
-    public ShoppingItem(String name, int quantity) {
+
+    public ShoppingItem(FoodInstance item) {
         super();
         setLayout(new BorderLayout());
-        initChildren(name, quantity);
+        this.item = item;
+        initChildren(item);
         setPreferredSize(new Dimension(400, 60));
     }
 
-    private void initChildren(String name, int amt) {
+    private void initChildren(FoodInstance item) {
+        food = Services.FOOD_SERVICE.getFood(item.getId());
+
         //Add right hand side formatter
         JPanel rightFormat = new JPanel();
         rightFormat.setBackground(Style.TRANSPARENT);
         add(rightFormat, BorderLayout.EAST);
-
-        // Add left hand side formatter
-//        JPanel leftFormat = new JPanel();
-//        rightFormat.setBackground(Style.TRANSPARENT);
-//        add(leftFormat, BorderLayout.WEST);
 
         // Setup Checkbox
         checkBox = new StandardCheckbox();
         add(checkBox, BorderLayout.WEST);
 
         // Setup Name of the item
-        itemName = new JLabel(name);
-        itemName.setFont(Style.bodyStyle);
+        itemName = new JLabel(food.getName());
+        //itemName.setFont(Style.bodyStyle);
         add(itemName);
 
         // Set up quantity text field
         quantity = new JFormattedTextField(NumberFormat.getIntegerInstance());
-        quantity.setText(amt + "");
-        quantity.setFont(Style.bodyStyle);
+        quantity.setText(item.getQuantity().getValue() + " " + item.getQuantity().getUnit());
         quantity.setHorizontalAlignment(JLabel.RIGHT);
-        quantity.setBackground(Style.PLATINUM);
-        quantity.setBorder(Style.BORDER_1);
         quantity.setPreferredSize(new Dimension(40, 40));
         rightFormat.add(quantity);
 
@@ -69,7 +70,7 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         deleteButton = new StandardButton("Delete");
         rightFormat.add(deleteButton);
         deleteButton.setVisible(false);
-        deleteButton.setActionCommand(name);
+        deleteButton.setActionCommand(food.getName());
         deleteButton.addActionListener(this);
     }
 
@@ -82,8 +83,8 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
         return checkBox;
     }
 
-    public String getName() {
-        return itemName.getText();
+    public Food getFood() {
+        return food;
     }
 
     @Override
@@ -93,7 +94,6 @@ public class ShoppingItem extends StandardPanel implements ActionListener {
             form.setLocationRelativeTo(this);
             form.setVisible(true);
         } else if (e.getSource() == deleteButton) {
-            System.out.println("asdadada");
             firePropertyChange("deleteItem", e.getActionCommand(), null);
         }
     }

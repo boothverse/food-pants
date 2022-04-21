@@ -21,7 +21,7 @@ public class FoodService {
      * @return
      */
     public List<Food> getFoods() {
-        return null;
+        return foods.values().stream().toList();
     }
 
     /**
@@ -31,7 +31,7 @@ public class FoodService {
      * @return
      */
     public Food getFood(String id) {
-        return null;
+        return foods.getOrDefault(id, null);
     }
 
     /**

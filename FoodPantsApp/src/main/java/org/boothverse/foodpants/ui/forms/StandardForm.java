@@ -13,7 +13,6 @@ public abstract class StandardForm extends JFrame {
         super();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        setBackground(Style.LIGHT_PLATINUM);
         setResizable(false);
 
         boxPanel = new JPanel(new GridBagLayout());
@@ -37,7 +36,6 @@ public abstract class StandardForm extends JFrame {
 
     void initFormHeader(String header, final JPanel panel) {
         JLabel createHeader = new JLabel(header);
-        createHeader.setFont(Style.headerStyle);
         panel.add(createHeader);
     }
 
