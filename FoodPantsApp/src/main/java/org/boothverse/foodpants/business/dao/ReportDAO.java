@@ -1,17 +1,8 @@
 package org.boothverse.foodpants.business.dao;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
-import org.boothverse.foodpants.business.dao.serialization.UnitMixin;
-import org.boothverse.foodpants.business.dao.util.SQLUtils;
-import org.boothverse.foodpants.persistence.Food;
-import org.boothverse.foodpants.persistence.FoodGroup;
-import org.boothverse.foodpants.persistence.NutritionDescriptor;
+import org.boothverse.foodpants.business.dao.util.*;
 import org.boothverse.foodpants.persistence.ReportPeriod;
 
-import javax.measure.Quantity;
-import javax.measure.Unit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
