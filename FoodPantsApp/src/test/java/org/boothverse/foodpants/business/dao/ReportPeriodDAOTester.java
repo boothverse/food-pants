@@ -23,7 +23,7 @@ public class ReportPeriodDAOTester {
 
         Date startDate = new Date(2020, 1, 1) , endDate = new Date(2021, 1, 1);
 
-        ReportPeriod reportPeriod = new ReportPeriod("ukB2Ufeabehiu23builb21", startDate, endDate);
+        ReportPeriod reportPeriod = new ReportPeriod("ukB2Ufeabehiu23buil", startDate, endDate);
 
         dao.save(reportPeriod);
     }
@@ -37,7 +37,7 @@ public class ReportPeriodDAOTester {
         Map<String, ReportPeriod> reportPeriods = dao.load();
         assertEquals(1, reportPeriods.size());
 
-        ReportPeriod reportPeriod = reportPeriods.get("ukB2Ufeabehiu23builb21");
+        ReportPeriod reportPeriod = reportPeriods.get("ukB2Ufeabehiu23buil");
         assertEquals(reportPeriod.getStartDate(), startDate);
         assertEquals(reportPeriod.getEndDate(), endDate);
     }

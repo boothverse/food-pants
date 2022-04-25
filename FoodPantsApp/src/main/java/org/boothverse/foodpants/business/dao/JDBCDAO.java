@@ -4,7 +4,7 @@ import java.sql.*;
 
 abstract class JDBCDAO {
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
-    private static final String DB_CONNECTION = "jdbc:derby:db;create=true";
+    private static final String DB_CONNECTION = "jdbc:derby:db;";
     private static final String DB_USER = "";
     private static final String DB_PASSWORD = "";
 
@@ -32,6 +32,7 @@ abstract class JDBCDAO {
     }
 
     protected void executeInsert(Statement statement, String[] data) throws SQLException {
+        System.out.println(data);
         statement.execute("INSERT INTO " + table + " VALUES (" + String.join(", ", data) + ")");
     }
 
