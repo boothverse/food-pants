@@ -36,9 +36,7 @@ public class PageRunner {
     }
 
     private static void createAndShowGUI() {
-
         Style.setupLookAndFeel();
-
         setupWindow();
         setupChildren();
     }

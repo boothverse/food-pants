@@ -14,7 +14,6 @@ import static tec.units.ri.AbstractUnit.ONE;
 
 @Getter @Setter
 public class Recipe extends Food {
-
     private String instructions;
     private List<FoodInstance> ingredients;
     private Double servings;

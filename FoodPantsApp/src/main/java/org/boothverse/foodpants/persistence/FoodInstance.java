@@ -7,9 +7,9 @@ import javax.measure.Quantity;
 
 public class FoodInstance extends IdObject {
     @Getter @Setter
-    private Quantity quantity;
+    private Quantity<?> quantity;
 
-    public FoodInstance(String id, Quantity quantity) {
+    public FoodInstance(String id, Quantity<?> quantity) {
         super(id);
         this.quantity = quantity;
     }

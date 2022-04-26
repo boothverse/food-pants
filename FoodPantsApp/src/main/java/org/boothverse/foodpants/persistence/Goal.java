@@ -5,13 +5,11 @@ import lombok.Setter;
 
 import javax.measure.Quantity;
 
+@Getter @Setter
 public class Goal<Q extends Quantity<Q>> extends IdObject {
 
-    @Getter @Setter
     private GoalType goalType;
-    @Getter @Setter
     private Quantity<Q> dailyQuantity;
-    @Getter @Setter
     private NutritionType nutritionType;
 
     public Goal(String id, GoalType goalType, Quantity<Q> dailyQuantity, NutritionType nutritionType) {
