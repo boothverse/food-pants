@@ -1,7 +1,7 @@
 package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.standard.RecipeItem;
+import org.boothverse.foodpants.ui.components.RecipeItem;
 import org.boothverse.foodpants.ui.forms.RecipeForm;
 
 import javax.swing.*;

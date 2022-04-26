@@ -1,7 +1,8 @@
-package org.boothverse.foodpants.ui.components.standard;
+package org.boothverse.foodpants.ui.components;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
+import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 
 import javax.swing.*;
 import java.awt.*;

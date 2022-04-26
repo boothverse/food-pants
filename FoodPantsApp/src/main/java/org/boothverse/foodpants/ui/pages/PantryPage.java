@@ -19,7 +19,6 @@ public class PantryPage extends Page {
     private static final int[] tempQuants = {3, 1, 2, 4, 5, 1, 2, 1, 10, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
 
     private static List<PantryItem> pantryItems;
-
     private static boolean modifyingPantry;
 
     public PantryPage() {

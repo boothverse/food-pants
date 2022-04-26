@@ -2,6 +2,7 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
+import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.forms.AddShoppingForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
@@ -15,9 +16,6 @@ import java.util.Objects;
 
 public class ShoppingPage extends Page {
     private static final String[] labels = {"Modify", "Export", "Mark All", "New List"};
-
-    private static final String[] DEMO_ITEMS = {"Apple", "Banana", "Ribeye", "Oreos", "Bread Flour", "Vanilla Extract", "Eggs"};
-    private static final int[] DEMO_AMTS = {6, 4, 2, 1, 1, 1, 12};
 
     protected JPanel shoppingListDisplay;
     protected StandardButton addItemButton;
@@ -55,7 +53,7 @@ public class ShoppingPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                for (ShoppingItem listItem : shoppingItems) {
+                for (StandardItem listItem : shoppingItems) {
                     listItem.setModification(modifying);
                 }
             } else if (e.getActionCommand().equals("New List")) {
@@ -68,7 +66,7 @@ public class ShoppingPage extends Page {
 
     private void initList() {
         // Setup display for the items
-        shoppingListDisplay = new JPanel(new GridLayout(DEMO_ITEMS.length + 1, 1));
+        shoppingListDisplay = new JPanel(new GridLayout(10 + 1, 2, 10, 0));
         shoppingListDisplay.setBackground(Style.TRANSPARENT);
 
         // Create a flowlayout wrapper so the component will not be resized
@@ -76,8 +74,8 @@ public class ShoppingPage extends Page {
         add(listWrapper);
         listWrapper.add(shoppingListDisplay);
         listWrapper.setBackground(Style.TRANSPARENT);
-        for (int i = 0; i < DEMO_ITEMS.length; i++) {
-            addListItem(DEMO_ITEMS[i], DEMO_AMTS[i]);
+        for (int i = 0; i < 20; i++) {
+            addListItem();
         }
 
         // Add the add item button
@@ -94,8 +92,8 @@ public class ShoppingPage extends Page {
         addItemWrapper.add(addItemButton, BorderLayout.LINE_END);
     }
 
-    protected void addListItem(String item, int quantity) {
-        ShoppingItem thisItem = new ShoppingItem(item, quantity);
+    protected void addListItem() {
+        ShoppingItem thisItem = new ShoppingItem(null);
         shoppingItems.add(thisItem);
     }
 
@@ -106,7 +104,7 @@ public class ShoppingPage extends Page {
 
     protected void updateDisplay() {
         shoppingListDisplay.removeAll();
-        for (ShoppingItem listItem : shoppingItems) {
+        for (StandardItem listItem : shoppingItems) {
             shoppingListDisplay.add(listItem);
         }
     }
