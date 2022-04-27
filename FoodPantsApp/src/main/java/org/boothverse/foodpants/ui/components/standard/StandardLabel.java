@@ -7,7 +7,5 @@ import javax.swing.*;
 public class StandardLabel extends JLabel {
     public StandardLabel(String label) {
         super(label);
-
-        setFont(Style.bodyStyle);
     }
 }

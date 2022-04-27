@@ -22,7 +22,7 @@ public class Food extends IdObject {
         this.nutrition = nutrition;
     }
 
-    public FoodInstance createInstance(Quantity quantity) {
+    public FoodInstance createInstance(Quantity<?> quantity) {
         return new FoodInstance(id, quantity);
     }
 }

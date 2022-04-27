@@ -35,7 +35,6 @@ public class PantryItem extends StandardPanel {
 
     private void initChildren(String name, int amt) {
         JPanel panel = new JPanel();
-        panel.setBackground(Style.WHITE);
 
         itemName = new StandardLabel(name);
         quantity = new StandardLabel(amt + "");

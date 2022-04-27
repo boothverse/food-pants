@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PageRunner {
-    private static final Dimension MIN_SIZE = new Dimension(800, 500);
+    private static final Dimension MIN_SIZE = new Dimension(1000, 800);
     private static JFrame frame;
     private static PageViewer pageFrame;
 
@@ -36,13 +36,7 @@ public class PageRunner {
     }
 
     private static void createAndShowGUI() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            //System.setProperty("sun.java2d.uiScale","1.0");
-        } catch (Exception e) {
-            System.out.println("Unable to set LookAndFeel");
-        }
-
+        Style.setupLookAndFeel();
         setupWindow();
         setupChildren();
     }
