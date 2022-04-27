@@ -1,7 +1,8 @@
-package org.boothverse.foodpants.business.dao;
+package org.boothverse.foodpants.business.dao.fileDAO;
 
 import java.io.*;
 
+@Deprecated
 public class FileSingleDAO<T> extends FileDAO<T> {
 
     public FileSingleDAO(Class<T> t, String filename) {

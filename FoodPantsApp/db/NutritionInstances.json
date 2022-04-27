@@ -1,0 +1,17 @@
+[ {
+  "id" : "0",
+  "quantity" : {
+    "unit" : "g",
+    "value" : 50
+  },
+  "foodId" : "Banana",
+  "consumedAt" : 1651098611253
+}, {
+  "id" : "0",
+  "quantity" : {
+    "unit" : "g",
+    "value" : 50
+  },
+  "foodId" : "Banana",
+  "consumedAt" : 1651098611253
+} ]

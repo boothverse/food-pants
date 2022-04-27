@@ -1,14 +1,16 @@
 package org.boothverse.foodpants.persistence;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Getter
+@Getter @NoArgsConstructor
 public class ReportPeriod extends IdObject {
 
-    Date startDate;
-    Date endDate;
+    private Date startDate;
+    private Date endDate;
 
     public ReportPeriod(String id, Date startDate, Date endDate) {
         super(id);

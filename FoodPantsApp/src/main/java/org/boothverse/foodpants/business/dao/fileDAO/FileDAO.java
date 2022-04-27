@@ -1,12 +1,12 @@
-package org.boothverse.foodpants.business.dao;
+package org.boothverse.foodpants.business.dao.fileDAO;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
-import org.boothverse.foodpants.business.dao.serialization.UnitMixin;
+import org.boothverse.foodpants.business.dao.serialization.*;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;
 
+@Deprecated
 public abstract class FileDAO<T> {
     protected final String filename;
     protected final ObjectMapper mapper;

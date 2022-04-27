@@ -1,10 +1,9 @@
 package org.boothverse.foodpants.persistence;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
-@AllArgsConstructor
+@AllArgsConstructor @NoArgsConstructor @ToString
 public abstract class IdObject {
-    @Getter
-    protected final String id;
+    @Getter @Setter
+    protected String id;
 }

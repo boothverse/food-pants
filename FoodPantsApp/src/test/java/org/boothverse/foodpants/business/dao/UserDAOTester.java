@@ -9,16 +9,15 @@ import tec.units.ri.unit.Units;
 import javax.measure.Quantity;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FileSingleDAOTester {
+public class UserDAOTester {
 
     @Test
     @Order(1)
-    void userSaveTest() throws IOException {
-        FileSingleDAO<User> dao = new FileSingleDAO<>(User.class, "User.json");
+    void userSaveTest() {
+        SingleDAO<User> dao = new UserDAO();
 
         String name = "Gandhi";
         String gender = "M";
@@ -32,8 +31,8 @@ public class FileSingleDAOTester {
 
     @Test
     @Order(2)
-    void userLoadTest() throws IOException {
-        FileSingleDAO<User> dao = new FileSingleDAO<>(User.class, "User.json");
+    void userLoadTest() {
+        SingleDAO<User> dao = new UserDAO();
 
         User user = dao.load();
 

@@ -1,13 +1,16 @@
 package org.boothverse.foodpants.persistence;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.measure.Quantity;
 
+@NoArgsConstructor
 public class FoodInstance extends IdObject {
     @Getter @Setter
-    private Quantity<?> quantity;
+    protected Quantity<?> quantity;
 
     public FoodInstance(String id, Quantity<?> quantity) {
         super(id);
