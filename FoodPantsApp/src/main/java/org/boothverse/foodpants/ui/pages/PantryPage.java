@@ -48,6 +48,7 @@ public class PantryPage extends Page {
         switch (e.getActionCommand()) {
             case "+" -> {
                 StandardForm form = new AddFoodInstanceForm();
+                form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
             case "Search" -> JOptionPane.showInputDialog(this, "Search");

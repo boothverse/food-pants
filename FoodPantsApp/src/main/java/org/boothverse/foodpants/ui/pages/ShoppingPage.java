@@ -4,6 +4,7 @@ import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.AddShoppingForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
@@ -64,7 +65,7 @@ public class ShoppingPage extends Page {
 
             }
             else if (e.getActionCommand().equals("+")) {
-                StandardForm form = new AddShoppingForm("Add Item");
+                StandardForm form = new AddFoodInstanceForm();
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
