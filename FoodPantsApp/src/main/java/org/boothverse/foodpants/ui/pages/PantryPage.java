@@ -2,7 +2,8 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
-import org.boothverse.foodpants.ui.forms.AddPantryForm;
+import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
+import org.boothverse.foodpants.ui.forms.StandardItemForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
@@ -46,8 +47,7 @@ public class PantryPage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+" -> {
-                StandardForm form = new AddPantryForm("Add Item");
-                form.setLocationRelativeTo(this);
+                StandardForm form = new AddFoodInstanceForm();
                 form.setVisible(true);
             }
             case "Search" -> JOptionPane.showInputDialog(this, "Search");

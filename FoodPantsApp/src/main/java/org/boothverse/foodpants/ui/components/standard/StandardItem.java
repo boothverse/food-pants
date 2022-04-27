@@ -26,18 +26,19 @@ public class StandardItem extends StandardPanel implements ActionListener {
 
     protected JButton deleteButton;
     protected JButton editButton;
+    protected Dimension prefSize = new Dimension(300, 50);
 
     @Getter
     protected FoodInstance foodInstance;
 
-    private Food demoFood = new Food("1", "Apple", FoodGroup.FRUIT, null);
+    private final Food demoFood = new Food("1", "Apple", FoodGroup.FRUIT, null);
 
     public StandardItem(FoodInstance foodInstance) {
         super();
 
         // Set swing properties
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(250, 50));
+        setPreferredSize(prefSize);
 
         this.foodInstance = /*foodInstance;*/ demoFood.createInstance(Quantities.getQuantity(10, KILOGRAM));
 
