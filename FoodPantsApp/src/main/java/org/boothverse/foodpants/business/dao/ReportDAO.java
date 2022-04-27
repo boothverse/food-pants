@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class ReportDAO extends JDBCListDAO<ReportPeriod> {
 
-        public ReportDAO() { super("reports", new String[]{"id", "startDate", "endDate"}); }
+        public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}); }
 
         @Override
         protected String[] objToSQL(ReportPeriod data) {
