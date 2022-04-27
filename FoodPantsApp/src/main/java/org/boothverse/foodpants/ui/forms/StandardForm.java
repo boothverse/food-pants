@@ -29,7 +29,7 @@ public abstract class StandardForm extends JFrame {
         contentPanel.setBackground(Style.TRANSPARENT);
 
         // Flowlayout panel (wrap around grid bag panel)
-        wrapperPanel = new JPanel(new FlowLayout());
+        wrapperPanel = new JPanel();
         wrapperPanel.setBackground(Style.TRANSPARENT);
 
         // Form initialization
@@ -37,7 +37,7 @@ public abstract class StandardForm extends JFrame {
 
         setTitle(header);
         add(wrapperPanel);
-        wrapperPanel.add(contentPanel, BorderLayout.CENTER);
+        wrapperPanel.add(contentPanel);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
@@ -57,11 +57,11 @@ public abstract class StandardForm extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 0.3;
         gbc.weighty = 0.3;
         gbc.ipadx = 10;
-        gbc.ipady = 10;
+        gbc.ipady = 5;
 
         contentPanel.add(c, gbc);
 
@@ -81,7 +81,7 @@ public abstract class StandardForm extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        gbc.ipady = 10;
+        gbc.ipady = 5;
 
         contentPanel.add(c, gbc);
 

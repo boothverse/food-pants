@@ -10,6 +10,7 @@ import java.util.List;
 
 public class AddReportForm extends StandardItemForm {
     public AddReportForm(String header) {
-        super(header, new String[]{"ChartType", "Fields"});
+        // , new String[]{"ChartType", "Fields"}
+        super(header);
     }
 }

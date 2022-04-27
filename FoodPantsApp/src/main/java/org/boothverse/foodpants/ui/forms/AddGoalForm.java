@@ -10,6 +10,7 @@ import java.util.List;
 
 public class AddGoalForm extends StandardItemForm {
     public AddGoalForm(String header) {
-        super(header, new String[]{"Nutrition", "Value", "GoalType"});
+        // , new String[]{"Nutrition", "Value", "GoalType"}
+        super(header);
     }
 }

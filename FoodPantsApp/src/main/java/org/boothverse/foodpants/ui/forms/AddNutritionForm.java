@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AddNutritionForm extends StandardItemForm {
     public AddNutritionForm(String header) {
-        super(header, new String[]{"Name", "Quantity", "Time"});
-
+        // , new String[]{"Name", "Quantity", "Time"}
+        super(header);
     }
 }
