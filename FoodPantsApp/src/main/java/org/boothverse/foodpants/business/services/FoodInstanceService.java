@@ -69,6 +69,8 @@ public abstract class FoodInstanceService {
      * @param id
      */
     public void removeItem(String id) {
+        // TODO: throw custom exception if the item is not found
         items.remove(id);
+        dao.remove(id);
     }
 }
