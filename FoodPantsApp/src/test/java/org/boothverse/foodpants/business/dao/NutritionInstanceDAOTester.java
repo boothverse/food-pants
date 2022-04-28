@@ -18,40 +18,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NutritionInstanceDAOTester {
 
-    protected FileListDAO<NutritionInstance> dao = null;
-
-    @BeforeEach
-    void init(){
-        dao = new FileListDAO<>(NutritionInstance.class, "NutritionInstances.json");
-    }
-
     @Test
     @Order(1)
     void nutritionInstanceSaveTest() throws IOException {
-        String id = "0", foodId = "Banana";
+        ListDAO<NutritionInstance> dao = new NutritionInstanceDAO();
+
+        String id = "aebfilnjefapin34quv", foodId = "Banana";
         Quantity<Mass> quantity = Quantities.getQuantity(50, Units.GRAM);
-        Date date = new Date();
+        Date date = new Date(2020, 1, 1);
 
         NutritionInstance nutritionInstance = new NutritionInstance(id, foodId, quantity, date);
 
-        List<NutritionInstance> items = new ArrayList<>();
-        items.add(nutritionInstance);
-        items.add(nutritionInstance);
-
-        dao.save(items);
+        dao.save(nutritionInstance);
     }
 
     @Test
     @Order(2)
     void nutritionInstanceLoadTest() throws IOException {
-        Map<String, NutritionInstance> items = dao.load();
-        assertEquals(items.size(), 1);
-        NutritionInstance n = (NutritionInstance) items.values().toArray()[0];
+        ListDAO<NutritionInstance> dao = new NutritionInstanceDAO();
+        String id = "aebfilnjefapin34quv", foodId = "Banana";
+        Quantity<Mass> quantity = Quantities.getQuantity(50, Units.GRAM);
+        Date date = new Date(2020, 1, 1);
 
-        assertEquals(n.getId(), "0");
-        assertEquals(n.getFoodId(), "Banana");
-        assertEquals(n.getConsumedAt(), new Date());
-        assertEquals(n.getQuantity().getUnit(), Units.GRAM);
-        assertEquals(n.getQuantity().getValue(), 50);
+        Map<String, NutritionInstance> nutritionInstances = dao.load();
+        assertEquals(1, nutritionInstances.size());
+
+        NutritionInstance nutritionInstance = nutritionInstances.get(id);
+
+        assertEquals(nutritionInstance.getFoodId(), foodId);
+        assertEquals(nutritionInstance.getConsumedAt(), date);
+        assertEquals(nutritionInstance.getQuantity().getUnit(), quantity.getUnit());
+        assertEquals(nutritionInstance.getQuantity().getValue(), 50.0);
     }
 }
