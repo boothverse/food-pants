@@ -1,9 +1,8 @@
 package org.boothverse.foodpants.ui.controllers;
 
-import org.boothverse.foodpants.persistence.Goal;
-import org.boothverse.foodpants.persistence.GoalType;
-import org.boothverse.foodpants.persistence.NutritionInstance;
-import org.boothverse.foodpants.persistence.NutritionType;
+import org.boothverse.foodpants.business.services.IdService;
+import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.persistence.*;
 
 import javax.measure.Quantity;
 import java.util.Date;
@@ -17,47 +16,69 @@ public class NutritionController {
         return null;
     }
 
-    public Goal addGoal(NutritionType nutritionType,
-                        Quantity quantity, GoalType goalType) {
-        return null;
+    public Goal addGoal(GoalType goalType,
+                        Quantity quantity, NutritionType nutritionType) {
+
+        Goal goal = new Goal(Services.ID_SERVICE.getId(), goalType, quantity, nutritionType);
+        Services.NUTRITION_SERVICE.addGoal(goal);
+
+        return goal;
     }
 
-    public Goal editGoal(String id, NutritionType nutritionType,
-                         Quantity quantity, GoalType goalType) {
-        return null;
+    public Goal editGoal(String id, GoalType goalType,
+                         Quantity quantity, NutritionType nutritionType) {
+
+        Goal goal = new Goal(id, goalType, quantity, nutritionType);
+        Services.NUTRITION_SERVICE.editGoal(goal);
+
+        return goal;
     }
 
     public void removeGoal(String id) {
-
+        Services.NUTRITION_SERVICE.removeGoal(id);
     }
 
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
-        return null;
+        return Services.NUTRITION_SERVICE.getItems(startDate, endDate);
     }
 
     public NutritionInstance addItem(String foodId, Quantity quantity,
                                      Date consumedAt) {
-        return null;
+
+        NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),
+            foodId, quantity, consumedAt);
+        Services.NUTRITION_SERVICE.addItem(nutInstance);
+
+        return nutInstance;
     }
 
-    public NutritionInstance editItem(String foodId, Quantity quantity,
+    public NutritionInstance editItem(String id, String foodId, Quantity quantity,
                                       Date consumedAt) {
-        return null;
+
+        NutritionInstance nutInstance = new NutritionInstance(id, foodId, quantity, consumedAt);
+        Services.NUTRITION_SERVICE.editItem(nutInstance);
+
+        return nutInstance;
     }
 
-    public void removeItem(String foodId, Date consumedAt) {
-
+    public void removeItem(String id) {
+        Services.NUTRITION_SERVICE.removeItem(id);
     }
 
-    public void addReport(Date startDate, Date endDate) {
+    public ReportPeriod addReport(Date startDate, Date endDate) {
+        ReportPeriod reportPeriod = new ReportPeriod(Services.ID_SERVICE.getId(),
+            startDate, endDate);
+        Services.NUTRITION_SERVICE.addReport(reportPeriod);
 
+        return reportPeriod;
     }
 
     public void editReport(String id, Date startDate, Date endDate) {
-
+        ReportPeriod period = new ReportPeriod(id, startDate, endDate);
+        Services.NUTRITION_SERVICE.editReport(period);
     }
 
     public void removeReport(String id) {
-
+        Services.NUTRITION_SERVICE.removeReport(id);
     }
 }

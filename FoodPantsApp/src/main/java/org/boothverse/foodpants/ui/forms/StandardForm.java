@@ -10,12 +10,13 @@ import java.awt.event.ActionListener;
 
 public abstract class StandardForm extends JFrame {
     // Form panel
-    private final int DEFAULT_WIDTH = 384;
-    private final int DEFAULT_HEIGHT = 256;
+    private final int DEFAULT_WIDTH = 500;
+    private final int DEFAULT_HEIGHT = 400;
     private int numRows;
 
     protected JPanel contentPanel;
     protected JPanel wrapperPanel;
+    protected JLabel title;
 
     public StandardForm(String header) {
         super();
@@ -42,9 +43,15 @@ public abstract class StandardForm extends JFrame {
     }
 
     protected void initFormHeader(String header) {
-        JLabel title = new JLabel(header);
-        title.setFont(Style.headerStyle);
-        wrapperPanel.add(title);
+        if (title == null) {
+            title = new JLabel(header);
+            title.setFont(Style.headerStyle);
+            wrapperPanel.add(title);
+        }
+        else {
+            title.setText(header);
+        }
+
     }
 
     abstract void initForm();

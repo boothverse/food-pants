@@ -26,13 +26,6 @@ public class FoodSearchBar extends JComboBox<String> {
         populate(foodNames);
     }
 
-    // TODO: for testing purposes only really
-    public FoodSearchBar(String[] foods) {
-        this();
-
-        populate(List.of(foods));
-    }
-
     public void populate(Collection<? extends String> c) {
         model.removeAllElements();
         model.addAll(c);

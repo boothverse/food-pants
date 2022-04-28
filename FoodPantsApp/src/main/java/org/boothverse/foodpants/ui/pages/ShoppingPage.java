@@ -5,7 +5,6 @@ import org.boothverse.foodpants.ui.components.ShoppingItem;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
-import org.boothverse.foodpants.ui.forms.AddShoppingForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 public class ShoppingPage extends Page {
     private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New"};
