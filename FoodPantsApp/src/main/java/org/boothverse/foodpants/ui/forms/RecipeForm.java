@@ -6,10 +6,9 @@ import org.boothverse.foodpants.ui.components.standard.StandardLabel;
 import javax.swing.*;
 import java.awt.*;
 
-public class RecipeForm extends StandardForm {
+public class RecipeForm extends StandardItemForm {
     protected final int WIDTH = 640;
     protected final int HEIGHT = 480;
-    protected final int TXT_FIELD_WIDTH = 25;
 
     public RecipeForm(String header) {
         super(header);
@@ -17,7 +16,7 @@ public class RecipeForm extends StandardForm {
     }
 
     @Override
-    void initForm(final JPanel panel) {
+    void initForm() {
         String[] textLabels = new String[]{"Name", "Servings"};
 
         int i;
@@ -39,7 +38,5 @@ public class RecipeForm extends StandardForm {
         submitBtn.addActionListener(e -> this.dispose());
 
         addRightComponent(submitBtn, ++i);
-
-        panel.add(boxPanel, BorderLayout.CENTER);
     }
 }

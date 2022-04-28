@@ -2,7 +2,9 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
+import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.AddShoppingForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
@@ -14,10 +16,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class ShoppingPage extends Page {
-    private static final String[] labels = {"Modify", "Export", "Mark All", "New List"};
-
-    private static final String[] DEMO_ITEMS = {"Apple", "Banana", "Ribeye", "Oreos", "Bread Flour", "Vanilla Extract", "Eggs"};
-    private static final int[] DEMO_AMTS = {6, 4, 2, 1, 1, 1, 12};
+    private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New"};
 
     protected JPanel shoppingListDisplay;
     protected StandardButton addItemButton;
@@ -26,14 +25,13 @@ public class ShoppingPage extends Page {
     protected ActionListener addItemListener;
 
     protected Boolean modifying = false;
-
     protected List<ShoppingItem> shoppingItems;
+    private final int numItems = 10;
 
     public ShoppingPage() {
         super(labels);
         shoppingItems = new ArrayList<>();
         initList();
-        updateDisplay();
         initActionListeners();
     }
 
@@ -43,9 +41,13 @@ public class ShoppingPage extends Page {
                 for (ShoppingItem listItem : shoppingItems) {
                     listItem.getCheckBox().setSelected(true);
                 }
-            } else if (e.getActionCommand().equals("Export")) {
-
-            } else if (e.getActionCommand().equals("Modify")) {
+            }
+            else if (e.getActionCommand().equals("Export")) {
+//                StandardForm form = new ExportShoppingForm("Export List");
+//                form.setLocationRelativeTo(this);
+//                form.setVisible(true);
+            }
+            else if (e.getActionCommand().equals("Modify")) {
                 JButton modifyBtn = (JButton) e.getSource();
                 modifying = !modifying;
 
@@ -55,11 +57,17 @@ public class ShoppingPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                for (ShoppingItem listItem : shoppingItems) {
+                for (StandardItem listItem : shoppingItems) {
                     listItem.setModification(modifying);
                 }
-            } else if (e.getActionCommand().equals("New List")) {
+            }
+            else if (e.getActionCommand().equals("New List")) {
 
+            }
+            else if (e.getActionCommand().equals("+")) {
+                StandardForm form = new AddFoodInstanceForm();
+                form.setLocationRelativeTo(this);
+                form.setVisible(true);
             }
         };
 
@@ -68,7 +76,8 @@ public class ShoppingPage extends Page {
 
     private void initList() {
         // Setup display for the items
-        shoppingListDisplay = new JPanel(new GridLayout(DEMO_ITEMS.length + 1, 1));
+        shoppingListDisplay = new JPanel();
+        shoppingListDisplay.setLayout(new BoxLayout(shoppingListDisplay, BoxLayout.PAGE_AXIS));
         shoppingListDisplay.setBackground(Style.TRANSPARENT);
 
         // Create a flowlayout wrapper so the component will not be resized
@@ -76,39 +85,14 @@ public class ShoppingPage extends Page {
         add(listWrapper);
         listWrapper.add(shoppingListDisplay);
         listWrapper.setBackground(Style.TRANSPARENT);
-        for (int i = 0; i < DEMO_ITEMS.length; i++) {
-            addListItem(DEMO_ITEMS[i], DEMO_AMTS[i]);
+        for (int i = 0; i < numItems; i++) {
+            addListItem();
         }
-
-        // Add the add item button
-        JPanel addItemWrapper = new JPanel(new BorderLayout());
-        addItemWrapper.setBackground(Style.TRANSPARENT);
-        shoppingListDisplay.add(addItemWrapper);
-        addItemButton = new StandardButton("Add Item");
-        addItemListener = e -> {
-            StandardForm form = new AddShoppingForm("Add Item");
-            form.setLocationRelativeTo(this);
-            form.setVisible(true);
-        };
-        addItemButton.addActionListener(addItemListener);
-        addItemWrapper.add(addItemButton, BorderLayout.LINE_END);
     }
 
-    protected void addListItem(String item, int quantity) {
-        ShoppingItem thisItem = new ShoppingItem(item, quantity);
+    protected void addListItem() {
+        ShoppingItem thisItem = new ShoppingItem(null);
         shoppingItems.add(thisItem);
+        shoppingListDisplay.add(thisItem);
     }
-
-    protected void removeShoppingItem(String name) {
-        shoppingItems.removeIf(listItem -> Objects.equals(listItem.getName(), name));
-        updateDisplay();
-    }
-
-    protected void updateDisplay() {
-        shoppingListDisplay.removeAll();
-        for (ShoppingItem listItem : shoppingItems) {
-            shoppingListDisplay.add(listItem);
-        }
-    }
-
 }

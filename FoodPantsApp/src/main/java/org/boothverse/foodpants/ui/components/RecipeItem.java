@@ -1,7 +1,8 @@
-package org.boothverse.foodpants.ui.components.standard;
+package org.boothverse.foodpants.ui.components;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
+import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,14 +46,10 @@ public class RecipeItem extends StandardPanel {
         c.gridy = 1;
         c.weightx = .2f;
         label = new JLabel("Instructions");
-        label.setFont(Style.headerStyle.deriveFont(20f));
-        label.setBorder(Style.BORDER_1);
         add(label, c);
 
         c.gridy = 2;
         label = new JLabel("Ingredients");
-        label.setFont(Style.headerStyle.deriveFont(20f));
-        label.setBorder(Style.BORDER_1);
         add(label, c);
 
         c.gridx = 1;
@@ -60,12 +57,10 @@ public class RecipeItem extends StandardPanel {
         c.weightx = .8f;
         c.weighty = .3f;
         JLabel nameLabel = new JLabel(name);
-        nameLabel.setFont(Style.headerStyle);
         add(nameLabel, c);
 
         c.gridy = 1;
         c.weighty = .4f;
-        instructionDisplay.setBorder(Style.BORDER_1);
         add(instructionDisplay, c);
 
         c.gridy = 2;

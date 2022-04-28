@@ -1,49 +1,55 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.standard.StandardButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public abstract class StandardForm extends JFrame {
     // Form panel
-    JPanel boxPanel;
+    private final int DEFAULT_WIDTH = 384;
+    private final int DEFAULT_HEIGHT = 256;
+    private int numRows;
+
+    protected JPanel contentPanel;
+    protected JPanel wrapperPanel;
 
     public StandardForm(String header) {
         super();
+
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        setBackground(Style.LIGHT_PLATINUM);
+        this.setLocationRelativeTo(PageRunner.getPageViewer());
         setResizable(false);
 
-        boxPanel = new JPanel(new GridBagLayout());
-        boxPanel.setBackground(Style.TRANSPARENT);
+        // Content goes in this panel, order with grid bag layout
+        contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBackground(Style.TRANSPARENT);
 
-        // Flowlayout panel
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(Style.TRANSPARENT);
+        // Flowlayout panel (wrap around grid bag panel)
+        wrapperPanel = new JPanel();
+        wrapperPanel.setBackground(Style.TRANSPARENT);
 
         // Form initialization
-        initFormHeader(header, panel);
-        initForm(panel);
+        initFormHeader(header);
 
-        this.add(panel);
         setTitle(header);
-        setSize(WIDTH, HEIGHT);
-        if (getParent() != null) {
-            setLocationRelativeTo(getParent());
-        }
+        add(wrapperPanel);
+        wrapperPanel.add(contentPanel);
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
-    void initFormHeader(String header, final JPanel panel) {
-        JLabel createHeader = new JLabel(header);
-        createHeader.setFont(Style.headerStyle);
-        panel.add(createHeader);
+    protected void initFormHeader(String header) {
+        JLabel title = new JLabel(header);
+        title.setFont(Style.headerStyle);
+        wrapperPanel.add(title);
     }
 
-    abstract void initForm(final JPanel panel);
+    abstract void initForm();
 
-    void addLeftComponent(Component c, int row) {
+    protected void addLeftComponent(Component c, int row) {
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridwidth = 1;
@@ -51,14 +57,20 @@ public abstract class StandardForm extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.3;
+        gbc.weighty = 0.3;
+        gbc.ipadx = 10;
+        gbc.ipady = 5;
 
-        boxPanel.add(c, gbc);
+        contentPanel.add(c, gbc);
+
+        if (row > numRows) {
+            numRows = row;
+        }
     }
 
-    void addRightComponent(Component c, int row) {
+    protected void addRightComponent(Component c, int row) {
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridwidth = 1;
@@ -69,7 +81,18 @@ public abstract class StandardForm extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
+        gbc.ipady = 5;
 
-        boxPanel.add(c, gbc);
+        contentPanel.add(c, gbc);
+
+        if (row > numRows) {
+            numRows = row;
+        }
+    }
+
+    void addSubmitButton(ActionListener e)  {
+        JButton submitBtn = new StandardButton("Submit");
+        submitBtn.addActionListener(e);
+        addRightComponent(submitBtn, ++numRows);
     }
 }
