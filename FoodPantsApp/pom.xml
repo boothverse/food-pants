@@ -78,6 +78,11 @@
             <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
         <!-- Derby -->
         <dependency>
             <groupId>org.apache.derby</groupId>
@@ -106,10 +111,6 @@
             <artifactId>systems-common</artifactId>
             <version>2.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>systems.uom</groupId>
-            <artifactId>systems-quantity</artifactId>
-            <version>2.0.2</version>
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
