@@ -21,7 +21,7 @@ public class ShoppingService extends FoodInstanceService {
 
     }
 
-    public void export(String fileFormat, Path destination) {
-
+    public boolean export(String fileFormat, Path destination) {
+        return false;
     }
 }
