@@ -2,6 +2,8 @@ package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.persistence.FoodInstance;
 
+import static org.boothverse.foodpants.ui.components.QuantitySelector.unitClasses;
+
 public class EditFoodInstanceForm extends AddFoodInstanceForm {
     public EditFoodInstanceForm(FoodInstance editItem) {
         super();
@@ -11,12 +13,12 @@ public class EditFoodInstanceForm extends AddFoodInstanceForm {
         //foodSearchBar.setSelectedItem(Services.FOOD_SERVICE.getFoodName(editItem.getId()));
 
         foodSearchBar.setSelectedItem("Apple");
-        quantityValueField.setText(editItem.getQuantity().getValue().toString() + "");
+        quantityPanel.getQuantityValueField().setText(editItem.getQuantity().getValue().toString() + "");
 
         if (editItem.getQuantity() != null) {
             for (int i = 0; i < unitClasses.length; i++) {
                 if (editItem.getQuantity().getUnit().equals(unitClasses[i])) {
-                    quantityUnitBox.setSelectedIndex(i);
+                    quantityPanel.getQuantityUnitBox().setSelectedIndex(i);
                     break;
                 }
             }
