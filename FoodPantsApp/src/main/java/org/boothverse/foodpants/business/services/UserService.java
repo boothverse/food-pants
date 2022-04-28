@@ -11,8 +11,6 @@ import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import java.util.Map;
 
-import static org.boothverse.foodpants.business.services.Services.NUTRITION_SERVICE;
-
 public class UserService {
 
     private final SingleDAO<User> dao = new UserDAO();
@@ -26,7 +24,11 @@ public class UserService {
         current = dao.load();
     }
 
-    public void register(String name, Map<String, String> info) {
+    /**
+     * creates a new user from input
+     * Saves new user to database
+     */
+    public User register(String name, Map<String, String> info) {
         current = new User();
         current.setName(name);
         current.setGender(info.get(attributes[0]));
@@ -37,6 +39,8 @@ public class UserService {
         Quantity<Mass> weight = Quantities.getQuantity(Double.parseDouble(info.get(attributes[2])), Units.KILOGRAM);
         current.setWeight(weight);
 
-        NUTRITION_SERVICE.getRecommendedGoal(current);
+        dao.save(current);
+
+        return current;
     }
 }

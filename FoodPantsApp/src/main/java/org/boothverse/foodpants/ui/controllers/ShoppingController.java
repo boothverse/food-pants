@@ -30,7 +30,11 @@ public class ShoppingController implements FoodInstanceController {
     }
 
     public Integer purchaseItems(List<String> foodIds) {
-        return null;
+        List<FoodInstance> items = Services.SHOPPING_SERVICE.getItems();
+        Services.SHOPPING_SERVICE.removeItems(foodIds);
+        Services.PANTRY_SERVICE.addItems(items);
+
+        return items.size();
     }
 
     public boolean export(String fileFormat, Path destination) {
