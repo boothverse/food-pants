@@ -1,10 +1,13 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.persistence.User;
+
 import java.util.Map;
 
 public class StartupController {
     public void register(String name, Map<String, String> info) {
-        // TODO: austin ? lol
-        // TODO: perhap
+        User user = Services.USER_SERVICE.register(name, info);
+        Services.NUTRITION_SERVICE.getRecommendedGoal(user);
     }
 }
