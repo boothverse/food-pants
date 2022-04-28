@@ -93,4 +93,8 @@ public class RecipeService {
         nutritionService.addItem(consumed);
         pantryService.addItem(leftover.getId(), leftover.getQuantity());
     }
+
+    public List<Recipe> getRecommendedRecipes() {
+        return null;
+    }
 }
