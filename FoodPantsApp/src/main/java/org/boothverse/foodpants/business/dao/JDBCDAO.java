@@ -64,14 +64,7 @@ abstract class JDBCDAO {
         return rs.next();
     }
 
-    /**
-     * Clears the connected table. Used during testing.
-     */
-    public void executeTruncate(){
-        try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
-            statement.execute("TRUNCATE FROM " + table);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    protected void executeRemove(Statement statement, String id) throws SQLException {
+        statement.execute("DELETE FROM " + table + " WHERE ID=" + id);
     }
 }

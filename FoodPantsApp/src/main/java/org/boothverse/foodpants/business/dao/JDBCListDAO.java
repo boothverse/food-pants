@@ -47,4 +47,13 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
 
         return data;
     }
+
+    @Override
+    public void remove(String id) {
+        try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
+            executeRemove(statement, id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

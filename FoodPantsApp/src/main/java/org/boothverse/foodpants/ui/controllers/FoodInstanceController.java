@@ -9,5 +9,5 @@ public interface FoodInstanceController {
     public List<FoodInstance> getItems();
     public FoodInstance addItem(String foodId, Quantity<?> quantity);
     public FoodInstance editItem(String foodId, Quantity<?> quantity);
-    public FoodInstance removeItem(String foodId);
+    public void removeItem(String foodId);
 }

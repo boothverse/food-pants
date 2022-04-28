@@ -6,8 +6,10 @@ import java.util.Map;
 
 public interface ListDAO<T extends IdObject> {
 
-    public void save(T data);
+    void save(T data);
 
-    public Map<String, T> load();
+    Map<String, T> load();
+
+    void remove(String id);
 
 }

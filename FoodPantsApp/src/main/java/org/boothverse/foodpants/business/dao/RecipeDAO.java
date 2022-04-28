@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class RecipeDAO extends JDBCListDAO<Recipe> {
 
-    RecipeDAO() {
+    public RecipeDAO() {
         super("recipes", new String[]{"id", "name", "foodGroup", "nutrition", "instructions", "ingredients", "servings"});
     }
 

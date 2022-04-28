@@ -1,17 +1,27 @@
 package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
+import systems.uom.unicode.CLDR;
+import tech.units.indriya.unit.Units;
 
+import javax.measure.Unit;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.NumberFormat;
 
-public class AddFoodInstanceForm extends StandardForm {
-    protected final int TXT_FIELD_WIDTH = 25;
-    String[] quantityOptions = {"unit", "g", "oz", "fl oz", "cups"};
+public class AddFoodInstanceForm extends StandardForm implements ItemListener {
+    protected final String[] quantityOptions = {"unit", "g", "kg", "oz", "lb", "fl oz", "cup", "gallon", "l"};
+    protected final Unit<?>[] unitClasses = {null, Units.GRAM, Units.KILOGRAM, CLDR.OUNCE, CLDR.POUND,
+                                            CLDR.FLUID_OUNCE, CLDR.CUP, CLDR.GALLON, Units.LITRE};
 
-    FoodSearchBar nameField;
+    FoodSearchBar foodSearchBar;
     JPanel quantityPanel;
+    JComboBox<String> quantityUnitBox;
+    JFormattedTextField quantityValueField;
+    JButton foodButton;
+    boolean addFoodButton = false;
 
     public AddFoodInstanceForm() {
         super("Add Food");
@@ -21,29 +31,60 @@ public class AddFoodInstanceForm extends StandardForm {
     }
 
     private void initSwing() {
-        // TODO: this will need to function as a search bar
-        nameField = new FoodSearchBar();
-        nameField.populate(java.util.List.of(new String[]{"Apple", "Orange", "Banana"}));
+        foodButton = new JButton("Edit Selected Food");
+        foodSearchBar = new FoodSearchBar();
+        foodSearchBar.addItemListener(this);
+        foodSearchBar.populate(java.util.List.of(new String[]{"Apple", "Orange", "Banana"}));
 
         quantityPanel = new JPanel(new BorderLayout());
-        JComboBox<String> quantityChoice = new JComboBox<>(quantityOptions);
-        JFormattedTextField quantityValue = new JFormattedTextField(NumberFormat.getNumberInstance());
+        quantityUnitBox = new JComboBox<>(quantityOptions);
+        quantityValueField = new JFormattedTextField(NumberFormat.getNumberInstance());
 
         // Use set preferred size if you want GridBagLayout to actually listen to what you want and not
         // ignore you like the garbage swing layout manager that it is.
-        quantityValue.setPreferredSize(new Dimension(getWidth() / 2, quantityValue.getHeight()));
-        quantityPanel.add(quantityChoice, BorderLayout.WEST);
-        quantityPanel.add(quantityValue, BorderLayout.CENTER);
+        quantityValueField.setPreferredSize(new Dimension(getWidth() / 2, quantityValueField.getHeight()));
+        quantityPanel.add(quantityUnitBox, BorderLayout.WEST);
+        quantityPanel.add(quantityValueField, BorderLayout.CENTER);
+
+        foodButton.addActionListener(e -> {
+            if (addFoodButton) {
+                AddFoodForm form = new AddFoodForm();
+                form.setLocationRelativeTo(this);
+                form.setVisible(true);
+            }
+        });
     }
 
     @Override
     void initForm() {
-        addLeftComponent(new JLabel("Food"), 1);
-        addRightComponent(nameField, 1);
+        int i = 0;
+        addLeftComponent(new JLabel("Food"), ++i);
+        addRightComponent(foodSearchBar, i);
 
-        addLeftComponent(new JLabel("Quantity"), 2);
-        addRightComponent(quantityPanel, 2);
+
+        addRightComponent(foodButton, ++i);
+        addRightComponent(new JPanel(),++i);
+
+        addLeftComponent(new JLabel("Quantity"), ++i);
+        addRightComponent(quantityPanel, i);
+        addRightComponent(new JPanel(),++i);
 
         addSubmitButton(e -> dispose());
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            Object item = e.getItem();
+            System.out.println(item.toString());
+            if (e.getItem().toString().equals("Create New Food")) {
+                foodButton.setText("Create New Food");
+                addFoodButton = true;
+            }
+            else {
+                foodButton.setText("Edit Selected Food");
+                addFoodButton = false;
+            }
+        }
     }
 }

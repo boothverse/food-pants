@@ -3,8 +3,8 @@ package org.boothverse.foodpants.business.dao.serialization;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import tec.units.ri.AbstractUnit;
-import tec.units.ri.quantity.Quantities;
+import tech.units.indriya.AbstractUnit;
+import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.io.IOException;
