@@ -11,28 +11,45 @@ import java.util.Map;
 
 public class ReportDAO extends JDBCListDAO<ReportPeriod> {
 
-        public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}); }
 
-        @Override
-        protected String[] objToSQL(ReportPeriod data) {
-            return new String[]{
-                SQLUtils.inQuote(data.getId()),
-                data.getStartDate().getTime() + "",
-                data.getEndDate().getTime() + ""
-            };
-        }
+    /**
+     * Constructor for ReportDAO
+     */
+    public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}); }
 
-        @Override
-        protected Map<String, ReportPeriod> SQLToObj(ResultSet rs) throws SQLException {
-            Map<String, ReportPeriod> data = new HashMap<>();
+    /**
+     * Converts object data to SQL
+     *
+     * @param data
+     * @return
+     */
+    @Override
+    protected String[] objToSQL(ReportPeriod data) {
+        return new String[]{
+            SQLUtils.inQuote(data.getId()),
+            data.getStartDate().getTime() + "",
+            data.getEndDate().getTime() + ""
+        };
+    }
 
-                while (rs.next()) {
-                    String id = rs.getString(1);
-                    Long startDate = rs.getLong(2);
-                    Long endDate = rs.getLong(3);
+    /**
+     * Converts SQL data to object
+     *
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    protected Map<String, ReportPeriod> SQLToObj(ResultSet rs) throws SQLException {
+        Map<String, ReportPeriod> data = new HashMap<>();
 
-                    data.put(id, new ReportPeriod(id, new Date(startDate), new Date(endDate)));
-                }
-            return data;
-        }
+            while (rs.next()) {
+                String id = rs.getString(1);
+                Long startDate = rs.getLong(2);
+                Long endDate = rs.getLong(3);
+
+                data.put(id, new ReportPeriod(id, new Date(startDate), new Date(endDate)));
+            }
+        return data;
+    }
 }
