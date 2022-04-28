@@ -24,6 +24,7 @@ public class AddFoodForm extends StandardForm {
     static {
         String[] nutritionNames = Services.FOOD_SERVICE.getEnumOptions(NutritionType.class);
         nutritionLabels = new ArrayList<>();
+        nutritionLabels.add(new JLabel("Serving Size"));
         for (String s : nutritionNames) {
             s = s.replaceAll("_", " ");
             s = s.charAt(0) + s.toLowerCase().substring(1);
@@ -61,11 +62,16 @@ public class AddFoodForm extends StandardForm {
 
         int j = 0;
         for (JLabel label: nutritionLabels) {
-            if (j == 0) {
+            if (j ==0) {
+                nutritionQuantitySelectors[j] = new QuantitySelector();
+            }
+            else if (j == 1) {
                 nutritionQuantitySelectors[j] = new QuantitySelector(new String[]{"unit"});
+                nutritionQuantitySelectors[j].setEnabled(false);
             }
             else {
                 nutritionQuantitySelectors[j] = new QuantitySelector(new String[]{"g"});
+                nutritionQuantitySelectors[j].setEnabled(false);
             }
 
             addLeftComponent(label, ++i);

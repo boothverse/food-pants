@@ -11,12 +11,13 @@ import java.awt.event.ActionEvent;
 public class RecipePage extends Page {
     private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
 
+    // TODO: add grandma cerny's synatactic sugar cookie recipe
     public RecipePage() {
         super(labels);
 
         JPanel listWrapper = new JPanel(new FlowLayout());
         add(listWrapper);
-        listWrapper.add(new RecipeItem());
+        listWrapper.add(new RecipeItem(null));
         listWrapper.setBackground(Style.TRANSPARENT);
     }
 

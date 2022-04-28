@@ -27,7 +27,7 @@ public class StandardItem extends StandardPanel implements ActionListener {
 
     protected JButton deleteButton;
     protected JButton editButton;
-    protected Dimension prefSize = new Dimension(300, 50);
+    protected Dimension prefSize = new Dimension(400, 50);
 
     @Getter
     protected FoodInstance foodInstance;
@@ -67,20 +67,22 @@ public class StandardItem extends StandardPanel implements ActionListener {
 
         // Setup Name of the item
         nameLabel = new JLabel(name);
+        nameLabel.setHorizontalAlignment(JLabel.CENTER);
         add(nameLabel);
 
         // Set up quantity text field
         quantityLabel = new JFormattedTextField(NumberFormat.getIntegerInstance());
         quantityLabel.setEditable(false);
         quantityLabel.setText(amt + "");
-        quantityLabel.setHorizontalAlignment(JLabel.RIGHT);
+        quantityLabel.setHorizontalAlignment(JLabel.CENTER);
         quantityLabel.setPreferredSize(new Dimension(40, 40));
-        rightFormat.add(quantityLabel);
 
 
-        unitLabel = new JLabel(foodInstance.getQuantity().getUnit().getName());
+
+        unitLabel = new JLabel("(" + foodInstance.getQuantity().getUnit().toString() + ")");
         unitLabel.setHorizontalAlignment(JLabel.LEFT);
         rightFormat.add(unitLabel);
+        rightFormat.add(quantityLabel);
 
         // Add edit button
         editButton = new StandardButton("Edit");
