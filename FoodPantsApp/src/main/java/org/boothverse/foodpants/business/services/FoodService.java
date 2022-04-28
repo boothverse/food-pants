@@ -2,6 +2,7 @@ package org.boothverse.foodpants.business.services;
 
 import org.boothverse.foodpants.persistence.Food;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -72,5 +73,9 @@ public class FoodService {
      */
     public String getFoodName(String id) {
         return null;
+    }
+
+    public String[] getFoodGroupOptions(Class<? extends Enum<?>> e) {
+        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 }

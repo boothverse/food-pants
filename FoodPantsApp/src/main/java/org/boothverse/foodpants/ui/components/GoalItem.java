@@ -1,11 +1,9 @@
 package org.boothverse.foodpants.ui.components;
 
-import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.standard.StandardButton;
+
 import org.boothverse.foodpants.ui.components.standard.StandardLabel;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
-import org.boothverse.foodpants.ui.forms.EditPantryForm;
-import org.boothverse.foodpants.ui.forms.StandardForm;
+
 
 import javax.swing.*;
 import java.awt.*;
