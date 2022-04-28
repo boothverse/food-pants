@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.dao.FoodDAO;
+import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.persistence.Food;
 
 import java.util.Arrays;
@@ -8,12 +10,13 @@ import java.util.Map;
 
 public class FoodService {
     protected Map<String, Food> foods;
+    protected final ListDAO<Food> dao = new FoodDAO();
 
     /**
      * Loads the foods from the database.
      */
     public FoodService() {
-
+        foods = dao.load();
     }
 
     /**
@@ -32,7 +35,8 @@ public class FoodService {
      * @return
      */
     public Food getFood(String id) {
-        return foods.getOrDefault(id, null);
+        // TODO: throw custom exception if not found
+        return foods.get(id);
     }
 
     /**
@@ -40,7 +44,8 @@ public class FoodService {
      * @param food
      */
     public void addFood(Food food) {
-
+        foods.put(food.getId(), food);
+        dao.save(food);
     }
 
     /**
@@ -51,7 +56,9 @@ public class FoodService {
      * @param food
      */
     public void editFood(Food food) {
-
+        // TODO: throw custom exception if not found
+        foods.put(food.getId(), food);
+        dao.save(food);
     }
 
     /**
@@ -61,7 +68,8 @@ public class FoodService {
      * @param id
      */
     public void removeFood(String id) {
-
+        foods.remove(id);
+        dao.remove(id);
     }
 
     /**
@@ -72,7 +80,8 @@ public class FoodService {
      * @return
      */
     public String getFoodName(String id) {
-        return null;
+        // TODO: throw custom exception if not found
+        return foods.get(id).getName();
     }
 
     public String[] getEnumOptions(Class<? extends Enum<?>> e) {

@@ -7,7 +7,6 @@ import org.boothverse.foodpants.persistence.NutritionInstance;
 import javax.measure.Quantity;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class PantryController implements FoodInstanceController {
     /**
@@ -68,7 +67,7 @@ public class PantryController implements FoodInstanceController {
      * @param query
      * @return
      */
-    public Map<String, FoodInstance> searchByFoodName(String query) {
+    public List<FoodInstance> searchByFoodName(String query) {
         return Services.PANTRY_SERVICE.searchByFoodName(query);
     }
 }

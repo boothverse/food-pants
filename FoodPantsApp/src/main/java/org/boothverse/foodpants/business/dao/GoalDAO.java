@@ -6,7 +6,6 @@ import org.boothverse.foodpants.persistence.GoalType;
 import org.boothverse.foodpants.persistence.NutritionType;
 import tech.units.indriya.quantity.Quantities;
 
-
 import javax.measure.Quantity;
 import java.sql.ResultSet;
 import java.sql.SQLException;

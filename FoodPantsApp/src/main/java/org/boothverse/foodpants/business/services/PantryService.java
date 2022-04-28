@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class PantryService extends FoodInstanceService {
 
-    private static final String DB_FILENAME = "Pantry.json";
+    private static final String DB_NAME = "PANTRY";
 
     public PantryService() {
-        super(DB_FILENAME);
+        super(DB_NAME);
     }
 
     /**
@@ -54,7 +54,7 @@ public class PantryService extends FoodInstanceService {
      * @param query
      * @return
      */
-    public Map<String, FoodInstance> searchByFoodName(String query) {
+    public List<FoodInstance> searchByFoodName(String query) {
         return null;
     }
 }

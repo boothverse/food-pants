@@ -12,7 +12,7 @@ import org.boothverse.foodpants.persistence.*;
 public class IdService {
 
     /** Holds all IDs registered by the service. */
-    protected Set<String> ids = new HashSet<>();
+    protected final Set<String> ids = new HashSet<>();
 
     /**
      * Loads all IdObjects from the database and registers all IDs to the service.
