@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
 
-    FoodInstanceDAO() {
+    public FoodInstanceDAO() {
         super("foodInstances", new String[]{"id", "quantity"});
     }
 

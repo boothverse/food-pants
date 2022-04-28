@@ -6,19 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class GoalDAO extends JDBCListDAO<Goal> {
-    GoalDAO() {
+public class GoalDAO extends JDBCListDAO<Goal<?>> {
+    public GoalDAO() {
         super("goals", new String[]{"id", "goalType", "dailyQuantity", "nutritionType"});
     }
 
     @Override
-    protected String[] objToSQL(Goal data) {
+    protected String[] objToSQL(Goal<?> data) {
         // TODO
         return new String[0];
     }
 
     @Override
-    protected Map<String, Goal> SQLToObj(ResultSet rs) throws SQLException {
+    protected Map<String, Goal<?>> SQLToObj(ResultSet rs) throws SQLException {
         // TODO
         return null;
     }
