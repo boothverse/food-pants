@@ -61,4 +61,8 @@ abstract class JDBCDAO {
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + condition);
         return rs.next();
     }
+
+    protected void executeRemove(Statement statement, String id) throws SQLException {
+        statement.execute("DELETE FROM " + table + " WHERE ID=" + id);
+    }
 }
