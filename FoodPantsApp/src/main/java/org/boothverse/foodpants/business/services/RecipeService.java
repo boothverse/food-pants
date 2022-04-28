@@ -3,6 +3,7 @@ package org.boothverse.foodpants.business.services;
 import lombok.NonNull;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.RecipeDAO;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
@@ -17,12 +18,13 @@ public class RecipeService {
 
     @NonNull
     protected Map<String, Recipe> recipes;
+    protected ListDAO<Recipe> dao = new RecipeDAO();
 
     /**
      * Loads the recipes from the database.
      */
     public RecipeService() {
-        recipes = new RecipeDAO().load();
+        recipes = dao.load();
     }
 
     public List<Recipe> getRecipes() {
@@ -60,12 +62,12 @@ public class RecipeService {
 
     public void addRecipe(Recipe recipe) {
         recipes.put(recipe.getId(), recipe);
-        new RecipeDAO().save(recipe);
+        dao.save(recipe);
     }
 
     public void editRecipe(Recipe recipe) {
         recipes.put(recipe.getId(), recipe);
-        new RecipeDAO().save(recipe);
+        dao.save(recipe);
     }
 
     public List<FoodInstance> getIngredients(String recipeId) {
@@ -90,5 +92,9 @@ public class RecipeService {
         // Add cooked products to the nutrition log and pantry
         nutritionService.addItem(consumed);
         pantryService.addItem(leftover.getId(), leftover.getQuantity());
+    }
+
+    public List<Recipe> getRecommendedRecipes() {
+        return null;
     }
 }

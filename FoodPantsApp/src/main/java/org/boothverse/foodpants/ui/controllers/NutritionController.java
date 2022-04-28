@@ -1,6 +1,5 @@
 package org.boothverse.foodpants.ui.controllers;
 
-import org.boothverse.foodpants.business.services.IdService;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.persistence.*;
 

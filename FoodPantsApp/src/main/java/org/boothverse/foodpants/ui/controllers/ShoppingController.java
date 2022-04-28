@@ -24,8 +24,8 @@ public class ShoppingController implements FoodInstanceController {
     }
 
     @Override
-    public FoodInstance removeItem(String foodId) {
-        return null;
+    public void removeItem(String foodId) {
+
     }
 
     public Integer purchaseItems(List<String> foodIds) {

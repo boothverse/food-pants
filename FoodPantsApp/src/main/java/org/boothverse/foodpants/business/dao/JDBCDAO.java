@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.util.SQLUtils;
+
 import java.sql.*;
 
 abstract class JDBCDAO {
@@ -60,5 +62,9 @@ abstract class JDBCDAO {
     protected Boolean executeExists(Statement statement, String condition) throws SQLException {
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + condition);
         return rs.next();
+    }
+
+    protected void executeRemove(Statement statement, String id) throws SQLException {
+        statement.execute("DELETE FROM " + table + " WHERE ID=" + id);
     }
 }
