@@ -2,7 +2,7 @@ package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.persistence.User;
 import org.boothverse.foodpants.business.dao.util.*;
-import tec.units.ri.quantity.Quantities;
+import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Length;

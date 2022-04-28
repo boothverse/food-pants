@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ShoppingItem extends StandardItem {
+    protected JCheckBox checkBox;
+
     public ShoppingItem(FoodInstance foodInstance) {
         super(foodInstance);
 

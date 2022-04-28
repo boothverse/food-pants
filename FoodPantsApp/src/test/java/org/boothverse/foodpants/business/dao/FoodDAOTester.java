@@ -6,13 +6,13 @@ import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.NutritionType;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import tec.units.ri.quantity.Quantities;
-import tec.units.ri.unit.Units;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static tec.units.ri.AbstractQuantity.ONE;
+import static tech.units.indriya.AbstractQuantity.ONE;
 
 public class FoodDAOTester {
 
