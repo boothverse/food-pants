@@ -47,13 +47,12 @@ public class PantryService extends FoodInstanceService {
     public void addItems(List<FoodInstance> itemsToAdd) {
         itemsToAdd.forEach(itemToAdd -> {
             String id = itemToAdd.getId();
-            if (items.containsKey(id)) {
-                FoodInstance pantryItem = items.get(id);
-                pantryItem.setQuantity(pantryItem.getQuantity().add((Quantity) itemToAdd.getQuantity()));
-                items.replace(id, pantryItem);
-            } else {
-                items.put(id, itemToAdd);
+            if (items.containsKey(id)) {    // food already exists in pantry, just add more
+                Quantity curQuantity = items.get(id).getQuantity();
+                itemToAdd.setQuantity(itemToAdd.getQuantity().add(curQuantity));
             }
+            items.put(id, itemToAdd);
+            dao.save(itemToAdd);
         });
     }
 
