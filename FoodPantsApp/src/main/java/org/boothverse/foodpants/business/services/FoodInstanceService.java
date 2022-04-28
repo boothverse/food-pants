@@ -1,30 +1,35 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.dao.FoodInstanceDAO;
+import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class FoodInstanceService {
     protected Map<String, FoodInstance> items;
+    protected final ListDAO<FoodInstance> dao;
 
     /**
      * Loads the items from the database.
      *
-     * @param dbFilename
+     * @param dbName
      */
-    public FoodInstanceService(String dbFilename) {
-
+    public FoodInstanceService(String dbName) {
+        dao = new FoodInstanceDAO(dbName);
+        items = dao.load();
     }
 
     /**
      * Returns all items tracked by the service.
      *
-     * @return
+     * @return the items tracked by the service
      */
     public List<FoodInstance> getItems() {
-        return null;
+        return new ArrayList<>(items.values());
     }
 
     /**
@@ -32,9 +37,13 @@ public abstract class FoodInstanceService {
      *
      * @param id
      * @param quantity
+     * @return the newly created item
      */
-    public void addItem(String id, Quantity<?> quantity) {
-
+    public FoodInstance addItem(String id, Quantity<?> quantity) {
+        FoodInstance item = new FoodInstance(id, quantity);
+        items.put(id, item);
+        dao.save(item);
+        return item;
     }
 
     /**
@@ -45,8 +54,12 @@ public abstract class FoodInstanceService {
      * @param id
      * @param quantity
      */
-    public void editItem(String id, Quantity<?> quantity) {
-
+    public FoodInstance editItem(String id, Quantity<?> quantity) {
+        // TODO: throw custom exception if the item is not found
+        FoodInstance item = new FoodInstance(id, quantity);
+        items.put(id, item);
+        dao.save(item);
+        return item;
     }
 
     /**
@@ -56,6 +69,6 @@ public abstract class FoodInstanceService {
      * @param id
      */
     public void removeItem(String id) {
-
+        items.remove(id);
     }
 }
