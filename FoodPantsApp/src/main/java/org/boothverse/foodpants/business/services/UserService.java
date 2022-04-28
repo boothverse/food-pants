@@ -26,6 +26,10 @@ public class UserService {
         current = dao.load();
     }
 
+    /**
+     * creates a new user from input
+     * Saves new user to database
+     */
     public void register(String name, Map<String, String> info) {
         current = new User();
         current.setName(name);
@@ -38,5 +42,7 @@ public class UserService {
         current.setWeight(weight);
 
         NUTRITION_SERVICE.getRecommendedGoal(current);
+
+        dao.save(current);
     }
 }
