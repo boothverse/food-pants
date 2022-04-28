@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class FoodService {
     protected Map<String, Food> foods;
-    protected ListDAO<Food> dao = new FoodDAO();
+    protected final ListDAO<Food> dao = new FoodDAO();
 
     /**
      * Loads the foods from the database.

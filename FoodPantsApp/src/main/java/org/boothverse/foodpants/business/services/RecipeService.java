@@ -1,8 +1,6 @@
 package org.boothverse.foodpants.business.services;
 
 import lombok.NonNull;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.RecipeDAO;
 import org.boothverse.foodpants.persistence.FoodInstance;
@@ -18,7 +16,7 @@ public class RecipeService {
 
     @NonNull
     protected Map<String, Recipe> recipes;
-    protected ListDAO<Recipe> dao = new RecipeDAO();
+    protected final ListDAO<Recipe> dao = new RecipeDAO();
 
     /**
      * Loads the recipes from the database.
@@ -36,22 +34,12 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecipesByIngredients(List<FoodInstance> ingredients) {
-        List<Pair<Double, Recipe>> weightedRecommendations = new ArrayList<>();
-        List<Recipe> recommendations = new ArrayList<>();
-
-        // Compute the ratio of ingredients
-        recipes.values().forEach(recipe -> {
-            Long count = recipe.getIngredients().stream().filter(ingredients::contains).count();
-            Double ratio = count.doubleValue() / recipe.getIngredients().size();
-            weightedRecommendations.add(new ImmutablePair<>(ratio, recipe));
-        });
-
-        // Sort by ratio
-        weightedRecommendations.stream()
-            .sorted(Comparator.comparingDouble(Pair<Double, Recipe>::getKey))
-            .forEach(pair -> recommendations.add(pair.getValue()));
-
-        return recommendations;
+        return recipes.values().stream()
+            .sorted(Comparator.comparingDouble(recipe -> {
+                long count = recipe.getIngredients().stream().filter(ingredients::contains).count();
+                return (double) count / recipe.getIngredients().size();
+            }))
+            .toList();
     }
 
     public List<Recipe> getRecipesNameStartsWith(String query) {
@@ -95,6 +83,6 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecommendedRecipes() {
-        return null;
+        return getRecipesByIngredients(Services.PANTRY_SERVICE.getItems());
     }
 }
