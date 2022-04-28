@@ -57,9 +57,7 @@ public class NutritionService {
 
     public void removeItem(String id) { items.remove(id); }
 
-    public List<Goal> getGoals() {
-        return null;
-    }
+    public Map<String, Goal> getGoals() { return goals; }
 
     public Goal<?> getRecommendedGoal(User user) {
         return null;
