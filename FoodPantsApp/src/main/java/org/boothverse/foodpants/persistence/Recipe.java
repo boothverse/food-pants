@@ -4,14 +4,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.boothverse.foodpants.business.services.Services;
-import tec.units.ri.quantity.Quantities;
+import tech.units.indriya.AbstractUnit;
+import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Dimensionless;
 import java.util.Date;
 import java.util.List;
 
-import static tec.units.ri.AbstractUnit.ONE;
+import static tech.units.indriya.AbstractUnit.ONE;
 
 @NoArgsConstructor
 @Getter @Setter

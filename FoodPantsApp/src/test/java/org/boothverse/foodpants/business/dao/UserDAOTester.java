@@ -3,8 +3,8 @@ package org.boothverse.foodpants.business.dao;
 import org.boothverse.foodpants.persistence.User;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import tec.units.ri.quantity.Quantities;
-import tec.units.ri.unit.Units;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Length;

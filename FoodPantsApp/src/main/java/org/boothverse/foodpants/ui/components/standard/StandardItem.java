@@ -5,9 +5,11 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.forms.EditShoppingForm;
+import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
-import tec.units.ri.quantity.Quantities;
+
+import systems.uom.unicode.CLDR;
+import tech.units.indriya.quantity.Quantities;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,14 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-import static tec.units.ri.unit.Units.KILOGRAM;
 
 public class StandardItem extends StandardPanel implements ActionListener {
 
     // Swing components
     protected JLabel nameLabel;
     protected JTextField quantityLabel;
-    protected JCheckBox checkBox;
+    protected JLabel unitLabel;
 
     protected JButton deleteButton;
     protected JButton editButton;
@@ -31,7 +32,8 @@ public class StandardItem extends StandardPanel implements ActionListener {
     @Getter
     protected FoodInstance foodInstance;
 
-    private final Food demoFood = new Food("1", "Apple", FoodGroup.FRUIT, null);
+    // TODO: demo only
+    private final Food demoFood = new Food("1", "Orange", FoodGroup.FRUIT, null);
 
     public StandardItem(FoodInstance foodInstance) {
         super();
@@ -40,13 +42,20 @@ public class StandardItem extends StandardPanel implements ActionListener {
         setLayout(new BorderLayout());
         setPreferredSize(prefSize);
 
-        this.foodInstance = /*foodInstance;*/ demoFood.createInstance(Quantities.getQuantity(10, KILOGRAM));
+        // NOTE: Must be Quantity from : tech.units:indriya:2.1.2
+        if (foodInstance != null) {
+            this.foodInstance = foodInstance;
+        }
+        else {
+            this.foodInstance = demoFood.createInstance(Quantities.getQuantity(10, CLDR.FLUID_OUNCE));
+        }
 
         // Setup fields
         initComponents();
     }
 
     private void initComponents() {
+        // TODO: change so name displays correctly
         Food food = /*Services.FOOD_SERVICE.getFood(foodInstance.getId());*/ demoFood;
         String name = food.getName();
         Number amt = foodInstance.getQuantity().getValue();
@@ -67,6 +76,11 @@ public class StandardItem extends StandardPanel implements ActionListener {
         quantityLabel.setHorizontalAlignment(JLabel.RIGHT);
         quantityLabel.setPreferredSize(new Dimension(40, 40));
         rightFormat.add(quantityLabel);
+
+
+        unitLabel = new JLabel(foodInstance.getQuantity().getUnit().getName());
+        unitLabel.setHorizontalAlignment(JLabel.LEFT);
+        rightFormat.add(unitLabel);
 
         // Add edit button
         editButton = new StandardButton("Edit");
@@ -91,7 +105,7 @@ public class StandardItem extends StandardPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
-            StandardForm form = new EditShoppingForm("Edit Item");
+            StandardForm form = new EditFoodInstanceForm(foodInstance);
             form.setLocationRelativeTo(this);
             form.setVisible(true);
         } else if (e.getSource() == deleteButton) {

@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Collections;
 
 public class Style {
-    private static final String primaryHex = "#FF6363";
+    private static final String primaryHex = "#FF5454";
 
     public static final Color PRIMARY = Color.decode(primaryHex);
 
