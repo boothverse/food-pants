@@ -1,5 +1,10 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.dao.GoalDAO;
+import org.boothverse.foodpants.business.dao.ListDAO;
+import org.boothverse.foodpants.business.dao.NutritionInstanceDAO;
+import org.boothverse.foodpants.business.dao.ReportDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.*;
 
 import java.util.*;
@@ -9,12 +14,20 @@ public class NutritionService {
     protected Map<String, NutritionInstance> items;
     protected Map<String, Goal> goals;
     protected Map<String, ReportPeriod> reportPeriods;
+    protected final ListDAO<NutritionInstance> nutritionInstanceDAO = new NutritionInstanceDAO();
+    protected final ListDAO<ReportPeriod> reportPeriodDAO = new ReportDAO();
+    protected final ListDAO<Goal> goalDAO = new GoalDAO();
 
+    /**
+     * Creates the NutritionService and loads data stored in database
+     */
     public NutritionService() {
-        // TODO load from database?
-        items = new HashMap<>();
-        goals = new HashMap<>();
-        reportPeriods = new HashMap<>();
+        ListDAO<Goal> goalDAO = new GoalDAO();
+        ListDAO<ReportPeriod> reportPeriodDAO = new ReportDAO();
+
+        items = nutritionInstanceDAO.load();
+        goals = goalDAO.load();
+        reportPeriods = reportPeriodDAO.load();
     }
 
     /**
@@ -41,8 +54,7 @@ public class NutritionService {
      */
     public void addItem(NutritionInstance nutritionInstance) {
         items.put(nutritionInstance.getId(), nutritionInstance);
-        //TODO Write to database
-        //FileListDAO<NutritionInstance> dao = new FileListDAO<NutritionInstance>(NutritionInstance.class, "User.json");
+        nutritionInstanceDAO.save(nutritionInstance);
     }
 
     /**
@@ -50,24 +62,30 @@ public class NutritionService {
      *
      * @param nutritionInstance
      */
-    public void editItem(NutritionInstance nutritionInstance) {
-        //TODO: Should I make sure the operation is successful?
+    public void editItem(NutritionInstance nutritionInstance) throws PantsNotFoundException {
+        if (items.containsKey(nutritionInstance.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
         items.replace(nutritionInstance.getId(), nutritionInstance);
-        //TODO Write to database
+        nutritionInstanceDAO.save(nutritionInstance);
     }
 
     /**
+     * Removes the specified item from the service and database
      *
      * @param id
      */
-    public void removeItem(String id) { items.remove(id); }
+    public void removeItem(String id) {
+        items.remove(id);
+        nutritionInstanceDAO.remove(id);
+    }
 
     /**
+     * Returns the goals map
      *
      * @return
      */
     public Map<String, Goal> getGoals() { return goals; }
 
+    //TODO
     /**
      *
      * @param user
@@ -78,42 +96,64 @@ public class NutritionService {
     }
 
     /**
+     * Adds a goal to the service and database
      *
      * @param goal
      */
     public void addGoal(Goal<?> goal) {
         goals.put(goal.getId(), goal);
-    }
-
-    public void editGoal(Goal<?> goal) {
-        goals.replace(goal.getId(), goal);
+        goalDAO.save(goal);
     }
 
     /**
+     * Changes the value of a goal in the service and database
+     *
+     * @param goal
+     */
+    public void editGoal(Goal<?> goal) throws PantsNotFoundException {
+        if (!goals.containsKey(goal.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
+        goals.replace(goal.getId(), goal);
+        goalDAO.save(goal);
+    }
+
+    /**
+     * Removes a goal from the service and database
      *
      * @param id
      */
     public void removeGoal(String id) {
         goals.remove(id);
+        goalDAO.remove(id);
     }
 
     /**
+     * Adds a report to the service and database
      *
      * @param period
      */
     public void addReport(ReportPeriod period) {
         reportPeriods.put(period.getId(), period);
-    }
-
-    public void editReport(ReportPeriod period) {
-        reportPeriods.replace(period.getId(), period);
+        reportPeriodDAO.save(period);
     }
 
     /**
+     * Modifies an existing report in the service and database
+     *
+     * @param period
+     */
+    public void editReport(ReportPeriod period) throws PantsNotFoundException{
+        if (!reportPeriods.containsKey(period.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
+        reportPeriods.replace(period.getId(), period);
+        reportPeriodDAO.save(period);
+    }
+
+    /**
+     * Removes a report from the service and database
      *
      * @param id
      */
     public void removeReport(String id) {
         reportPeriods.remove(id);
+        reportPeriodDAO.remove(id);
     }
 }

@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.*;
 
 import javax.measure.Quantity;
@@ -28,8 +29,12 @@ public class NutritionController {
                          Quantity quantity, NutritionType nutritionType) {
 
         Goal goal = new Goal(id, goalType, quantity, nutritionType);
-        Services.NUTRITION_SERVICE.editGoal(goal);
-
+        //TODO: Maybe error handling shoudln't be here
+        try {
+            Services.NUTRITION_SERVICE.editGoal(goal);
+        } catch (PantsNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
         return goal;
     }
 
@@ -51,11 +56,15 @@ public class NutritionController {
         return nutInstance;
     }
 
-    public NutritionInstance editItem(String id, String foodId, Quantity quantity,
-                                      Date consumedAt) {
+    public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) {
 
         NutritionInstance nutInstance = new NutritionInstance(id, foodId, quantity, consumedAt);
-        Services.NUTRITION_SERVICE.editItem(nutInstance);
+        //TODO: Maybe error handling shoudln't be here
+        try {
+            Services.NUTRITION_SERVICE.editItem(nutInstance);
+        } catch (PantsNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
 
         return nutInstance;
     }
@@ -74,7 +83,12 @@ public class NutritionController {
 
     public void editReport(String id, Date startDate, Date endDate) {
         ReportPeriod period = new ReportPeriod(id, startDate, endDate);
-        Services.NUTRITION_SERVICE.editReport(period);
+        //TODO: Maybe error handling shoudln't be here
+        try {
+            Services.NUTRITION_SERVICE.editReport(period);
+        } catch (PantsNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void removeReport(String id) {
