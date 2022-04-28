@@ -3,9 +3,9 @@ package org.boothverse.foodpants.business.dao;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.persistence.GoalType;
-import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.persistence.NutritionType;
-import tec.units.ri.quantity.Quantities;
+import tech.units.indriya.quantity.Quantities;
+
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;

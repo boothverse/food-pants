@@ -84,7 +84,7 @@ public class FoodService {
         return foods.get(id).getName();
     }
 
-    public String[] getFoodGroupOptions(Class<? extends Enum<?>> e) {
+    public String[] getEnumOptions(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
 }

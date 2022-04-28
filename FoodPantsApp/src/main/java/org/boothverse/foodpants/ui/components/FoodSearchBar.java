@@ -20,7 +20,6 @@ public class FoodSearchBar extends JComboBox<String> {
 
     public FoodSearchBar(Collection<? extends Food> foods) {
         this();
-
         List<String> foodNames = new ArrayList<>();
         foods.forEach(food -> foodNames.add(food.getName()));
         populate(foodNames);
@@ -29,7 +28,6 @@ public class FoodSearchBar extends JComboBox<String> {
     public void populate(Collection<? extends String> c) {
         model.removeAllElements();
         model.addAll(c);
-        model.addElement("Create New Food");
         revalidate();
     }
 }

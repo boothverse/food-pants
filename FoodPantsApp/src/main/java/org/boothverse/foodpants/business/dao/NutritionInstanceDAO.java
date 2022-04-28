@@ -2,8 +2,7 @@ package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.NutritionInstance;
-import org.boothverse.foodpants.persistence.ReportPeriod;
-import tec.units.ri.quantity.Quantities;
+import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;
