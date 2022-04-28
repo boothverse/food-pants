@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.util.SQLUtils;
+
 import java.sql.*;
 
 abstract class JDBCDAO {
@@ -60,5 +62,16 @@ abstract class JDBCDAO {
     protected Boolean executeExists(Statement statement, String condition) throws SQLException {
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + condition);
         return rs.next();
+    }
+
+    /**
+     * Clears the connected table. Used during testing.
+     */
+    public void executeTruncate(){
+        try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
+            statement.execute("TRUNCATE FROM " + table);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
