@@ -10,7 +10,7 @@ import tech.units.indriya.unit.Units;
 import java.awt.*;
 
 public class PantryItem extends StandardItem {
-    protected int WIDTH = 250;
+    protected int WIDTH = 350;
     protected int HEIGHT = 50;
 
     public PantryItem(String name, int amt) {

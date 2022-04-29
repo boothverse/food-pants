@@ -31,6 +31,9 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         foodSearchBar.populate(java.util.List.of(new String[]{"Apple", "Orange", "Banana"}));
 
         quantityPanel = new QuantitySelector();
+
+        // Use set preferred size if you want GridBagLayout to actually listen to what you want and not
+        // ignore you like the garbage swing layout manager that it is.
         quantityPanel.getQuantityValueField().setPreferredSize(
             new Dimension(getWidth() / 2, quantityPanel.getQuantityValueField().getHeight()));
 
@@ -43,7 +46,6 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         int i = 0;
         addLeftComponent(new JLabel("Food"), ++i);
         addRightComponent(foodSearchBar, i);
-
 
         addRightComponent(foodButton, ++i);
         addRightComponent(createFoodButton, ++i);
