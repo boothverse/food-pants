@@ -48,6 +48,6 @@ public class NutritionInstanceDAOTester {
         assertEquals(nutritionInstance.getFoodId(), foodId);
         assertEquals(nutritionInstance.getConsumedAt(), date);
         assertEquals(nutritionInstance.getQuantity().getUnit(), quantity.getUnit());
-        assertEquals(nutritionInstance.getQuantity().getValue(), 50.0);
+        assertEquals(nutritionInstance.getQuantity().getValue().doubleValue(), quantity.getValue().doubleValue());
     }
 }

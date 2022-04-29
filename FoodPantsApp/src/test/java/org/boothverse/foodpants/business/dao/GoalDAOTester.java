@@ -52,6 +52,6 @@ public class GoalDAOTester {
         assertEquals(goal.getGoalType(), goalType);
         assertEquals(goal.getNutritionType(), nutritionType);
         assertEquals(goal.getDailyQuantity().getUnit(), quantity.getUnit());
-        assertEquals(goal.getDailyQuantity().getValue(), 50.0);
+        assertEquals(goal.getDailyQuantity().getValue().doubleValue(), quantity.getValue().doubleValue());
     }
 }

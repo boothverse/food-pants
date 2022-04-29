@@ -1,84 +1,167 @@
 package org.boothverse.foodpants.ui.components;
 
+import org.boothverse.foodpants.persistence.*;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.PantryItem;
+import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
+import systems.uom.unicode.CLDR;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RecipeItem extends StandardPanel {
     private static final String demoName = "Chocolate Cake";
-    private static final String[] demoIngredients = {"Bread Flour (lb)", "Vanilla Extract (oz)", "Eggs (unit)", "Sugar (cup)", "Cocoa Powder (g)"};
+    private static final String[] demoFoodNames = {"Bread Flour (lb)", "Vanilla Extract (oz)", "Eggs (unit)", "Sugar (cup)", "Cocoa Powder (g)"};
     private static final int[] demoQuantities = {10, 1, 4, 2, 15};
-    private static final String[] demoInstructions = {"Preheat the oven to 350 degrees F.", "Coat two 9-inch-round cake pans with cooking spray and line the bottoms with parchment paper.",
-        "Whisk the cocoa powder and 1 1/2 cups boiling water in a medium bowl until smooth; set aside.", "Whisk the flour, sugar, baking powder, baking soda and salt in a large bowl until combined.", "Add the eggs, vegetable oil, sour cream and vanilla and beat with a mixer on medium speed until smooth, about 1 minute.", " Reduce the mixer speed to low; beat in the cocoa mixture in a steady stream until just combined, then finish mixing with a rubber spatula. (The batter will be thin.)",
-        "Divide the batter between the prepared pans and tap the pans against the counter to help the batter settle.", "Bake until a toothpick inserted into the middle comes out clean, 30 to 40 minutes. ", "Transfer to racks and let cool 10 minutes, then run a knife around the edge of the pans and turn the cakes out onto the racks to cool completely.", " Remove the parchment. Trim the tops of the cakes with a long serrated knife to make them level, if desired."};
+    private static final List<FoodInstance> demoIngredients = new ArrayList<>();
+    static {
+        for (int i = 0; i < demoFoodNames.length; i++) {
+            demoIngredients.add(new Food(i + "", demoFoodNames[i], FoodGroup.DAIRY, null).createInstance(Quantities.getQuantity(demoQuantities[i], CLDR.POUND)));
+        }
+    }
+    private static final String demoInstructions = """
+        Preheat the oven to 350 degrees F.\s
+        Coat two 9-inch-round cake pans with cooking spray and line the bottoms with parchment paper\s
+        Whisk the cocoa powder and 1 1/2 cups boiling water in a medium bowl until smooth; set aside.\s
+        Whisk the flour, sugar, baking powder, baking soda and salt in a large bowl until combined.\s
+        Add the eggs, vegetable oil, sour cream and vanilla and beat with a mixer on medium speed until smooth,\s
+        about 1 minute.\s
+        Reduce the mixer speed to low; beat in the cocoa mixture in a steady stream until just combined,\s
+        then finish mixing with a rubber spatula. (The batter will be thin.)\s
+        Divide the batter between the prepared pans and tap the pans against the counter to help the batter settle.\s
+        Bake until a toothpick inserted into the middle comes out clean, 30 to 40 minutes.\s
+        Transfer to racks and let cool 10 minutes, then run a knife around the edge of the pans\s
+        and turn the cakes out onto the racks to cool completely. Remove the parchment.\s
+        Trim the tops of the cakes with a long serrated knife to make them level, if desired.""";
 
+    private final Recipe demoRecipe = new Recipe("a123123123", "Chocolate Cake", FoodGroup.GRAIN, new NutritionDescriptor(null, Quantities.getQuantity(100, Units.GRAM)),
+        demoInstructions, demoIngredients, 12.0);
 
-    protected String name;
-    protected List<PantryItem> ingredients;
+    protected JLabel title;
+    protected List<StandardItem> ingredientDisplays;
 
-    protected JPanel ingredientDisplay;
-    protected JPanel instructionDisplay;
+    protected JPanel contentPanel;
+    protected JPanel wrapperPanel;
+    protected JPanel ingredientPanel;
+    protected JButton seeMoreButton;
 
-    public RecipeItem() {
+    protected Recipe recipe;
+
+    public RecipeItem(Recipe recipeItem) {
         super();
-        setLayout(new GridBagLayout());
+        recipe = Objects.requireNonNullElse(recipeItem, demoRecipe);
 
-        // Init fields
-        this.name = demoName;
-        ingredients = new ArrayList<>();
+        // Content goes in this panel, order with grid bag layout
+        contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBackground(Style.TRANSPARENT);
+
+        // Flowlayout panel (wrap around grid bag panel)
+        wrapperPanel = new JPanel();
+        wrapperPanel.setBackground(Style.TRANSPARENT);
+
+        add(wrapperPanel);
+        wrapperPanel.add(contentPanel);
 
         // init swing components
-        ingredientDisplay = new JPanel(new GridLayout(demoIngredients.length, 0));
-        instructionDisplay = new JPanel(new GridLayout(demoInstructions.length, 0));
-        initDemoValues();
+        initHeader(recipe.getName());
         initComponents();
     }
 
     private void initComponents() {
-        GridBagConstraints c = new GridBagConstraints();
-        JLabel label;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.weightx = .2f;
-        label = new JLabel("Instructions");
-        add(label, c);
+        ingredientDisplays = new ArrayList<>();
+        recipe.getIngredients().forEach(ingredient -> ingredientDisplays.add(new StandardItem(ingredient)));
 
-        c.gridy = 2;
-        label = new JLabel("Ingredients");
-        add(label, c);
+        seeMoreButton = new StandardButton("See more");
 
-        c.gridx = 1;
-        c.gridy = 0;
-        c.weightx = .8f;
-        c.weighty = .3f;
-        JLabel nameLabel = new JLabel(name);
-        add(nameLabel, c);
+        ingredientPanel = new JPanel();
+        ingredientPanel.setBackground(Style.TRANSPARENT);
+        ingredientPanel.setLayout(new BoxLayout(ingredientPanel, BoxLayout.Y_AXIS));
+        ingredientDisplays.stream().limit(3).forEach(display -> ingredientPanel.add(display));
+        if (ingredientPanel.getComponentCount() < ingredientDisplays.size()) {
+            JPanel seeMoreWrapper = new JPanel(new BorderLayout());
+            seeMoreWrapper.setBackground(Style.TRANSPARENT);
+            seeMoreWrapper.add(seeMoreButton, BorderLayout.EAST);
+            ingredientPanel.add(seeMoreWrapper);
+        }
 
-        c.gridy = 1;
-        c.weighty = .4f;
-        add(instructionDisplay, c);
+        JLabel ingredientLabel = new JLabel("Ingredients");
+        ingredientLabel.setFont(Style.headerStyle.deriveFont(13f));
+        ingredientLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 
-        c.gridy = 2;
-        c.weighty = .7f;
-        add(ingredientDisplay, c);
+        JLabel servingLabel = new JLabel();
+        servingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        servingLabel.setFont(Style.headerStyle.deriveFont(12f));
+        servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
 
+        int i = 0;
+        addRightComponent(servingLabel, i);
+        addSeperator(++i);
+        contentPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        addLeftComponent(ingredientLabel, ++i);
+        addRightComponent(ingredientPanel, i);
+
+        JPanel spacer = new JPanel();
+        spacer.setBackground(Style.TRANSPARENT);
+        addRightComponent(spacer, ++i);
+        addSeperator(++i);
     }
 
-    private void initDemoValues() {
-        for (int i = 0; i < demoIngredients.length; i++) {
-            ingredients.add(new PantryItem(demoIngredients[i], demoQuantities[i]));
+    protected void addSeperator(int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
+    }
+
+    protected void addLeftComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.3;
+        gbc.weighty = 0.3;
+        gbc.ipady = 10;
+
+        contentPanel.add(c, gbc);
+    }
+
+    protected void addRightComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+        contentPanel.add(c, gbc);
+    }
+
+    protected void initHeader(String header) {
+        if (title == null) {
+            title = new JLabel(header);
+            title.setFont(Style.headerStyle.deriveFont(16f));
+            addLeftComponent(title, 0);
         }
-        for (PantryItem p : ingredients) {
-            ingredientDisplay.add(p);
+        else {
+            title.setText(header);
         }
 
-        for (String s : demoInstructions) {
-            instructionDisplay.add(new JLabel(s));
-        }
     }
 }
