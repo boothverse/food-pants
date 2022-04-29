@@ -47,6 +47,24 @@ public abstract class FoodInstanceService {
     }
 
     /**
+     * Adds the list of items to the service and the database.
+     * If the service already has the given food, just add the specified amount to the service.
+     *
+     * @param itemsToAdd
+     */
+    public void addItems(List<FoodInstance> itemsToAdd) {
+        itemsToAdd.forEach(itemToAdd -> {
+            String id = itemToAdd.getId();
+            if (items.containsKey(id)) {    // food already exists in pantry, just add more
+                Quantity curQuantity = items.get(id).getQuantity();
+                itemToAdd.setQuantity(itemToAdd.getQuantity().add(curQuantity));
+            }
+            items.put(id, itemToAdd);
+            dao.save(itemToAdd);
+        });
+    }
+
+    /**
      * Edits the quantity of an item being tracked by the service,
      * and updates the database accordingly.
      * Should throw a custom exception if the item is not found.
