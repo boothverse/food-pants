@@ -11,6 +11,12 @@ public class FoodInstance extends IdObject {
     @Getter @Setter
     protected Quantity<?> quantity;
 
+    /**
+     * Creates a new FoodInstance
+     *
+     * @param id
+     * @param quantity
+     */
     public FoodInstance(String id, Quantity<?> quantity) {
         super(id);
         this.quantity = quantity;

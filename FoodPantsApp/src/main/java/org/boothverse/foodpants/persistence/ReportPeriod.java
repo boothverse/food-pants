@@ -12,6 +12,13 @@ public class ReportPeriod extends IdObject {
     private Date startDate;
     private Date endDate;
 
+    /**
+     * Creates a new ReportPeriod
+     *
+     * @param id
+     * @param startDate
+     * @param endDate
+     */
     public ReportPeriod(String id, Date startDate, Date endDate) {
         super(id);
         this.startDate = startDate;

@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class RecipeDAO extends JDBCListDAO<Recipe> {
 
+    /**
+     * Creates a new RecipeDAO
+     */
     public RecipeDAO() {
         super("recipes", new String[]{"id", "name", "foodGroup", "nutrition", "instructions", "ingredients", "servings"});
     }
@@ -49,6 +52,12 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         return list;
     }
 
+    /**
+     * Converts object data to SQL
+     *
+     * @param data
+     * @return
+     */
     @Override
     protected String[] objToSQL(Recipe data) {
 
@@ -62,6 +71,12 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             SQLUtils.inQuote(data.getServings().toString())};
     }
 
+    /**
+     * Converts SQL data to object
+     *
+     * @param rs
+     * @return
+     */
     @Override
     protected Map<String, Recipe> SQLToObj(ResultSet rs) {
         Map<String, Recipe> map = new HashMap<>();

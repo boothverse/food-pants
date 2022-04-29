@@ -12,6 +12,12 @@ import java.util.Map;
 
 abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDAO<T> {
 
+    /**
+     * Creates a new JDBCListDAO
+     *
+     * @param table
+     * @param cols
+     */
     JDBCListDAO(String table, String[] cols) {
         super(table, cols);
     }
@@ -19,6 +25,11 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
     protected abstract String[] objToSQL(T data);
     protected abstract Map<String, T> SQLToObj(ResultSet rs) throws SQLException;
 
+    /**
+     * Saves the specified data in the DB
+     *
+     * @param data
+     */
     @Override
     public void save(T data) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
@@ -34,6 +45,11 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         }
     }
 
+    /**
+     * Loads the data in the DB
+     *
+     * @return
+     */
     @Override
     public Map<String, T> load() {
         Map<String, T> data = new HashMap<>();
@@ -48,6 +64,11 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         return data;
     }
 
+    /**
+     * Removes the specified data from the DB
+     *
+     * @param id
+     */
     @Override
     public void remove(String id) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {

@@ -15,6 +15,14 @@ public class Food extends IdObject {
     @Getter @Setter
     protected NutritionDescriptor nutrition;
 
+    /**
+     * Creates a new Food
+     *
+     * @param id
+     * @param name
+     * @param foodGroup
+     * @param nutrition
+     */
     public Food(String id, String name, FoodGroup foodGroup, NutritionDescriptor nutrition) {
         super(id);
         this.name = name;

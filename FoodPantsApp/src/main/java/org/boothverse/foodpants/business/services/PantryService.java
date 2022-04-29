@@ -15,6 +15,7 @@ public class PantryService extends FoodInstanceService {
     }
 
     /**
+     * Returns a list of ingredients missing from the pantry which are in the given list
      *
      * @param itemsToCheck
      * @return
@@ -41,6 +42,7 @@ public class PantryService extends FoodInstanceService {
     }
 
     /**
+     * Removes the given item from the pantry
      *
      * @param foodId
      * @param quantity
@@ -63,6 +65,7 @@ public class PantryService extends FoodInstanceService {
     }
 
     /**
+     * Determines whether the given item is in the pantry
      *
      * @param item
      * @return
@@ -72,6 +75,7 @@ public class PantryService extends FoodInstanceService {
     }
 
     /**
+     * Produces a list of foods based on the given string
      *
      * @param query
      * @return
