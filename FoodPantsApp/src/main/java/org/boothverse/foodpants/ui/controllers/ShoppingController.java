@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
@@ -37,7 +38,12 @@ public class ShoppingController implements FoodInstanceController {
         return items.size();
     }
 
-    public boolean export(String fileFormat, Path destination) {
-        return Services.SHOPPING_SERVICE.export(fileFormat, destination);
+    public void export(Path destination) {
+        // TODO: maybe don't try catch here???
+        try {
+            Services.SHOPPING_SERVICE.export(destination);
+        } catch (PantsExportShoppingListException e) {
+            e.printStackTrace();
+        }
     }
 }
