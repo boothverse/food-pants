@@ -21,6 +21,17 @@ public class Recipe extends Food {
     private List<FoodInstance> ingredients;
     private Double servings;
 
+    /**
+     * Creates a new Recipe
+     *
+     * @param id
+     * @param name
+     * @param foodGroup
+     * @param nutrition
+     * @param instructions
+     * @param ingredients
+     * @param servings
+     */
     public Recipe(String id, String name, FoodGroup foodGroup, NutritionDescriptor nutrition,
                   String instructions, List<FoodInstance> ingredients, Double servings) {
 
@@ -30,10 +41,22 @@ public class Recipe extends Food {
         this.servings = servings;
     }
 
+    /**
+     * Turns the recipe into a FoodInstance
+     *
+     * @param instanceServings
+     * @return
+     */
     public FoodInstance createFoodInstance(Double instanceServings) {
         return new FoodInstance(id, Quantities.getQuantity(instanceServings / this.servings, ONE));
     }
 
+    /**
+     * Logs a recipe in the NutritionLog
+     *
+     * @param instanceServings
+     * @return
+     */
     public NutritionInstance createNutritionInstance(Double instanceServings) {
         String id = Services.ID_SERVICE.getId();
         String foodId = this.id;

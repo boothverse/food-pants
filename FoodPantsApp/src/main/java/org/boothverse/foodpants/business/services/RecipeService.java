@@ -25,14 +25,31 @@ public class RecipeService {
         recipes = dao.load();
     }
 
+    /**
+     * Returns a list of stored recipes.
+     *
+     * @return
+     */
     public List<Recipe> getRecipes() {
         return new ArrayList<>(recipes.values());
     }
 
+    /**
+     * Gets the recipe with the specified id from the service
+     *
+     * @param id
+     * @return
+     */
     public Recipe getRecipe(String id) {
         return recipes.get(id);
     }
 
+    /**
+     * Gets a list of recipes based on the given list of ingredients
+     *
+     * @param ingredients
+     * @return
+     */
     public List<Recipe> getRecipesByIngredients(List<FoodInstance> ingredients) {
         return recipes.values().stream()
             .sorted(Comparator.comparingDouble(recipe -> {
@@ -42,26 +59,56 @@ public class RecipeService {
             .toList();
     }
 
+    /**
+     * Get a list of recipes names based on a given string
+     *
+     * @param query
+     * @return
+     */
     public List<Recipe> getRecipesNameStartsWith(String query) {
         return recipes.values().stream()
             .filter(recipe -> recipe.getName().startsWith(query))
             .toList();
     }
 
+    /**
+     * Adds a recipe to the service and database
+     *
+     * @param recipe
+     */
     public void addRecipe(Recipe recipe) {
         recipes.put(recipe.getId(), recipe);
         dao.save(recipe);
     }
 
+    /**
+     * Modifies the given recipe in the database and service
+     *
+     * @param recipe
+     */
     public void editRecipe(Recipe recipe) {
         recipes.put(recipe.getId(), recipe);
         dao.save(recipe);
     }
 
+    /**
+     * Get a list of ingredients for the given recipe
+     *
+     * @param recipeId
+     * @return
+     */
     public List<FoodInstance> getIngredients(String recipeId) {
         return recipes.get(recipeId).getIngredients();
     }
 
+    /**
+     * Takes a recipe and logs the recipe in the food log and pantry
+     *
+     * @param recipeId
+     * @param isUsingPantry
+     * @param consumedServings
+     * @param leftoverServings
+     */
     public void produceCookedRecipe(String recipeId, Boolean isUsingPantry, Double consumedServings, Double leftoverServings) {
         PantryService pantryService = Services.PANTRY_SERVICE;
         NutritionService nutritionService = Services.NUTRITION_SERVICE;
@@ -82,6 +129,11 @@ public class RecipeService {
         pantryService.addItem(leftover.getId(), leftover.getQuantity());
     }
 
+    /**
+     * Produces a list of recipes for the user
+     *
+     * @return
+     */
     public List<Recipe> getRecommendedRecipes() {
         return getRecipesByIngredients(Services.PANTRY_SERVICE.getItems());
     }

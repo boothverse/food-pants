@@ -14,6 +14,14 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
     private Quantity<Q> dailyQuantity;
     private NutritionType nutritionType;
 
+    /**
+     * Creates a new Goal
+     *
+     * @param id
+     * @param goalType
+     * @param dailyQuantity
+     * @param nutritionType
+     */
     public Goal(String id, GoalType goalType, Quantity<Q> dailyQuantity, NutritionType nutritionType) {
         super(id);
         this.goalType = goalType;
@@ -21,6 +29,12 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
         this.nutritionType = nutritionType;
     }
 
+    /**
+     * Determines whether this goal has been attained
+     *
+     * @param actualQuantity
+     * @return
+     */
     public boolean isAttained(Quantity<Q> actualQuantity) {
         return dailyQuantity.subtract(actualQuantity).getValue().doubleValue() <= 0;
     }

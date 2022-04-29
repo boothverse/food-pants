@@ -9,6 +9,12 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
 
     protected static final Long ID = 1L;
 
+    /**
+     * Creates a new JDBCSingleDAO
+     *
+     * @param table
+     * @param cols
+     */
     JDBCSingleDAO(String table, String[] cols) {
         super(table, cols);
     }
@@ -16,6 +22,11 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
     protected abstract String[] objToSQL(T data);
     protected abstract T SQLToObj(ResultSet rs) throws SQLException;
 
+    /**
+     * Saves the specified data in the DB
+     *
+     * @param data
+     */
     @Override
     public void save(T data) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
@@ -31,6 +42,11 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
         }
     }
 
+    /**
+     * Loads data from the DB
+     *
+     * @return
+     */
     @Override
     public T load() {
         T data = null;
