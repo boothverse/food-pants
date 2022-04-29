@@ -11,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PageRunner {
-    private static final Dimension MIN_SIZE = new Dimension(1000, 500);
+    private static final Dimension MIN_SIZE = new Dimension(1000, 800);
     private static JFrame frame;
     private static PageViewer pageFrame;
 

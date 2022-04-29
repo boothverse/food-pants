@@ -11,9 +11,9 @@ public class PageManager {
     private static final Page shoppingPage = new ShoppingPage();
 
     //Three subpages of NutritionPage, timeline is default
-    private static final Page timelinePage = new TimelinePage();
-    private static final Page goalsPage = new GoalsPage();
-    private static final Page reportPage = new ReportsPage();
+    private static final Page timelinePage = new NutritionTimelinePage();
+    private static final Page goalsPage = new NutritionGoalsPage();
+    private static final Page reportPage = new NutritionReportsPage();
 
     public static void setPage(String pageName) {
         PageViewer pageViewer = PageRunner.getPageViewer();
