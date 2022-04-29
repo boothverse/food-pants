@@ -1,13 +1,12 @@
 package org.boothverse.foodpants.ui.pages;
 
-import org.boothverse.foodpants.ui.forms.AddNutritionForm;
 import org.boothverse.foodpants.ui.forms.AddReportForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import java.awt.event.ActionEvent;
 
-public class NutritionReportsPage extends NutritionPage {
-    public NutritionReportsPage() {
+public class ReportsPage extends NutritionPage {
+    public ReportsPage() {
 
     }
 
