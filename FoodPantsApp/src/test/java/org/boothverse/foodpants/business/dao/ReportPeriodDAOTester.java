@@ -16,11 +16,13 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReportPeriodDAOTester {
+    /**
     @AfterAll
     void cleanUp(){
         ListDAO<ReportPeriod> dao = new ReportDAO();
         //dao.executeTruncate();
     }
+     */
 
     @Test
     @Order(1)
