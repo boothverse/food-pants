@@ -10,9 +10,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class NutritionGoalsPage extends NutritionPage {
+public class GoalsPage extends NutritionPage {
 
-    public NutritionGoalsPage() {
+    public GoalsPage() {
         JPanel listWrapper = new JPanel(new FlowLayout());
         JPanel panel = new JPanel(new GridLayout(0, 2));
         panel.add(new GoalItem("Protein (grams)", 140, true));

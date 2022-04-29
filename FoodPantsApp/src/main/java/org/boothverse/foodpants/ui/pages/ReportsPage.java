@@ -6,8 +6,8 @@ import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import java.awt.event.ActionEvent;
 
-public class NutritionReportsPage extends NutritionPage {
-    public NutritionReportsPage() {
+public class ReportsPage extends NutritionPage {
+    public ReportsPage() {
 
     }
 
