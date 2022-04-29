@@ -1,6 +1,5 @@
 package org.boothverse.foodpants.business.dao;
 
-import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
@@ -9,7 +8,6 @@ import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
