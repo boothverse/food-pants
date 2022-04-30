@@ -97,7 +97,6 @@ public class TimelinePage extends NutritionPage {
                 break;
             case "Month":
                 c.set(Calendar.DAY_OF_MONTH, 1);
-                System.out.println(c.getTime());
 
                 // Get first Sunday
                 int nDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
