@@ -142,7 +142,6 @@ abstract class JDBCDAO {
         DatabaseMetaData dbm = connection.getMetaData();
         ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
         if(tables.next()){
-            System.out.println(table);
             return true;
         }
         return false;
