@@ -19,7 +19,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
      * Creates a new RecipeDAO
      */
     public RecipeDAO() {
-        super("recipes", new String[]{"id", "name", "foodGroup", "nutrition", "instructions", "ingredients", "servings"});
+        super("recipes", new String[]{"id", "name", "foodGroup", "nutrition", "instructions", "ingredients", "servings"}, "create_recipes.sql");
     }
 
     /**

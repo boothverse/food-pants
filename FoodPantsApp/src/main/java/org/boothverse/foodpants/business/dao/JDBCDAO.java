@@ -16,16 +16,28 @@ abstract class JDBCDAO {
 
     protected final String table;
     protected final String[] cols;
+    protected final String path;
 
     /**
      * Creates a new JDBCDAO
      *
      * @param table
      * @param cols
+     * @param path
      */
-    JDBCDAO(String table, String[] cols) {
+    JDBCDAO(String table, String[] cols, String path) {
         this.table = table;
         this.cols = cols;
+        this.path = "target/classes/sql/" + path;
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -128,8 +140,9 @@ abstract class JDBCDAO {
     protected boolean tableExists() throws SQLException{
         Connection connection = getDBConnection();
         DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, table, null);
+        ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
         if(tables.next()){
+            System.out.println(table);
             return true;
         }
         return false;
@@ -138,15 +151,14 @@ abstract class JDBCDAO {
     /**
      * Runs SQL file to create table in DB if it doesn't exist
      *
-     * @param path
      * @throws SQLException
      * @throws FileNotFoundException
      */
-    protected void createTable(String path) throws SQLException, FileNotFoundException {
+    protected void createTable() throws SQLException, FileNotFoundException {
         if(!tableExists()){
             Connection connection = getDBConnection();
             ScriptRunner sr = new ScriptRunner(connection);
-            Reader reader = new BufferedReader(new FileReader(path));
+            Reader reader = new BufferedReader(new FileReader(this.path));
             sr.runScript(reader);
         }
     }

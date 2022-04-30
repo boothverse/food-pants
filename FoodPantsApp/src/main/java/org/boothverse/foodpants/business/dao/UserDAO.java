@@ -16,7 +16,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
      * Constructs UserDAO
      */
     public UserDAO() {
-        super("users", new String[] {"id", "name", "gender", "height", "weight"});
+        super("users", new String[] {"id", "name", "gender", "height", "weight"}, "create_users.sql");
     }
 
     /**

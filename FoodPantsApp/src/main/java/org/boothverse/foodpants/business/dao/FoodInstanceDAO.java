@@ -20,7 +20,7 @@ public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
      * @param name
      */
     public FoodInstanceDAO(String name) {
-        super(name, new String[]{"id", "quantity"});
+        super(name, new String[]{"id", "quantity"}, "create_" + name.toLowerCase() + "s.sql");
     }
 
     /**
