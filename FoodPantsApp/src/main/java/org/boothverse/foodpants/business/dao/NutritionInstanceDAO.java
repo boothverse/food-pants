@@ -17,7 +17,7 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
      * Constructor for NutritionInstanceDAO
      */
     public NutritionInstanceDAO() {
-        super("nutritionInstances", new String[]{"id", "foodId", "quantity", "consumedAt"}, "create_nutritioninstances.sql");
+        super("nutritionInstances", new String[]{"id", "foodId", "quantity", "consumedAt"});
     }
 
     /**

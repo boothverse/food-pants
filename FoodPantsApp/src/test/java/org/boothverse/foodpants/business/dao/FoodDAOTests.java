@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tech.units.indriya.AbstractQuantity.ONE;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FoodDAOTester {
+public class FoodDAOTests {
 
     @Test
     @Order(1)

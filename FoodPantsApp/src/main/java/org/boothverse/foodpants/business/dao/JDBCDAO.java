@@ -23,12 +23,11 @@ abstract class JDBCDAO {
      *
      * @param table
      * @param cols
-     * @param path
      */
-    JDBCDAO(String table, String[] cols, String path) {
+    JDBCDAO(String table, String[] cols) {
         this.table = table;
         this.cols = cols;
-        this.path = "target/classes/sql/" + path;
+        this.path = "target/classes/sql/create_" + table + ".sql";
         try {
             createTable();
         } catch (SQLException e) {

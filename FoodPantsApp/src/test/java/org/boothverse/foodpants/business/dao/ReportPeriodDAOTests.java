@@ -1,9 +1,5 @@
 package org.boothverse.foodpants.business.dao;
 
-import org.boothverse.foodpants.persistence.Food;
-import org.boothverse.foodpants.persistence.FoodGroup;
-import org.boothverse.foodpants.persistence.NutritionInstance;
-import org.boothverse.foodpants.business.dao.fileDAO.FileListDAO;
 import org.boothverse.foodpants.persistence.ReportPeriod;
 import org.junit.jupiter.api.*;
 
@@ -13,14 +9,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ReportPeriodDAOTester {
-    /**
-    @AfterAll
-    void cleanUp(){
-        ListDAO<ReportPeriod> dao = new ReportDAO();
-        //dao.executeTruncate();
-    }
-     */
+public class ReportPeriodDAOTests {
 
     @Test
     @Order(1)

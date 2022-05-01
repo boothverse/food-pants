@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-public class ShoppingServiceTester {
+public class ShoppingServiceTests {
     ShoppingService service;
 
     @BeforeEach

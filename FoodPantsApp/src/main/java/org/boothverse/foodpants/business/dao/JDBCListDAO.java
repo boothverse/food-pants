@@ -18,8 +18,8 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
      * @param table
      * @param cols
      */
-    JDBCListDAO(String table, String[] cols, String path) {
-        super(table, cols, path);
+    JDBCListDAO(String table, String[] cols) {
+        super(table, cols);
     }
 
     protected abstract String[] objToSQL(T data);

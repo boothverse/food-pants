@@ -22,7 +22,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
      * Creates a new FoodDAO
      */
     public FoodDAO() {
-        super("foods", new String[]{"id", "name", "foodGroup", "nutrition"}, "create_foods.sql");
+        super("foods", new String[]{"id", "name", "foodGroup", "nutrition"});
     }
 
     /**
