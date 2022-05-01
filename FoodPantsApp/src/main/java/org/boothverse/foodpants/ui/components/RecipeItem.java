@@ -100,58 +100,17 @@ public class RecipeItem extends StandardPanel {
         servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
 
         int i = 0;
-        addRightComponent(servingLabel, i);
+        contentPanel.addRightComponent(servingLabel, i);
 
-        addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
+        contentPanel.addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
 
-        addLeftComponent(ingredientLabel, ++i);
-        addRightComponent(ingredientPanel, i);
+        contentPanel.addLeftComponent(ingredientLabel, ++i);
+        contentPanel.addRightComponent(ingredientPanel, i);
 
         JPanel spacer = new JPanel();
         spacer.setBackground(Style.TRANSPARENT);
-        addRightComponent(spacer, ++i);
-        addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
-    }
-
-    protected void addMiddleComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPanel.add(c, gbc);
-    }
-
-    protected void addLeftComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 0.3;
-        gbc.weighty = 0.3;
-        gbc.ipady = 10;
-
-        contentPanel.add(c, gbc);
-    }
-
-    protected void addRightComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 1;
-        gbc.gridy = row;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-
-        contentPanel.add(c, gbc);
+        contentPanel.addRightComponent(spacer, ++i);
+        contentPanel.addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
     }
 
     protected void initHeader(String header) {
@@ -159,10 +118,8 @@ public class RecipeItem extends StandardPanel {
             title = new JLabel(header);
             title.setFont(Style.headerStyle.deriveFont(16f));
             contentPanel.addLeftComponent(title, 0);
-        }
-        else {
+        } else {
             title.setText(header);
         }
-
     }
 }
