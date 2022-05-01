@@ -72,6 +72,16 @@ public abstract class StandardForm extends JFrame {
         }
     }
 
+    protected void addMiddleComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPanel.add(c, gbc);
+    }
+
     void addSubmitButton(ActionListener e)  {
         contentPanel.addSubmitButton(e, ++numRows);
     }
