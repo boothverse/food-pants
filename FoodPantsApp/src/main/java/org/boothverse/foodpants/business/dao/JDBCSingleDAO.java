@@ -15,8 +15,8 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
      * @param table
      * @param cols
      */
-    JDBCSingleDAO(String table, String[] cols, String path) {
-        super(table, cols, path);
+    JDBCSingleDAO(String table, String[] cols) {
+        super(table, cols);
     }
 
     protected abstract String[] objToSQL(T data);
