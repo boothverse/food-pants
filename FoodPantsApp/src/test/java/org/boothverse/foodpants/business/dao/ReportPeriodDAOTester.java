@@ -5,16 +5,14 @@ import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.business.dao.fileDAO.FileListDAO;
 import org.boothverse.foodpants.persistence.ReportPeriod;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ReportPeriodDAOTester {
     /**
     @AfterAll
