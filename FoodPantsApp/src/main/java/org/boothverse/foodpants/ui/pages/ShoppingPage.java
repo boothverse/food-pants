@@ -1,15 +1,23 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.controllers.RecipeController;
+import org.boothverse.foodpants.ui.controllers.ShoppingController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -42,9 +50,25 @@ public class ShoppingPage extends Page {
                 }
             }
             else if (e.getActionCommand().equals("Export")) {
-//                StandardForm form = new ExportShoppingForm("Export List");
-//                form.setLocationRelativeTo(this);
-//                form.setVisible(true);
+                // create new save dialog
+                JFileChooser fc = new JFileChooser();
+
+                FileNameExtensionFilter filter = new FileNameExtensionFilter(".pdf", "pdf");
+
+                fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                fc.addChoosableFileFilter(filter);
+                fc.setAcceptAllFileFilterUsed(false);
+
+                int result = fc.showSaveDialog(PageRunner.getPageViewer());
+
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    if (fc.getFileFilter() == filter) {
+                        // adding extension .pdf to the end of the file path
+                        String path = fc.getSelectedFile().toPath() + ".pdf";
+                        new ShoppingController().export(Paths.get(path));
+                    }
+                }
+
             }
             else if (e.getActionCommand().equals("Modify")) {
                 JButton modifyBtn = (JButton) e.getSource();

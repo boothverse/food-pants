@@ -22,9 +22,6 @@ public class NutritionService {
      * Creates the NutritionService and loads data stored in database
      */
     public NutritionService() {
-        ListDAO<Goal> goalDAO = new GoalDAO();
-        ListDAO<ReportPeriod> reportPeriodDAO = new ReportDAO();
-
         items = nutritionInstanceDAO.load();
         goals = goalDAO.load();
         reportPeriods = reportPeriodDAO.load();
@@ -83,7 +80,7 @@ public class NutritionService {
      *
      * @return
      */
-    public Map<String, Goal> getGoals() { return goals; }
+    public List<Goal> getGoals() { return new ArrayList<>(goals.values()); }
 
     //TODO
     /**

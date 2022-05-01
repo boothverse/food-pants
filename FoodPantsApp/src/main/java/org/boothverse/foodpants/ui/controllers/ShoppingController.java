@@ -7,7 +7,6 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 import javax.measure.Quantity;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Map;
 
 public class ShoppingController implements FoodInstanceController {
     @Override
