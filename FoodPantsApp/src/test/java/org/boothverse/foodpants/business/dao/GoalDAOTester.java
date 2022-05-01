@@ -4,8 +4,10 @@ import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.persistence.GoalType;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.persistence.NutritionType;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -18,6 +20,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class GoalDAOTester {
 
     @Test

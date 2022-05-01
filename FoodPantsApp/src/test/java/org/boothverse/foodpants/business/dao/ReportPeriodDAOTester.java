@@ -1,14 +1,14 @@
 package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.persistence.ReportPeriod;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ReportPeriodDAOTester {
 
     @Test

@@ -1,8 +1,10 @@
 package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.persistence.FoodInstance;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -13,6 +15,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FoodInstanceDAOTester {
     @Test
     @Order(1)
