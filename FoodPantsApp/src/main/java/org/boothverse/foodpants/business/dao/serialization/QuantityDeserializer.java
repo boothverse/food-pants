@@ -7,7 +7,9 @@ import tech.units.indriya.AbstractUnit;
 import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
+import javax.measure.Unit;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class QuantityDeserializer extends StdDeserializer<Quantity<?>> {
 
@@ -21,11 +23,14 @@ public class QuantityDeserializer extends StdDeserializer<Quantity<?>> {
 
     @Override
     public Quantity<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        jsonParser.nextValue();
-        String rawUnit = jsonParser.getValueAsString();
-        jsonParser.nextValue();
-        Double rawValue = jsonParser.getValueAsDouble();
-
-        return Quantities.getQuantity(rawValue, AbstractUnit.parse(rawUnit));
+        String rawQuantity = jsonParser.getValueAsString();
+        String[] parts = rawQuantity.split(" ");
+        Unit<?> unit;
+        if (parts.length == 1) {
+            unit = AbstractUnit.ONE;
+        } else {
+            unit = AbstractUnit.parse(parts[1]);
+        }
+        return Quantities.getQuantity(Double.parseDouble(parts[0]), unit);
     }
 }
