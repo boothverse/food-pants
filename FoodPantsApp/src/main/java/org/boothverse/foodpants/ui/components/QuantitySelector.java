@@ -12,9 +12,9 @@ import java.text.NumberFormat;
 
 @Getter
 public class QuantitySelector extends JPanel {
-    public static final String[] quantityOptions = {"unit", "g", "kg", "oz", "lb", "fl oz", "cup", "gallon", "L"};
+    public static final String[] quantityOptions = {"unit", "g", "kg", "oz", "lb", "fl oz", "cup", "gallon", "L", "calorie"};
     public static final Unit<?>[] unitClasses = {null, Units.GRAM, Units.KILOGRAM, CLDR.OUNCE, CLDR.POUND,
-        CLDR.FLUID_OUNCE, CLDR.CUP, CLDR.GALLON, Units.LITRE};
+        CLDR.FLUID_OUNCE, CLDR.CUP, CLDR.GALLON, Units.LITRE, CLDR.CALORIE};
     protected JComboBox<String> quantityUnitBox;
     protected JFormattedTextField quantityValueField;
 
@@ -34,5 +34,9 @@ public class QuantitySelector extends JPanel {
         for (String s : quantityOptions) {
             quantityUnitBox.addItem(s);
         }
+    }
+
+    public Unit<?> getSelectedUnit() {
+        return unitClasses[quantityUnitBox.getSelectedIndex()];
     }
 }

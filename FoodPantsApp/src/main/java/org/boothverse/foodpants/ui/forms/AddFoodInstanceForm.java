@@ -28,7 +28,7 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         createFoodButton = new JButton("Create New");
         foodSearchBar = new FoodSearchBar();
         foodSearchBar.addItemListener(this);
-        foodSearchBar.populate(java.util.List.of(new String[]{"Apple", "Orange", "Banana"}));
+        foodSearchBar.populate();
 
         quantityPanel = new QuantitySelector();
 
@@ -74,11 +74,16 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(createFoodButton)) {
             AddFoodForm form = new AddFoodForm();
+            form.addFormToBeNotified(this);
             form.setLocationRelativeTo(this);
             form.setVisible(true);
         }
         else {
 
         }
+    }
+
+    public void updateFoodSearchBar() {
+        foodSearchBar.populate();
     }
 }

@@ -3,14 +3,22 @@ package org.boothverse.foodpants.ui.forms;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
+import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.NutritionType;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
+import org.boothverse.foodpants.ui.controllers.FoodController;
+import systems.uom.unicode.CLDR;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
+import javax.measure.Quantity;
+import javax.measure.Unit;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
 
-public class AddFoodForm extends StandardForm {
+public class AddFoodForm extends StandardForm implements ActionListener {
     private static final int DEFAULT_WIDTH = 500;
     private static final int DEFAULT_HEIGHT = 700;
 
@@ -20,6 +28,9 @@ public class AddFoodForm extends StandardForm {
     protected JComboBox<String> foodGroupBox;
     protected static List<JLabel> nutritionLabels;
     protected QuantitySelector[] nutritionQuantitySelectors;
+    protected AddFoodInstanceForm parent;
+
+    private FoodController foodController;
 
     static {
         String[] nutritionNames = Services.FOOD_SERVICE.getEnumOptions(NutritionType.class);
@@ -37,14 +48,13 @@ public class AddFoodForm extends StandardForm {
         initSwing();
         initForm();
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        foodController = new FoodController();
     }
 
     private void initSwing() {
         nutritionQuantitySelectors = new QuantitySelector[nutritionLabels.size()];
         nameField = new JTextField(30);
         foodGroupBox = new JComboBox<>(Services.FOOD_SERVICE.getEnumOptions(FoodGroup.class));
-
-
     }
 
     @Override
@@ -82,6 +92,47 @@ public class AddFoodForm extends StandardForm {
         addRightComponent(new JLabel(), ++i);       // Empty JPanel to space
         addRightComponent(new JLabel(), ++i);       // Empty JPanel to space
 
-        addSubmitButton(e -> dispose());
+        addSubmitButton(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String[] nutritionNames = Services.FOOD_SERVICE.getEnumOptions(NutritionType.class);
+        Map<NutritionType, Quantity<?>> nutritionMap = new HashMap<>();
+        for (int i = 1; i < nutritionQuantitySelectors.length; i++) {
+            double quantityVal = 0.0;
+            String enteredText = nutritionQuantitySelectors[i].getQuantityValueField().getText();
+
+            if (!Objects.equals(enteredText, "")) {
+                quantityVal = Double.parseDouble(enteredText);
+            }
+
+            if (i == 1) {
+                nutritionMap.put(NutritionType.valueOf(nutritionNames[i -1]),
+                    Quantities.getQuantity(quantityVal, CLDR.CALORIE));
+            }
+            else {
+                nutritionMap.put(NutritionType.valueOf(nutritionNames[i -1]),
+                    Quantities.getQuantity(quantityVal, Units.GRAM));
+            }
+        }
+
+        String servingText = nutritionQuantitySelectors[0].getQuantityValueField().getText();
+        Unit<?> unit = nutritionQuantitySelectors[0].getSelectedUnit();
+        double quantityVal = 0.0;
+
+        if (!Objects.equals(servingText, "")) {
+            quantityVal = Double.parseDouble(servingText);
+        }
+
+        NutritionDescriptor nut = new NutritionDescriptor(nutritionMap, Quantities.getQuantity(quantityVal, unit));
+        foodController.addFood(nameField.getText(), FoodGroup.valueOf((String) foodGroupBox.getSelectedItem()), nut);
+
+        parent.updateFoodSearchBar();
+        dispose();
+    }
+
+    public void addFormToBeNotified(AddFoodInstanceForm a) {
+        parent = a;
     }
 }
