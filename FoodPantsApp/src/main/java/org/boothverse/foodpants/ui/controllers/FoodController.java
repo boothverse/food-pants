@@ -14,7 +14,7 @@ public class FoodController {
      * @return
      */
     public Food getFood(String id) {
-        return null;
+        return Services.FOOD_SERVICE.getFood(id);
     }
 
     /**

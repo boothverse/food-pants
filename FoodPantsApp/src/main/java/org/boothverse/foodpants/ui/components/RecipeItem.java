@@ -100,16 +100,58 @@ public class RecipeItem extends StandardPanel {
         servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
 
         int i = 0;
-        contentPanel.addRightComponent(servingLabel, i);
-        contentPanel.addSeperator(++i);
-        contentPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-        contentPanel.addLeftComponent(ingredientLabel, ++i);
-        contentPanel.addRightComponent(ingredientPanel, i);
+        addRightComponent(servingLabel, i);
+
+        addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
+
+        addLeftComponent(ingredientLabel, ++i);
+        addRightComponent(ingredientPanel, i);
 
         JPanel spacer = new JPanel();
         spacer.setBackground(Style.TRANSPARENT);
-        contentPanel.addRightComponent(spacer, ++i);
-        contentPanel.addSeperator(++i);
+        addRightComponent(spacer, ++i);
+        addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
+    }
+
+    protected void addMiddleComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPanel.add(c, gbc);
+    }
+
+    protected void addLeftComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 0.3;
+        gbc.weighty = 0.3;
+        gbc.ipady = 10;
+
+        contentPanel.add(c, gbc);
+    }
+
+    protected void addRightComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.gridx = 1;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+        contentPanel.add(c, gbc);
     }
 
     protected void initHeader(String header) {
