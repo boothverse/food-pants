@@ -17,6 +17,6 @@ public class ShoppingServiceTests {
 
     @Test
     void exportTest() {
-        assertDoesNotThrow(() -> service.export(Paths.get("C:\\Users\\Public\\shopping-list.pdf")));
+        assertDoesNotThrow(() -> service.export(Paths.get("shopping-list.pdf")));
     }
 }
