@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import javax.measure.Quantity;
 import java.io.IOException;
 
-@Deprecated
 public class QuantitySerializer extends StdSerializer<Quantity<?>> {
 
     public QuantitySerializer(Class<Quantity<?>> t) {
