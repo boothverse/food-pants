@@ -1,4 +1,4 @@
 package org.boothverse.foodpants.business.services;
 
-public class FoodServiceTester {
+public class FoodServiceTests {
 }

@@ -9,7 +9,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ReportPeriodDAOTester {
+public class ReportPeriodDAOTests {
 
     @Test
     @Order(1)

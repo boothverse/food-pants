@@ -15,7 +15,7 @@ import javax.measure.quantity.Mass;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UserDAOTester {
+public class UserDAOTests {
 
     @Test
     @Order(1)
