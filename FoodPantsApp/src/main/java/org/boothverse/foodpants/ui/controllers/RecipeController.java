@@ -7,7 +7,6 @@ import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.Recipe;
 
 import java.util.List;
-import java.util.Map;
 
 public class RecipeController {
     public Recipe getRecipe(String id) {

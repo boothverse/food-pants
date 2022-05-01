@@ -7,13 +7,11 @@ import org.boothverse.foodpants.persistence.*;
 import javax.measure.Quantity;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class NutritionController {
-    // TODO: someone else's problem lol
-    public Map<String, Goal> getGoals() {
-        // TODO: Nutrition Service getGoals
-        return null;
+
+    public List<Goal> getGoals() {
+        return Services.NUTRITION_SERVICE.getGoals();
     }
 
     public Goal addGoal(GoalType goalType,
