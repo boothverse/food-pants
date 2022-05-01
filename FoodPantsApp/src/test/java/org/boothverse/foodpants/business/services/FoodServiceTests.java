@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
@@ -21,13 +22,21 @@ public class FoodServiceTests {
     @Test
     @Order(2)
     public void getFoodTest(){
-        Assertions.assertTrue(service.getFood("sfkjsfks").equals(food));
+        try {
+            Assertions.assertTrue(service.getFood("sfkjsfks").equals(food));
+        } catch (PantsNotFoundException e) {
+            Assertions.fail();
+        }
     }
 
     @Test
     @Order(3)
     public void editFoodTest(){
-        service.editFood(foodEdited);
+        try {
+            service.editFood(foodEdited);
+        } catch (PantsNotFoundException e) {
+            Assertions.fail();
+        }
         Assertions.assertFalse(service.getFoods().contains(food));
         Assertions.assertTrue(service.getFoods().contains(foodEdited));
     }

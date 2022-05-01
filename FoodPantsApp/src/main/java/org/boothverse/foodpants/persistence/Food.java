@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.persistence;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.measure.Quantity;
 import java.util.Objects;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Food extends IdObject {
     @Getter
     protected String name;
@@ -33,18 +35,5 @@ public class Food extends IdObject {
 
     public FoodInstance createInstance(Quantity<?> quantity) {
         return new FoodInstance(id, quantity);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Food food = (Food) o;
-        return Objects.equals(name, food.name) && foodGroup == food.foodGroup && Objects.equals(nutrition, food.nutrition);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, foodGroup, nutrition);
     }
 }

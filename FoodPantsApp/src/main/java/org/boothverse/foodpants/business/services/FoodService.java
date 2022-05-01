@@ -2,6 +2,7 @@ package org.boothverse.foodpants.business.services;
 
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 
 import java.util.Arrays;
@@ -34,8 +35,8 @@ public class FoodService {
      * @param id
      * @return
      */
-    public Food getFood(String id) {
-        // TODO: throw custom exception if not found
+    public Food getFood(String id) throws PantsNotFoundException{
+        if(!foods.containsKey(id)){ throw new PantsNotFoundException("Failed to find food with id " + id);}
         return foods.get(id);
     }
 
@@ -55,9 +56,9 @@ public class FoodService {
      *
      * @param food
      */
-    public void editFood(Food food) {
-        // TODO: throw custom exception if not found
-        foods.put(food.getId(), food);
+    public void editFood(Food food) throws PantsNotFoundException {
+        if(!foods.containsKey(food.getId())){ throw new PantsNotFoundException("Failed to find food with id " + food.getId());}
+        foods.replace(food.getId(), food);
         dao.save(food);
     }
 

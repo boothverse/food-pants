@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
@@ -82,8 +84,18 @@ public class PantryService extends FoodInstanceService {
      */
     public List<FoodInstance> searchByFoodName(String query) {
         FoodService foodService = Services.FOOD_SERVICE;
-        return items.values().stream()
-            .filter(item -> foodService.getFood(item.getId()).getName().startsWith(query))
+        List<FoodInstance> ret = new ArrayList<>();
+
+        ret = items.values().stream()
+            .filter(item -> {
+                try {
+                    return foodService.getFood(item.getId()).getName().startsWith(query);
+                } catch (PantsNotFoundException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            })
             .toList();
+        return ret;
     }
 }

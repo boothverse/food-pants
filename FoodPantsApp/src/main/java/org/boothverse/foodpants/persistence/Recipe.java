@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.persistence;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import static tech.units.indriya.AbstractUnit.ONE;
 
 @NoArgsConstructor
 @Getter @Setter
+@EqualsAndHashCode
 public class Recipe extends Food {
     private String instructions;
     private List<FoodInstance> ingredients;

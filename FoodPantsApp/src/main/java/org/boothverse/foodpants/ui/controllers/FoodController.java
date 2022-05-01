@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
@@ -14,7 +15,14 @@ public class FoodController {
      * @return
      */
     public Food getFood(String id) {
-        return Services.FOOD_SERVICE.getFood(id);
+        Food food = null;
+        //TODO: Maybe error handling shoudln't be here
+        try {
+            food = Services.FOOD_SERVICE.getFood(id);
+        } catch (PantsNotFoundException e) {
+            e.printStackTrace();
+        }
+        return food;
     }
 
     /**
@@ -40,7 +48,12 @@ public class FoodController {
      */
     public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) {
         Food food = new Food(id, name, category, nutrition);
-        Services.FOOD_SERVICE.editFood(food);
+        //TODO: Maybe error handling shoudln't be here
+        try {
+            Services.FOOD_SERVICE.editFood(food);
+        } catch (PantsNotFoundException e) {
+            e.printStackTrace();
+        }
         return food;
     }
 
