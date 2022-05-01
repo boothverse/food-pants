@@ -23,6 +23,12 @@ public class ShoppingService extends FoodInstanceService {
     }
 
     public void export(Path destination) throws PantsExportShoppingListException {
-        new ShoppingListExporter().export(destination, new ArrayList<>(items.values()));
+        FoodService foodService = Services.FOOD_SERVICE;
+
+        new ShoppingListExporter().export(destination, items.values()
+            .stream()
+            .map(item -> new ShoppingListExporter.ShoppingListItem(foodService.getFoodName(item.getId()), item.getQuantity().toString()))
+            .toList()
+        );
     }
 }
