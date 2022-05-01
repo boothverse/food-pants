@@ -36,6 +36,9 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
      * @return
      */
     public boolean isAttained(Quantity<Q> actualQuantity) {
+        if(actualQuantity == null){
+            return false;
+        }
         if(this.goalType.equals(GoalType.MAXIMIZE)){
             return dailyQuantity.subtract(actualQuantity).getValue().doubleValue() >= 0;
         }
