@@ -19,7 +19,7 @@ public class RecipeTester {
     }
 
     @Test
-    public void createNutritionInstamceNullServings(){
+    public void createNutritionInstanceNullServings(){
 
     }
 }

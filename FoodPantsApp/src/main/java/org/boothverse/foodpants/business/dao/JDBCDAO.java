@@ -128,7 +128,7 @@ abstract class JDBCDAO {
      * @throws SQLException
      */
     protected void executeRemove(Statement statement, String id) throws SQLException {
-        statement.execute("DELETE FROM " + table + " WHERE ID=" + id);
+        statement.execute("DELETE FROM " + table + " WHERE ID='" + id + "'");
     }
 
     /**
