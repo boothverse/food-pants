@@ -16,8 +16,11 @@ public class RecipePage extends Page {
         super(labels);
 
         JPanel listWrapper = new JPanel(new FlowLayout());
+        JPanel recipeListPanel = new JPanel(new GridLayout(2, 1, 0, 10));
         add(listWrapper);
-        listWrapper.add(new RecipeItem(null));
+        listWrapper.add(recipeListPanel);
+        recipeListPanel.add(new RecipeItem(null));
+        recipeListPanel.add(new RecipeItem(null));
         listWrapper.setBackground(Style.TRANSPARENT);
     }
 
