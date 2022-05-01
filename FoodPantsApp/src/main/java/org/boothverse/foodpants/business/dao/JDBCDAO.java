@@ -1,5 +1,11 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.ibatis.jdbc.ScriptRunner;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.Reader;
 import java.sql.*;
 
 abstract class JDBCDAO {
@@ -10,16 +16,28 @@ abstract class JDBCDAO {
 
     protected final String table;
     protected final String[] cols;
+    protected final String path;
 
     /**
      * Creates a new JDBCDAO
      *
      * @param table
      * @param cols
+     * @param path
      */
-    JDBCDAO(String table, String[] cols) {
+    JDBCDAO(String table, String[] cols, String path) {
         this.table = table;
         this.cols = cols;
+        this.path = "target/classes/sql/" + path;
+        try {
+            createTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -112,5 +130,35 @@ abstract class JDBCDAO {
      */
     protected void executeRemove(Statement statement, String id) throws SQLException {
         statement.execute("DELETE FROM " + table + " WHERE ID=" + id);
+    }
+
+    /**
+     * Checks whether table exists in DB
+     *
+     * @throws SQLException
+     */
+    protected boolean tableExists() throws SQLException{
+        Connection connection = getDBConnection();
+        DatabaseMetaData dbm = connection.getMetaData();
+        ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
+        if(tables.next()){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Runs SQL file to create table in DB if it doesn't exist
+     *
+     * @throws SQLException
+     * @throws FileNotFoundException
+     */
+    protected void createTable() throws SQLException, FileNotFoundException {
+        if(!tableExists()){
+            Connection connection = getDBConnection();
+            ScriptRunner sr = new ScriptRunner(connection);
+            Reader reader = new BufferedReader(new FileReader(this.path));
+            sr.runScript(reader);
+        }
     }
 }

@@ -18,7 +18,7 @@ public class GoalDAO extends JDBCListDAO<Goal> {
      * Constructor for NutritionInstanceDAO
      */
     public GoalDAO() {
-        super("goals", new String[]{"id", "goalType", "dailyQuantity", "nutritionType"});
+        super("goals", new String[]{"id", "goalType", "dailyQuantity", "nutritionType"}, "create_goals.sql");
     }
 
     /**

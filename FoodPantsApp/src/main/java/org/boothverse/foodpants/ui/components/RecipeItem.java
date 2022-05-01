@@ -3,6 +3,7 @@ package org.boothverse.foodpants.ui.components;
 import org.boothverse.foodpants.persistence.*;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.components.standard.StandardGridBagPanel;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 import systems.uom.unicode.CLDR;
@@ -46,7 +47,7 @@ public class RecipeItem extends StandardPanel {
     protected JLabel title;
     protected List<StandardItem> ingredientDisplays;
 
-    protected JPanel contentPanel;
+    protected StandardGridBagPanel contentPanel;
     protected JPanel wrapperPanel;
     protected JPanel ingredientPanel;
     protected JButton seeMoreButton;
@@ -58,8 +59,7 @@ public class RecipeItem extends StandardPanel {
         recipe = Objects.requireNonNullElse(recipeItem, demoRecipe);
 
         // Content goes in this panel, order with grid bag layout
-        contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBackground(Style.TRANSPARENT);
+        contentPanel = new StandardGridBagPanel();
 
         // Flowlayout panel (wrap around grid bag panel)
         wrapperPanel = new JPanel();
@@ -100,64 +100,23 @@ public class RecipeItem extends StandardPanel {
         servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
 
         int i = 0;
-        addRightComponent(servingLabel, i);
-        addSeperator(++i);
+        contentPanel.addRightComponent(servingLabel, i);
+        contentPanel.addSeperator(++i);
         contentPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-        addLeftComponent(ingredientLabel, ++i);
-        addRightComponent(ingredientPanel, i);
+        contentPanel.addLeftComponent(ingredientLabel, ++i);
+        contentPanel.addRightComponent(ingredientPanel, i);
 
         JPanel spacer = new JPanel();
         spacer.setBackground(Style.TRANSPARENT);
-        addRightComponent(spacer, ++i);
-        addSeperator(++i);
-    }
-
-    protected void addSeperator(int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 2;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPanel.add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
-    }
-
-    protected void addLeftComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 0.3;
-        gbc.weighty = 0.3;
-        gbc.ipady = 10;
-
-        contentPanel.add(c, gbc);
-    }
-
-    protected void addRightComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 1;
-        gbc.gridy = row;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-
-        contentPanel.add(c, gbc);
+        contentPanel.addRightComponent(spacer, ++i);
+        contentPanel.addSeperator(++i);
     }
 
     protected void initHeader(String header) {
         if (title == null) {
             title = new JLabel(header);
             title.setFont(Style.headerStyle.deriveFont(16f));
-            addLeftComponent(title, 0);
+            contentPanel.addLeftComponent(title, 0);
         }
         else {
             title.setText(header);

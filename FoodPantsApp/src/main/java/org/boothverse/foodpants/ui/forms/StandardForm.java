@@ -3,6 +3,7 @@ package org.boothverse.foodpants.ui.forms;
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.components.standard.StandardGridBagPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public abstract class StandardForm extends JFrame {
     private final int DEFAULT_HEIGHT = 400;
     private int numRows;
 
-    protected JPanel contentPanel;
+    protected StandardGridBagPanel contentPanel;
     protected JPanel wrapperPanel;
     protected JLabel title;
 
@@ -25,9 +26,8 @@ public abstract class StandardForm extends JFrame {
         this.setLocationRelativeTo(PageRunner.getPageViewer());
         setResizable(false);
 
-        // Content goes in this panel, order with grid bag layout
-        contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBackground(Style.TRANSPARENT);
+        // Content goes in this panel
+        contentPanel = new StandardGridBagPanel();
 
         // Flowlayout panel (wrap around grid bag panel)
         wrapperPanel = new JPanel();
@@ -57,20 +57,7 @@ public abstract class StandardForm extends JFrame {
     abstract void initForm();
 
     protected void addLeftComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 0;
-        gbc.gridy = row;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 0.3;
-        gbc.weighty = 0.3;
-        gbc.ipadx = 10;
-        gbc.ipady = 5;
-
-        contentPanel.add(c, gbc);
+        contentPanel.addLeftComponent(c, row);
 
         if (row > numRows) {
             numRows = row;
@@ -78,19 +65,7 @@ public abstract class StandardForm extends JFrame {
     }
 
     protected void addRightComponent(Component c, int row) {
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.gridwidth = 1;
-        gbc.gridheight = 1;
-        gbc.gridx = 1;
-        gbc.gridy = row;
-        gbc.anchor = GridBagConstraints.EAST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.ipady = 5;
-
-        contentPanel.add(c, gbc);
+        contentPanel.addRightComponent(c, row);
 
         if (row > numRows) {
             numRows = row;
@@ -98,8 +73,6 @@ public abstract class StandardForm extends JFrame {
     }
 
     void addSubmitButton(ActionListener e)  {
-        JButton submitBtn = new StandardButton("Submit");
-        submitBtn.addActionListener(e);
-        addRightComponent(submitBtn, ++numRows);
+        contentPanel.addSubmitButton(e, ++numRows);
     }
 }

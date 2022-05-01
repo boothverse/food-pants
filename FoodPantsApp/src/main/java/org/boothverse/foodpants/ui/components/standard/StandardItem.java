@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
-
 public class StandardItem extends StandardPanel implements ActionListener {
 
     // Swing components
@@ -76,8 +75,6 @@ public class StandardItem extends StandardPanel implements ActionListener {
         quantityLabel.setText(amt + "");
         quantityLabel.setHorizontalAlignment(JLabel.CENTER);
         quantityLabel.setPreferredSize(new Dimension(40, 40));
-
-
 
         unitLabel = new JLabel("(" + foodInstance.getQuantity().getUnit().toString() + ")");
         unitLabel.setHorizontalAlignment(JLabel.LEFT);

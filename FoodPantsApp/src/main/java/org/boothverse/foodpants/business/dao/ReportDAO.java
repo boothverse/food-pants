@@ -15,7 +15,7 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
     /**
      * Constructor for ReportDAO
      */
-    public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}); }
+    public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}, "create_reports.sql"); }
 
     /**
      * Converts object data to SQL
