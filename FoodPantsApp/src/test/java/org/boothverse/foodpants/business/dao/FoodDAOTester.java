@@ -4,8 +4,10 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.NutritionType;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -14,6 +16,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tech.units.indriya.AbstractQuantity.ONE;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FoodDAOTester {
 
     @Test
