@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components.standard;
 
 import lombok.Getter;
+import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;

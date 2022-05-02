@@ -14,8 +14,8 @@ public class RecipeForm extends StandardItemForm {
 
     protected RecipeController recipeController;
 
-    public RecipeForm(String header) {
-        super(header);
+    public RecipeForm(String header, Component parent) {
+        super(header, parent);
         setSize(WIDTH, HEIGHT);
 
         recipeController = new RecipeController();
