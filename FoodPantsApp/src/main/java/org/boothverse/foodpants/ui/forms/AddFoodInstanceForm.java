@@ -4,7 +4,9 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
+import org.boothverse.foodpants.ui.components.IngredientItem;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
+import org.boothverse.foodpants.ui.components.standard.Searchable;
 import org.boothverse.foodpants.ui.controllers.FoodInstanceController;
 
 import javax.swing.*;
@@ -15,15 +17,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Objects;
 
-public class AddFoodInstanceForm extends StandardForm implements ItemListener, ActionListener {
+public class AddFoodInstanceForm extends StandardForm implements ItemListener, ActionListener, Searchable {
     FoodSearchBar foodSearchBar;
     QuantitySelector quantityPanel;
     JButton editFoodButton;
     JButton createFoodButton;
     FoodInstanceController controller;
 
-    public AddFoodInstanceForm(FoodInstanceController controller, Component parent) {
-        super("Add Food", parent);
+    public AddFoodInstanceForm(String header, FoodInstanceController controller, Component parent) {
+        super(header, parent);
 
         this.controller = controller;
         initSwing();
@@ -72,10 +74,21 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
 
         addSubmitButton(e -> {
             if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
-                FoodInstance newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
-                    .getId(), quantityPanel.getSelectedQuantity());
+                FoodInstance newFood;
+                if (controller != null) {
+                     newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                        .getId(), quantityPanel.getSelectedQuantity());
+                    PageManager.getActivePage().notifyChange("add", null, newFood);
+                }
+                else {
+                    newFood = ((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem())).createInstance(quantityPanel.getSelectedQuantity());
+                    if (parent.getClass().equals(AddRecipeForm.class)) {
+                        ((AddRecipeForm)parent).ingredients.add(new IngredientItem(newFood));
+                        parent.revalidate();
+                        parent.repaint();
+                    }
+                }
 
-                PageManager.getActivePage().notifyPage("add", null, newFood);
                 dispose();
             }
             else {

@@ -1,18 +1,14 @@
 package org.boothverse.foodpants.ui.pages;
 
-import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.Recipe;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.components.PantryItem;
 import org.boothverse.foodpants.ui.components.RecipeItem;
-import org.boothverse.foodpants.ui.controllers.FoodInstanceController;
 import org.boothverse.foodpants.ui.controllers.RecipeController;
-import org.boothverse.foodpants.ui.forms.RecipeForm;
+import org.boothverse.foodpants.ui.forms.AddRecipeForm;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +38,7 @@ public class RecipePage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                RecipeForm form = new RecipeForm("Create Recipe", this);
+                AddRecipeForm form = new AddRecipeForm("Create Recipe", this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;
@@ -62,12 +58,15 @@ public class RecipePage extends Page {
             recipeListPanel.add(thisItem);
         }
         revalidate();
+        repaint();
     }
 
     @Override
-    public void notifyPage(String message, Object oldValue, Object newValue) {
-        if (Objects.equals(message, "add")) {
+    public void notifyChange(String message, Object oldValue, Object newValue) {
+        if (Objects.equals(message, "add recipe")) {
             recipeListPanel.add(new RecipeItem((Recipe) newValue));
+            revalidate();
+            repaint();
         }
         else if (Objects.equals(message, "remove")) {
 
@@ -75,6 +74,5 @@ public class RecipePage extends Page {
         else if (Objects.equals(message, "update")) {
             updateList();
         }
-
     }
 }

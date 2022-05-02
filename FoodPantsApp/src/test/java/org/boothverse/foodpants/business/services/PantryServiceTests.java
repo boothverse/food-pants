@@ -18,7 +18,7 @@ public class PantryServiceTests {
     static NutritionDescriptor nd = new NutritionDescriptor();
     static Food food = new Food("kdfkjalnad", "Banana", FoodGroup.FRUIT, nd);
     static FoodService foodService = new FoodService();
-    Food foodItem1 = new Food("fwjadjda", "Apple", FoodGroup.FRUIT, nd);
+    static Food foodItem1 = new Food("fwjadjda", "Apple", FoodGroup.FRUIT, nd);
     Food foodItem2 = new Food("eqvhjdbj", "Orange", FoodGroup.FRUIT, nd);
 
     @BeforeAll
@@ -32,6 +32,7 @@ public class PantryServiceTests {
             }
         });
         foodService.addFood(food);
+        foodService.addFood(foodItem1);
     }
 
     @Test
@@ -97,5 +98,77 @@ public class PantryServiceTests {
 
     }
 
+    @Test
+    @Order(6)
+    public void removeItemTest(){
+        try {
+            service.removeItem(food.getId());
+        } catch (PantsNotFoundException e) {
+            Assertions.fail();
+        }
+        FoodInstance instance = food.createInstance(Quantities.getQuantity(4, Units.KILOGRAM));
+        Assertions.assertFalse(service.getItems().contains(instance));
+
+    }
+
+    @Test
+    @Order(7)
+    public void getMissingNoMissing(){
+        List<FoodInstance> instances = new ArrayList<>();
+        FoodInstance instance1 = foodItem1.createInstance(Quantities.getQuantity(2, Units.KILOGRAM));
+        FoodInstance instance2 = foodItem2.createInstance(Quantities.getQuantity(3, Units.KILOGRAM));
+        instances.add(instance1);
+        instances.add(instance2);
+        Assertions.assertTrue(service.getMissing(instances).isEmpty());
+    }
+
+    @Test
+    @Order(8)
+    public void getMissingWrongQuantity(){
+        List<FoodInstance> instances = new ArrayList<>();
+        FoodInstance instance1 = foodItem1.createInstance(Quantities.getQuantity(2, Units.KILOGRAM));
+        FoodInstance instance2 = foodItem2.createInstance(Quantities.getQuantity(4, Units.KILOGRAM));
+        FoodInstance remaining = foodItem2.createInstance(Quantities.getQuantity(1, Units.KILOGRAM));
+        instances.add(instance1);
+        instances.add(instance2);
+        Assertions.assertTrue(service.getMissing(instances).contains(remaining));
+    }
+
+    @Test
+    @Order(9)
+    public void getMissingOverQuantity(){
+        List<FoodInstance> instances = new ArrayList<>();
+        FoodInstance instance1 = foodItem1.createInstance(Quantities.getQuantity(1, Units.KILOGRAM));
+        FoodInstance instance2 = foodItem2.createInstance(Quantities.getQuantity(2, Units.KILOGRAM));
+        instances.add(instance1);
+        instances.add(instance2);
+        Assertions.assertTrue(service.getMissing(instances).isEmpty());
+    }
+
+    @Test
+    @Order(10)
+    public void containsTrueTest(){
+        FoodInstance instance = foodItem1.createInstance(Quantities.getQuantity(2, Units.KILOGRAM));
+        Assertions.assertTrue(service.contains(instance));
+    }
+
+    @Test
+    @Order(11)
+    public void containsFalseTest(){
+        FoodInstance instance = food.createInstance(Quantities.getQuantity(5, Units.KILOGRAM));
+        Assertions.assertFalse(service.contains(instance));
+    }
+
+    @Test
+    @Order(12)
+    public void searchByFoodNameTrueTest(){
+        Assertions.assertEquals(service.searchByFoodName("Apple").size(), 1);
+    }
+
+    @Test
+    @Order(13)
+    public void searchByFoodNameFalseTest(){
+        Assertions.assertTrue(service.searchByFoodName("Banana").isEmpty());
+    }
 
 }
