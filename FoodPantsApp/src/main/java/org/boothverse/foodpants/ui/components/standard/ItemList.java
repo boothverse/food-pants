@@ -41,6 +41,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
             listDisplay.add(item);
         });
         revalidate();
+        repaint();
     }
 
     public void add(StandardItem item) {
@@ -48,6 +49,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         listDisplay.add(item);
         item.addPropertyChangeListener(this);
         revalidate();
+        repaint();
     }
 
     public void removeAll() {
@@ -55,6 +57,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         items.clear();
         listDisplay.removeAll();
         revalidate();
+        repaint();
     }
 
     public void remove(StandardItem item) {
@@ -63,6 +66,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         items.remove(item);
         parent.notifyPage("remove", item, null);
         revalidate();
+        repaint();
     }
 
     @Override

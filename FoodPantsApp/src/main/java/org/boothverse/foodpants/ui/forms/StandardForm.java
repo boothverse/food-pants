@@ -23,16 +23,15 @@ public abstract class StandardForm extends JFrame {
     protected JPanel wrapperPanel;
     protected JLabel title;
     protected Component parent;
-    protected PropertyChangeListener submitListener;
 
     public StandardForm(String header, Component parent) {
         super();
         this.parent = parent;
         setLocationRelativeTo(parent);
 
+        // Disable prior forms/ pages while this one is open
         parent.setEnabled(false);
         if (Page.class.isAssignableFrom(parent.getClass())) {
-            System.out.println("main disabled");
             PageRunner.getFrame().setEnabled(false);
         }
 
@@ -53,20 +52,6 @@ public abstract class StandardForm extends JFrame {
         add(wrapperPanel);
         wrapperPanel.add(contentPanel);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-
-        setupListeners();
-    }
-
-    private void setupListeners() {
-        submitListener = evt -> {
-          if (Objects.equals(evt.getPropertyName(), "submit")) {
-              System.out.println("submit");
-              if (!parent.getClass().isAssignableFrom(StandardForm.class)) {
-                  PageRunner.getFrame().setEnabled(true);
-              }
-          }
-        };
-        contentPanel.addPropertyChangeListener(submitListener);
     }
 
     protected void initFormHeader(String header) {

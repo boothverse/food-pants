@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
 import org.boothverse.foodpants.ui.PageRunner;
@@ -113,7 +114,13 @@ public class ShoppingPage extends Page {
             itemDisplay.add(new ShoppingItem((FoodInstance) newValue));
         }
         else if (Objects.equals(message, "remove")) {
-
+            try {
+                shoppingController.removeItem(((StandardItem)oldValue).getFoodInstance().getId());
+            }
+            catch (PantsNotFoundException e) {
+                System.out.println("Austin is bad at frontend");
+                e.printStackTrace();
+            }
         }
         else if (Objects.equals(message, "update")) {
             updateList();
