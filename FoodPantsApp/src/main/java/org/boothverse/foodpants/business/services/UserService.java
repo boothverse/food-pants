@@ -27,6 +27,10 @@ public class UserService {
     /**
      * creates a new user from input
      * Saves new user to database
+     *
+     * @param name
+     * @param info
+     * @return
      */
     public User register(String name, Map<String, String> info) {
         current = new User();

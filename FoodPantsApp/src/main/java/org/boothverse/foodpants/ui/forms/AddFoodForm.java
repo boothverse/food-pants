@@ -33,7 +33,7 @@ public class AddFoodForm extends StandardForm implements ActionListener {
     private FoodController foodController;
 
     static {
-        String[] nutritionNames = Services.FOOD_SERVICE.getEnumOptions(NutritionType.class);
+        String[] nutritionNames = Services.NUTRITION_SERVICE.getNutritionTypes();
         nutritionLabels = new ArrayList<>();
         nutritionLabels.add(new JLabel("Serving Size"));
         for (String s : nutritionNames) {
@@ -54,7 +54,7 @@ public class AddFoodForm extends StandardForm implements ActionListener {
     private void initSwing() {
         nutritionQuantitySelectors = new QuantitySelector[nutritionLabels.size()];
         nameField = new JTextField(30);
-        foodGroupBox = new JComboBox<>(Services.FOOD_SERVICE.getEnumOptions(FoodGroup.class));
+        foodGroupBox = new JComboBox<>(Services.FOOD_SERVICE.getFoodGroups());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class AddFoodForm extends StandardForm implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String[] nutritionNames = Services.FOOD_SERVICE.getEnumOptions(NutritionType.class);
+        String[] nutritionNames = Services.NUTRITION_SERVICE.getNutritionTypes();
         Map<NutritionType, Quantity<?>> nutritionMap = new HashMap<>();
         for (int i = 1; i < nutritionQuantitySelectors.length; i++) {
             double quantityVal = 0.0;

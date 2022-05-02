@@ -10,6 +10,7 @@ import java.util.List;
 
 public class FoodController {
     /**
+     * Gets the food with the specified id
      *
      * @param id
      * @return
@@ -19,6 +20,7 @@ public class FoodController {
     }
 
     /**
+     * Adds a new food item to the system
      *
      * @param name
      * @param category
@@ -32,6 +34,7 @@ public class FoodController {
     }
 
     /**
+     * Modifies the specified food item with the specified information
      *
      * @param id
      * @param name
@@ -46,6 +49,7 @@ public class FoodController {
     }
 
     /**
+     * Removes the specified food item
      *
      * @param id
      */
@@ -54,6 +58,7 @@ public class FoodController {
     }
 
     /**
+     * Gets a list of all food items
      *
      * @return
      */

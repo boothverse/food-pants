@@ -15,12 +15,24 @@ public class ShoppingService extends FoodInstanceService {
         super(DB_NAME);
     }
 
+    /**
+     * Removes the specified item from the shopping service.
+     *
+     * @param foodIds
+     * @throws PantsNotFoundException
+     */
     public void removeItems(List<String> foodIds) throws PantsNotFoundException {
         for (String id : foodIds) {
             removeItem(id);
         }
     }
 
+    /**
+     * Translates the shopping list into a pdf.
+     *
+     * @param destination
+     * @throws PantsExportShoppingListException
+     */
     public void export(Path destination) throws PantsExportShoppingListException {
         FoodService foodService = Services.FOOD_SERVICE;
 
