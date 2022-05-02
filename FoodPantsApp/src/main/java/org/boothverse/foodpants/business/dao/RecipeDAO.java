@@ -31,7 +31,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
     private String ingredientsToString(List<FoodInstance> ingredients) {
         String result = "";
         for (FoodInstance food : ingredients) {
-            result = result + food.getId() + " " + food.getQuantity().toString() + ",";
+            result = result + food.getId() + ":" + food.getQuantity().toString() + ",";
         }
         result = result.substring(0, result.length() - 1);
         return result;
@@ -47,7 +47,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         List<FoodInstance> list = new ArrayList<>();
         String[] items = ingredients.split(",");
         for (String s : items) {
-            String[] temp = s.split(" ");
+            String[] temp = s.split(":");
             list.add(new FoodInstance(temp[0], Quantities.getQuantity(temp[1])));
         }
         return list;
