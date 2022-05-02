@@ -12,4 +12,6 @@ public interface ListDAO<T extends IdObject> {
 
     void remove(String id);
 
+    void removeAll();
+
 }

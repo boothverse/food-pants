@@ -2,10 +2,7 @@ package org.boothverse.foodpants.business.dao;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
 import java.sql.*;
 
 abstract class JDBCDAO {
@@ -28,14 +25,8 @@ abstract class JDBCDAO {
         this.table = table;
         this.cols = cols;
         this.path = "target/classes/sql/create_" + table + ".sql";
-        try {
+        if (!tableExists()) {
             createTable();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
         }
     }
 
@@ -135,12 +126,15 @@ abstract class JDBCDAO {
      *
      * @throws SQLException
      */
-    protected boolean tableExists() throws SQLException{
-        Connection connection = getDBConnection();
-        DatabaseMetaData dbm = connection.getMetaData();
-        ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
-        if(tables.next()){
-            return true;
+    protected boolean tableExists() {
+        try (Connection connection = getDBConnection()) {
+            DatabaseMetaData dbm = connection.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
+            if (tables.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -151,12 +145,29 @@ abstract class JDBCDAO {
      * @throws SQLException
      * @throws FileNotFoundException
      */
-    protected void createTable() throws SQLException, FileNotFoundException {
-        if(!tableExists()){
-            Connection connection = getDBConnection();
-            ScriptRunner sr = new ScriptRunner(connection);
-            Reader reader = new BufferedReader(new FileReader(this.path));
+    protected void createTable() {
+        executeScript(this.path);
+    }
+
+    /**
+     * Runs a SQL file
+     *
+     * @param filepath
+     */
+    public void executeScript(String filepath) {
+        try (Connection conn = getDBConnection(); Reader reader = new BufferedReader(new FileReader(filepath))) {
+            ScriptRunner sr = new ScriptRunner(conn);
             sr.runScript(reader);
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeAll() {
+        try (Connection conn = getDBConnection(); Statement statement = conn.createStatement()) {
+            statement.execute("DELETE FROM " + table);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
