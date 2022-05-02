@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+import org.boothverse.foodpants.business.dao.util.QuantityParser;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
@@ -45,12 +47,13 @@ public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
      * @throws SQLException
      */
     @Override
-    protected Map<String, FoodInstance> SQLToObj(ResultSet rs) throws SQLException {
+    protected Map<String, FoodInstance> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, FoodInstance> data = new HashMap<>();
 
         while (rs.next()) {
             String id = rs.getString(1);
-            Quantity<?> quantity = Quantities.getQuantity(rs.getString(2));
+            Quantity<?> quantity;
+            quantity = QuantityParser.parse(rs.getString(2));
 
             data.put(id, new FoodInstance(id, quantity));
         }

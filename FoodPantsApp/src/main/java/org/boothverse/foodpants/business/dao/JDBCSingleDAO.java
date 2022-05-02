@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +22,7 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
     }
 
     protected abstract String[] objToSQL(T data);
-    protected abstract T SQLToObj(ResultSet rs) throws SQLException;
+    protected abstract T SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException;
 
     /**
      * Saves the specified data in the DB
@@ -54,7 +56,7 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             ResultSet rs = executeGetAll(statement);
             data = SQLToObj(rs);
-        } catch (SQLException e) {
+        } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
         }
 

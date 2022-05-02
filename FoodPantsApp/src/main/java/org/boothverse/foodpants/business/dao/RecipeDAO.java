@@ -1,14 +1,18 @@
 package org.boothverse.foodpants.business.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
+import org.boothverse.foodpants.business.dao.util.QuantityParser;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.*;
 import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,12 +47,12 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
      * @param
      * @return List<FoodInstance> list
      */
-    private List<FoodInstance> stringToIngredients(String ingredients) {
+    private List<FoodInstance> stringToIngredients(String ingredients) throws PantsNotParsedException {
         List<FoodInstance> list = new ArrayList<>();
         String[] items = ingredients.split(",");
         for (String s : items) {
             String[] temp = s.split(":");
-            list.add(new FoodInstance(temp[0], Quantities.getQuantity(temp[1])));
+            list.add(new FoodInstance(temp[0], QuantityParser.parse(temp[1])));
         }
         return list;
     }
@@ -85,26 +89,26 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
      * @return
      */
     @Override
-    protected Map<String, Recipe> SQLToObj(ResultSet rs) {
+    protected Map<String, Recipe> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, Recipe> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
 
-        try {
-            while (rs.next()) {
-                String id = rs.getString(1);
-                String name = rs.getString(2);
-                FoodGroup group = FoodGroup.valueOf(rs.getString(3));
-                NutritionDescriptor descriptor = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
-                String instructions = rs.getString(5);
-                List<FoodInstance> ingredients = stringToIngredients(rs.getString(6));
-                Double servings = rs.getDouble(7);
-
-                map.put(id, new Recipe(id, name, group, descriptor, instructions, ingredients, servings));
+        while (rs.next()) {
+            String id = rs.getString(1);
+            String name = rs.getString(2);
+            FoodGroup group = FoodGroup.valueOf(rs.getString(3));
+            NutritionDescriptor descriptor = null;
+            try {
+                descriptor = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+            String instructions = rs.getString(5);
+            List<FoodInstance> ingredients = stringToIngredients(rs.getString(6));
+            Double servings = rs.getDouble(7);
+
+            map.put(id, new Recipe(id, name, group, descriptor, instructions, ingredients, servings));
         }
 
         return map;

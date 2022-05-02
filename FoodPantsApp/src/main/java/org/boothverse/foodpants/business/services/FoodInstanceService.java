@@ -30,7 +30,7 @@ public abstract class FoodInstanceService {
      * @return the items tracked by the service
      */
     public List<FoodInstance> getItems() {
-        return new ArrayList<>(items.values());
+       return new ArrayList<>(items.values());
     }
 
     /**

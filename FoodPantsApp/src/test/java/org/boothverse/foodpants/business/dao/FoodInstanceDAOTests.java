@@ -1,14 +1,21 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+import org.boothverse.foodpants.business.dao.util.QuantityParser;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.junit.jupiter.api.*;
 import systems.uom.unicode.CLDR;
+import tech.units.indriya.format.SimpleUnitFormat;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
+import javax.measure.Unit;
 import javax.measure.quantity.Mass;
+import javax.measure.quantity.Volume;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,6 +28,21 @@ public class FoodInstanceDAOTests extends BaseDAOTests {
         pantry = new FoodInstanceDAO("pantry");
         setup(pantry);
         executeScript("pantry_01.sql");
+    }
+
+    @Test
+    void parseQuantitiesTest() throws PantsNotParsedException {
+        Unit<?>[] units = new Unit<?>[] {
+            CLDR.CALORIE,
+            CLDR.OUNCE,
+            CLDR.INCH,
+            CLDR.FLUID_OUNCE,
+            CLDR.POUND,
+            CLDR.CUP,
+            CLDR.PINT,
+            CLDR.GALLON
+        };
+        Arrays.stream(units).map(Objects::toString).forEach(System.out::println);
     }
 
     @Test
@@ -50,7 +72,7 @@ public class FoodInstanceDAOTests extends BaseDAOTests {
     @Test
     @Order(3)
     void foodInstanceSaveTest2() {
-        Quantity<Mass> quantity = Quantities.getQuantity(30.5, CLDR.OUNCE);
+        Quantity<Volume> quantity = Quantities.getQuantity(30.5, CLDR.CUP);
         FoodInstance item = new FoodInstance(testIds.get(1), quantity);
         pantry.save(item);
     }

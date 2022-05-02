@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.persistence.User;
 import org.boothverse.foodpants.business.dao.util.*;
 import tech.units.indriya.quantity.Quantities;
@@ -45,13 +46,13 @@ public class UserDAO extends JDBCSingleDAO<User> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected User SQLToObj(ResultSet rs) throws SQLException {
+    protected User SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         User data = null;
         if (rs.next()) {
             String name = rs.getString(2);
             String gender = rs.getString(3);
-            Quantity<Length> height = (Quantity<Length>) Quantities.getQuantity(rs.getString(4));
-            Quantity<Mass> weight = (Quantity<Mass>) Quantities.getQuantity(rs.getString(5));
+            Quantity<Length> height = (Quantity<Length>) QuantityParser.parse(rs.getString(4));
+            Quantity<Mass> weight = (Quantity<Mass>) QuantityParser.parse(rs.getString(5));
 
             data = new User(name, gender, height, weight);
         }

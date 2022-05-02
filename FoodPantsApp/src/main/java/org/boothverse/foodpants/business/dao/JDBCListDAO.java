@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.persistence.IdObject;
 import org.boothverse.foodpants.business.dao.util.*;
 
@@ -23,7 +24,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
     }
 
     protected abstract String[] objToSQL(T data);
-    protected abstract Map<String, T> SQLToObj(ResultSet rs) throws SQLException;
+    protected abstract Map<String, T> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException;
 
     /**
      * Saves the specified data in the DB
@@ -57,7 +58,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             ResultSet rs = executeGetAll(statement);
             data = SQLToObj(rs);
-        } catch (SQLException e) {
+        } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
         }
 
