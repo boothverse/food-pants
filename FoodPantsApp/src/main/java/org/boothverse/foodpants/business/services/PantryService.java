@@ -1,7 +1,6 @@
 package org.boothverse.foodpants.business.services;
 
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
-import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
@@ -49,20 +48,20 @@ public class PantryService extends FoodInstanceService {
      * @param foodId
      * @param quantity
      */
-    public void removeItem(String foodId, Quantity quantity) {
+    public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException {
         // TODO: test with quantities of diff types and units
-        if (items.containsKey(foodId)) {
-            FoodInstance item = items.get(foodId);
-            quantity = item.getQuantity().subtract(quantity);
+        if (!items.containsKey(foodId)) throw new PantsNotFoundException("food " + foodId + " not found");
 
-            if (quantity.getValue().doubleValue() > 0) {    // remove part
-                item.setQuantity(quantity);
-                items.replace(foodId, item);
-                dao.save(item);
-            } else {                                        // remove all
-                items.remove(foodId);
-                dao.remove(foodId);
-            }
+        FoodInstance item = items.get(foodId);
+        quantity = item.getQuantity().subtract(quantity);
+
+        if (quantity.getValue().doubleValue() > 0) {    // remove part
+            item.setQuantity(quantity);
+            items.replace(foodId, item);
+            dao.save(item);
+        } else {                                        // remove all
+            items.remove(foodId);
+            dao.remove(foodId);
         }
     }
 
@@ -84,18 +83,15 @@ public class PantryService extends FoodInstanceService {
      */
     public List<FoodInstance> searchByFoodName(String query) {
         FoodService foodService = Services.FOOD_SERVICE;
-        List<FoodInstance> ret = new ArrayList<>();
-
-        ret = items.values().stream()
+        return items.values().stream()
             .filter(item -> {
                 try {
                     return foodService.getFood(item.getId()).getName().startsWith(query);
                 } catch (PantsNotFoundException e) {
                     e.printStackTrace();
+                    return false;
                 }
-                return false;
             })
             .toList();
-        return ret;
     }
 }

@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class PantryController implements FoodInstanceController {
     /**
+     * Returns a list of all food instances.
      *
      * @return
      */
@@ -19,6 +21,7 @@ public class PantryController implements FoodInstanceController {
     }
 
     /**
+     * Adds a food instance to the system.
      *
      * @param foodId
      * @param quantity
@@ -30,31 +33,34 @@ public class PantryController implements FoodInstanceController {
     }
 
     /**
+     * Modifies the specified food instance with the given info.
      *
      * @param foodId
      * @param quantity
      * @return
      */
     @Override
-    public FoodInstance editItem(String foodId, Quantity<?> quantity) {
+    public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         return Services.PANTRY_SERVICE.editItem(foodId, quantity);
     }
 
     /**
+     * Removes the specified food instance.
      *
      * @param foodId
      */
     @Override
-    public void removeItem(String foodId) {
+    public void removeItem(String foodId) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId);
     }
 
     /**
+     * Removes the specified food instance and generates a nutrition instance
      *
      * @param foodId
      * @param quantity
      */
-    public void consume(String foodId, Quantity<?> quantity) {
+    public void consume(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId, quantity);
 
         NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),
@@ -63,6 +69,7 @@ public class PantryController implements FoodInstanceController {
     }
 
     /**
+     * Returns a list of food instances given a specific name.
      *
      * @param query
      * @return

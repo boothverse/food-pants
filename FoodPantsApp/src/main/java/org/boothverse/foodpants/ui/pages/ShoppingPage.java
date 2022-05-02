@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.persistence.FoodInstance;
+import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
@@ -62,7 +63,12 @@ public class ShoppingPage extends Page {
                     if (fc.getFileFilter() == filter) {
                         // adding extension .pdf to the end of the file path
                         String path = fc.getSelectedFile().toPath() + ".pdf";
-                        new ShoppingController().export(Paths.get(path));
+                        // TODO: properly handle the exception!
+                        try {
+                            new ShoppingController().export(Paths.get(path));
+                        } catch (PantsExportShoppingListException pantsExportShoppingListException) {
+                            pantsExportShoppingListException.printStackTrace();
+                        }
                     }
                 }
 

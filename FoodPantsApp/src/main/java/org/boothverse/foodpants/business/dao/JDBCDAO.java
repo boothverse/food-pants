@@ -67,7 +67,6 @@ abstract class JDBCDAO {
      * @throws SQLException
      */
     protected void executeInsert(Statement statement, String[] data) throws SQLException {
-        System.out.println(data);
         statement.execute("INSERT INTO " + table + " VALUES (" + String.join(", ", data) + ")");
     }
 

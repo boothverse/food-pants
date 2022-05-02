@@ -2,6 +2,7 @@ package org.boothverse.foodpants.business.services;
 
 import org.boothverse.foodpants.business.dao.FoodInstanceDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
@@ -72,10 +73,11 @@ public abstract class FoodInstanceService {
      * @param id
      * @param quantity
      */
-    public FoodInstance editItem(String id, Quantity<?> quantity) {
-        // TODO: throw custom exception if the item is not found
+    public FoodInstance editItem(String id, Quantity<?> quantity) throws PantsNotFoundException {
+        if (!items.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         FoodInstance item = new FoodInstance(id, quantity);
-        items.put(id, item);
+        items.replace(id, item);
         dao.save(item);
         return item;
     }
@@ -86,8 +88,9 @@ public abstract class FoodInstanceService {
      *
      * @param id
      */
-    public void removeItem(String id) {
-        // TODO: throw custom exception if the item is not found
+    public void removeItem(String id) throws PantsNotFoundException {
+        if (!items.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         items.remove(id);
         dao.remove(id);
     }

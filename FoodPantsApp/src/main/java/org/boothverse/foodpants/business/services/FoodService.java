@@ -3,7 +3,10 @@ package org.boothverse.foodpants.business.services;
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.business.services.util.EnumUtils;
 import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.persistence.FoodGroup;
+import org.boothverse.foodpants.persistence.NutritionType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +38,9 @@ public class FoodService {
      * @param id
      * @return
      */
-    public Food getFood(String id) throws PantsNotFoundException{
-        if(!foods.containsKey(id)){ throw new PantsNotFoundException("Failed to find food with id " + id);}
+    public Food getFood(String id) throws PantsNotFoundException {
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         return foods.get(id);
     }
 
@@ -57,8 +61,10 @@ public class FoodService {
      * @param food
      */
     public void editFood(Food food) throws PantsNotFoundException {
-        if(!foods.containsKey(food.getId())){ throw new PantsNotFoundException("Failed to find food with id " + food.getId());}
-        foods.replace(food.getId(), food);
+        String id = food.getId();
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
+        foods.replace(id, food);
         dao.save(food);
     }
 
@@ -68,7 +74,9 @@ public class FoodService {
      *
      * @param id
      */
-    public void removeFood(String id) {
+    public void removeFood(String id) throws PantsNotFoundException {
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         foods.remove(id);
         dao.remove(id);
     }
@@ -80,12 +88,16 @@ public class FoodService {
      * @param id
      * @return
      */
-    public String getFoodName(String id) {
-        // TODO: throw custom exception if not found
-        return foods.get(id).getName();
+    public String getFoodName(String id) throws PantsNotFoundException {
+        return getFood(id).getName();
     }
 
-    public String[] getEnumOptions(Class<? extends Enum<?>> e) {
-        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+    /**
+     * Return a list of food groups.
+     *
+     * @return
+     */
+    public String[] getFoodGroups() {
+        return EnumUtils.getEnumOptions(FoodGroup.class);
     }
 }

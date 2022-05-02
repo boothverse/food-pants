@@ -10,22 +10,17 @@ import java.util.List;
 
 public class FoodController {
     /**
+     * Gets the food with the specified id
      *
      * @param id
      * @return
      */
-    public Food getFood(String id) {
-        Food food = null;
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            food = Services.FOOD_SERVICE.getFood(id);
-        } catch (PantsNotFoundException e) {
-            e.printStackTrace();
-        }
-        return food;
+    public Food getFood(String id) throws PantsNotFoundException {
+        return Services.FOOD_SERVICE.getFood(id);
     }
 
     /**
+     * Adds a new food item to the system
      *
      * @param name
      * @param category
@@ -39,6 +34,7 @@ public class FoodController {
     }
 
     /**
+     * Modifies the specified food item with the specified information
      *
      * @param id
      * @param name
@@ -46,26 +42,23 @@ public class FoodController {
      * @param nutrition
      * @return
      */
-    public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) {
+    public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) throws PantsNotFoundException{
         Food food = new Food(id, name, category, nutrition);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.FOOD_SERVICE.editFood(food);
-        } catch (PantsNotFoundException e) {
-            e.printStackTrace();
-        }
+        Services.FOOD_SERVICE.editFood(food);
         return food;
     }
 
     /**
+     * Removes the specified food item
      *
      * @param id
      */
-    public void removeFood(String id) {
+    public void removeFood(String id) throws PantsNotFoundException {
         Services.FOOD_SERVICE.removeFood(id);
     }
 
     /**
+     * Gets a list of all food items
      *
      * @return
      */

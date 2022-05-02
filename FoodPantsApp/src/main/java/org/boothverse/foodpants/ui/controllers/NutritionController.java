@@ -10,10 +10,23 @@ import java.util.List;
 
 public class NutritionController {
 
+    /**
+     * Returns a list of all nutrition goals
+     *
+     * @return
+     */
     public List<Goal> getGoals() {
         return Services.NUTRITION_SERVICE.getGoals();
     }
 
+    /**
+     * Adds a goal to the system
+     *
+     * @param goalType
+     * @param quantity
+     * @param nutritionType
+     * @return
+     */
     public Goal addGoal(GoalType goalType,
                         Quantity quantity, NutritionType nutritionType) {
 
@@ -23,27 +36,54 @@ public class NutritionController {
         return goal;
     }
 
+    /**
+     * Edits the specified goal with the given information
+     *
+     * @param id
+     * @param goalType
+     * @param quantity
+     * @param nutritionType
+     * @return
+     * @throws PantsNotFoundException
+     */
     public Goal editGoal(String id, GoalType goalType,
-                         Quantity quantity, NutritionType nutritionType) {
+                         Quantity quantity, NutritionType nutritionType) throws PantsNotFoundException {
 
         Goal goal = new Goal(id, goalType, quantity, nutritionType);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editGoal(goal);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editGoal(goal);
+
         return goal;
     }
 
-    public void removeGoal(String id) {
+    /**
+     * Removes the specified goal.
+     *
+     * @param id
+     * @throws PantsNotFoundException
+     */
+    public void removeGoal(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeGoal(id);
     }
 
+    /**
+     * Gets a list of all nutrition items
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
         return Services.NUTRITION_SERVICE.getItems(startDate, endDate);
     }
 
+    /**
+     * Adds a nutrition item to the system.
+     *
+     * @param foodId
+     * @param quantity
+     * @param consumedAt
+     * @return
+     */
     public NutritionInstance addItem(String foodId, Quantity quantity,
                                      Date consumedAt) {
 
@@ -54,23 +94,41 @@ public class NutritionController {
         return nutInstance;
     }
 
-    public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) {
+    /**
+     * Modifies the specified item with the given information.
+     *
+     * @param id
+     * @param foodId
+     * @param quantity
+     * @param consumedAt
+     * @return
+     * @throws PantsNotFoundException
+     */
+    public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) throws PantsNotFoundException {
 
         NutritionInstance nutInstance = new NutritionInstance(id, foodId, quantity, consumedAt);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editItem(nutInstance);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editItem(nutInstance);
 
         return nutInstance;
     }
 
-    public void removeItem(String id) {
+    /**
+     * Removes the specified item.
+     *
+     * @param id
+     * @throws PantsNotFoundException
+     */
+    public void removeItem(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeItem(id);
     }
 
+    /**
+     * Adds a report to the system
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public ReportPeriod addReport(Date startDate, Date endDate) {
         ReportPeriod reportPeriod = new ReportPeriod(Services.ID_SERVICE.getId(),
             startDate, endDate);
@@ -79,17 +137,26 @@ public class NutritionController {
         return reportPeriod;
     }
 
-    public void editReport(String id, Date startDate, Date endDate) {
+    /**
+     * Modifies the specified report with the given info.
+     *
+     * @param id
+     * @param startDate
+     * @param endDate
+     * @throws PantsNotFoundException
+     */
+    public void editReport(String id, Date startDate, Date endDate) throws PantsNotFoundException {
         ReportPeriod period = new ReportPeriod(id, startDate, endDate);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editReport(period);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editReport(period);
     }
 
-    public void removeReport(String id) {
+    /**
+     * Removes the specified report.
+     *
+     * @param id
+     * @throws PantsNotFoundException
+     */
+    public void removeReport(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeReport(id);
     }
 }

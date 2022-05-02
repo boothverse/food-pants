@@ -5,8 +5,8 @@ create table RECIPES
             primary key,
     NAME         VARCHAR(40)  not null,
     FOODGROUP    VARCHAR(20)  not null,
-    NUTRITION    VARCHAR(40)  not null,
-    INSTRUCTIONS VARCHAR(200) not null,
-    INGREDIENTS  VARCHAR(100) not null,
+    NUTRITION    VARCHAR(4000)  not null,
+    INSTRUCTIONS VARCHAR(20000) not null,
+    INGREDIENTS  VARCHAR(1000) not null,
     SERVINGS     VARCHAR(20)  not null
 );
