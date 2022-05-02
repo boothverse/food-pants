@@ -28,9 +28,9 @@ public class RecipeItem extends StandardPanel {
 
     protected Recipe recipe;
 
-    public RecipeItem(@NonNull Recipe recipeItem) {
+    public RecipeItem(@NonNull Recipe r) {
         super();
-        recipe = Objects.requireNonNull(recipeItem);
+        recipe = Objects.requireNonNull(r);
 
         // Content goes in this panel, order with grid bag layout
         contentPanel = new StandardGridBagPanel();
