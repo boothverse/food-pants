@@ -5,6 +5,7 @@ import org.boothverse.foodpants.business.services.exceptions.PantsExportShopping
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
+import org.boothverse.foodpants.ui.components.standard.ItemList;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.ShoppingController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
@@ -16,26 +17,22 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ArrayList;
 
 
 public class ShoppingPage extends Page {
     private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New"};
 
-    protected JPanel shoppingListDisplay;
-    protected List<ShoppingItem> shoppingItems;
-
     protected ShoppingController shoppingController = new ShoppingController();
 
     protected ActionListener sideMenuListener;
-    protected ActionListener addItemListener;
-
+    protected ItemList items;
     protected Boolean modifying = false;
 
     public ShoppingPage() {
         super(labels);
-        shoppingItems = new ArrayList<>();
-        initSwing();
+        items = new ItemList(1, this);
+        add(items);
+
         initActionListeners();
         updateList();
     }
@@ -43,8 +40,8 @@ public class ShoppingPage extends Page {
     private void initActionListeners() {
         sideMenuListener = e -> {
             if (e.getActionCommand().equals("Mark All")) {
-                for (ShoppingItem listItem : shoppingItems) {
-                    listItem.getCheckBox().setSelected(true);
+                for (StandardItem listItem : items.getItems()) {
+                    ((ShoppingItem)listItem).getCheckBox().setSelected(true);
                 }
             }
             else if (e.getActionCommand().equals("Export")) {
@@ -83,13 +80,12 @@ public class ShoppingPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                for (StandardItem listItem : shoppingItems) {
+                for (StandardItem listItem : items.getItems()) {
                     listItem.setModification(modifying);
                 }
             }
             else if (e.getActionCommand().equals("New List")) {
-                shoppingListDisplay.removeAll();
-                shoppingItems.clear();
+                items.removeAll();
             }
             else if (e.getActionCommand().equals("+")) {
                 StandardForm form = new AddFoodInstanceForm(shoppingController);
@@ -101,28 +97,12 @@ public class ShoppingPage extends Page {
         sideMenu.buttonMap.forEach((name, button) -> button.addActionListener(sideMenuListener));
     }
 
-    private void initSwing() {
-        // Setup display for the items
-        shoppingListDisplay = new JPanel();
-        shoppingListDisplay.setLayout(new BoxLayout(shoppingListDisplay, BoxLayout.PAGE_AXIS));
-        shoppingListDisplay.setBackground(Style.TRANSPARENT);
-
-        // Create a flowlayout wrapper so the component will not be resized
-        JPanel listWrapper = new JPanel(new FlowLayout());
-        add(listWrapper);
-        listWrapper.add(shoppingListDisplay);
-        listWrapper.setBackground(Style.TRANSPARENT);
-    }
-
     protected void updateList() {
         List<FoodInstance> listItems = shoppingController.getItems();
 
-        shoppingItems.clear();
-        shoppingListDisplay.removeAll();
+        items.removeAll();
         for (FoodInstance item : listItems) {
-            ShoppingItem thisItem = new ShoppingItem(item);
-            shoppingItems.add(thisItem);
-            shoppingListDisplay.add(thisItem);
+            items.add(new ShoppingItem(item));
         }
         revalidate();
     }
