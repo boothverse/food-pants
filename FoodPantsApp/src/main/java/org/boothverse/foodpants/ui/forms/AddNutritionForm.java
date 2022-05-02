@@ -49,7 +49,7 @@ public class AddNutritionForm extends AddFoodInstanceForm {
                         quantityPanel.getSelectedQuantity(),
                         dateFormat.parse(dateField.getText()));
 
-                    PageManager.getActivePage().notifyPage("add", null, newFood);
+                    PageManager.getActivePage().notifyChange("add", null, newFood);
                     dispose();
                 } catch (ParseException ex) {
                     JOptionPane.showMessageDialog(this, "Must specify a date in MM/dd/yyyy format!",
