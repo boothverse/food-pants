@@ -7,8 +7,13 @@ import org.boothverse.foodpants.business.dao.ReportDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.business.services.util.EnumUtils;
 import org.boothverse.foodpants.persistence.*;
+import tech.units.indriya.quantity.Quantities;
 
+import javax.measure.Quantity;
+import javax.measure.quantity.Dimensionless;
 import java.util.*;
+
+import static tech.units.indriya.AbstractUnit.ONE;
 
 public class NutritionService {
     // Map<id : String, i : NutritionInstance >
@@ -18,6 +23,10 @@ public class NutritionService {
     protected final ListDAO<NutritionInstance> nutritionInstanceDAO = new NutritionInstanceDAO();
     protected final ListDAO<ReportPeriod> reportPeriodDAO = new ReportDAO();
     protected final ListDAO<Goal> goalDAO = new GoalDAO();
+
+    private static final double AVG_CALORIE_MEN = 2500;
+    private static final double AVG_CALORIE_WOMEN = 2000;
+    private static final double CALORIE_GOAL_BUFFER = 500;
 
     /**
      * Creates the NutritionService and loads data stored in database
@@ -84,14 +93,54 @@ public class NutritionService {
      */
     public List<Goal> getGoals() { return new ArrayList<>(goals.values()); }
 
-    //TODO
     /**
+     * Computes the recommended calorie goal based on the Harris-Benedict formula
      *
-     * @param user
      * @return
      */
-    public Goal<?> getRecommendedGoal(User user) {
-        return null;
+    public Goal<?> getRecommendedCalorieGoal() {
+        UserService userService = Services.USER_SERVICE;
+        double calories;
+        double weight = userService.getBodyWeightKg();
+        double height = userService.getHeightCm();
+        int age = userService.getAge();
+        String id = Services.ID_SERVICE.getId();
+
+        // Harris-Benedict formula
+        if (userService.userIsFemale()) {
+            calories = (655.1 + 9.6 * weight + 1.9 * height) / (4.7 * age);
+        } else {
+            calories = (66.5 + 13.8 * weight + 5 * height) / (6.8 * age);
+        }
+        // TODO: low physical activity -> 1.2
+        //       med                   -> 1.3
+        //       high                  -> 1.4
+        double multiplier = 1.3;
+        calories *= multiplier;
+
+        // Find goal type
+        GoalType goalType;
+        if (userService.userIsFemale()) {
+            if (calories < AVG_CALORIE_WOMEN) {
+                goalType = GoalType.MAXIMIZE;
+                calories -= CALORIE_GOAL_BUFFER;
+            } else {
+                goalType = GoalType.MINIMIZE;
+                calories += CALORIE_GOAL_BUFFER;
+            }
+        } else {
+            if (calories < AVG_CALORIE_MEN) {
+                goalType = GoalType.MAXIMIZE;
+                calories -= CALORIE_GOAL_BUFFER;
+            } else {
+                goalType = GoalType.MINIMIZE;
+                calories += CALORIE_GOAL_BUFFER;
+            }
+        }
+
+        Quantity<Dimensionless> quantity = Quantities.getQuantity(calories, ONE);
+
+        return new Goal<>(id, goalType, quantity, NutritionType.CALORIES);
     }
 
     /**
