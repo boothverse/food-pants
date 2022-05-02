@@ -62,9 +62,15 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         addRightComponent(new JPanel(),++i);
 
         addSubmitButton(e -> {
-            controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
-                .getId(), quantityPanel.getSelectedQuantity());
-            PageManager.getActivePage().notifyPage();
+            if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
+                controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                    .getId(), quantityPanel.getSelectedQuantity());
+                PageManager.getActivePage().notifyPage();
+                dispose();
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Must select a food and quantity to be added", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
     }
 

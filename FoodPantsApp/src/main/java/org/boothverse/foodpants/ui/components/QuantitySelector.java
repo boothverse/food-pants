@@ -17,7 +17,7 @@ import java.util.Objects;
 @Getter
 public class QuantitySelector extends JPanel {
     public static final String[] quantityOptions = {"unit", "g", "kg", "oz", "lb", "fl oz", "cup", "gallon", "L", "calorie"};
-    public static final Unit<?>[] unitClasses = {AbstractUnit.ONE, Units.KILOGRAM, CLDR.OUNCE, CLDR.POUND,
+    public static final Unit<?>[] unitClasses = {AbstractUnit.ONE, Units.GRAM, Units.KILOGRAM, CLDR.OUNCE, CLDR.POUND,
         CLDR.FLUID_OUNCE, CLDR.CUP, CLDR.GALLON, Units.LITRE, CLDR.CALORIE};
     protected JComboBox<String> quantityUnitBox;
     protected JFormattedTextField quantityValueField;
@@ -56,5 +56,9 @@ public class QuantitySelector extends JPanel {
             quantityVal = 0.0;
         }
         return Quantities.getQuantity(quantityVal, unit);
+    }
+
+    public boolean isEmpty() {
+        return Objects.equals(quantityValueField.getText(), "");
     }
 }

@@ -4,6 +4,8 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
+import org.boothverse.foodpants.ui.components.standard.ItemList;
+import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.PantryController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.SearchForm;
@@ -20,24 +22,16 @@ import java.util.List;
 public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
 
-    private static List<PantryItem> pantryItems;
-    private static JPanel displayPanel;
     private static boolean modifyingPantry;
     private final PantryController pantryController = new PantryController();
+    private final ItemList itemDisplay;
 
     public PantryPage() {
         super(labels);
-        pantryItems = new ArrayList<>();
         modifyingPantry = false;
 
-        JPanel listWrapper = new JPanel(new FlowLayout());
-        listWrapper.setBackground(Style.TRANSPARENT);
-
-        displayPanel = new JPanel(new GridLayout(0, 2));
-        displayPanel.setBackground(Style.TRANSPARENT);
-
-        listWrapper.add(displayPanel);
-        add(listWrapper);
+        itemDisplay = new ItemList(2, this);
+        add(itemDisplay);
 
         updateList();
     }
@@ -64,7 +58,7 @@ public class PantryPage extends Page {
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
-                for (PantryItem pantryPanel : pantryItems) {
+                for (StandardItem pantryPanel : itemDisplay.getItems()) {
                     pantryPanel.setModification(modifyingPantry);
                 }
             }
@@ -74,12 +68,9 @@ public class PantryPage extends Page {
     protected void updateList() {
         List<FoodInstance> listItems = pantryController.getItems();
 
-        pantryItems.clear();
-        displayPanel.removeAll();
-        for (FoodInstance item : listItems) {
-            PantryItem thisItem = new PantryItem(item);
-            pantryItems.add(thisItem);
-            displayPanel.add(thisItem);
+        itemDisplay.removeAll();
+        for (FoodInstance food : listItems) {
+            itemDisplay.add(new PantryItem(food));
         }
         revalidate();
     }
