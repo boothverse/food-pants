@@ -4,32 +4,41 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.NutritionType;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static tech.units.indriya.AbstractQuantity.ONE;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class FoodDAOTests {
+public class FoodDAOTests extends BaseDAOTests {
+
+    static List<Food> backup;
+    static ListDAO<Food> dao;
+
+    @BeforeAll
+    static void setup() {
+        // Clear table
+        dao = new FoodDAO();
+        backup = new ArrayList<>(dao.load().values());
+        dao.removeAll();
+
+        initIds();
+    }
 
     @Test
     @Order(1)
     void foodSaveTest() {
-        ListDAO<Food> dao = new FoodDAO();
-
         NutritionDescriptor nutrition = new NutritionDescriptor();
         nutrition.setNutritionInfo(Map.of(
             NutritionType.CALORIES, Quantities.getQuantity(105, Units.KILOGRAM)));
         nutrition.setServingSize(ONE);
 
-        Food food = new Food("ja2f039jawoiefj029JF", "Banana", FoodGroup.FRUIT, nutrition);
+        Food food = new Food(testIds.get(0), "Banana", FoodGroup.FRUIT, nutrition);
 
         dao.save(food);
     }
@@ -37,13 +46,35 @@ public class FoodDAOTests {
     @Test
     @Order(2)
     void foodLoadTest() {
-        ListDAO<Food> dao = new FoodDAO();
-
         Map<String, Food> foods = dao.load();
         assertEquals(1, foods.size());
 
-        Food food = foods.get("ja2f039jawoiefj029JF");
+        Food food = foods.get(testIds.get(0));
         assertEquals(food.getName(), "Banana");
+        assertEquals(food.getFoodGroup(), FoodGroup.FRUIT);
+    }
+
+    @Test
+    @Order(3)
+    void foodSaveTest2() {
+        NutritionDescriptor nutrition = new NutritionDescriptor();
+        nutrition.setNutritionInfo(Map.of(
+            NutritionType.CALORIES, Quantities.getQuantity(105, Units.KILOGRAM)));
+        nutrition.setServingSize(ONE);
+
+        Food food = new Food(testIds.get(0), "Apple", FoodGroup.FRUIT, nutrition);
+
+        dao.save(food);
+    }
+
+    @Test
+    @Order(4)
+    void foodLoadTest2() {
+        Map<String, Food> foods = dao.load();
+        assertEquals(1, foods.size());
+
+        Food food = foods.get(testIds.get(0));
+        assertEquals(food.getName(), "Apple");
         assertEquals(food.getFoodGroup(), FoodGroup.FRUIT);
     }
 
