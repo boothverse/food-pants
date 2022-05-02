@@ -25,7 +25,7 @@ public class PantryController implements FoodInstanceController {
 
         System.out.println("THERE");
 
-        System.exit(1);
+        // System.exit(1);
 
         return Services.PANTRY_SERVICE.getItems();
     }

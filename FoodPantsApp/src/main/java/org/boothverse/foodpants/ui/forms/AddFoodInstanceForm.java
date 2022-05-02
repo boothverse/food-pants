@@ -30,6 +30,14 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         initForm();
     }
 
+    public AddFoodInstanceForm(String header, FoodInstanceController controller, Component parent) {
+        super(header, parent);
+
+        this.controller = controller;
+        initSwing();
+        initForm();
+    }
+
     private void initSwing() {
         editFoodButton = new JButton("Edit Selected");
         editFoodButton.setEnabled(false);
