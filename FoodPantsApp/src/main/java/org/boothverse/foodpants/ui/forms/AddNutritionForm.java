@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddNutritionForm extends StandardItemForm {
-    public AddNutritionForm(String header) {
+    public AddNutritionForm(String header, Component parent) {
         // , new String[]{"Name", "Quantity", "Time"}
-        super(header);
+        super(header, parent);
     }
 }

@@ -1,7 +1,9 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.ui.components.standard.ItemList;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardLabel;
+import org.boothverse.foodpants.ui.controllers.RecipeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,15 +12,20 @@ public class RecipeForm extends StandardItemForm {
     protected final int WIDTH = 640;
     protected final int HEIGHT = 480;
 
-    public RecipeForm(String header) {
-        super(header);
+    protected RecipeController recipeController;
+
+    public RecipeForm(String header, Component parent) {
+        super(header, parent);
         setSize(WIDTH, HEIGHT);
+
+        recipeController = new RecipeController();
+
+        textLabels = new String[]{"Name", "Food Group", "Nutrition",
+            "Instructions", "Ingredients", "Servings"};
     }
 
     @Override
     void initForm() {
-        String[] textLabels = new String[]{"Name", "Servings"};
-
         int i;
         for (i = 0; i < textLabels.length; i++) {
             JLabel lbl = new StandardLabel(textLabels[i]);
@@ -35,7 +42,9 @@ public class RecipeForm extends StandardItemForm {
         addRightComponent(ingredArea, ++i);
 
         JButton submitBtn = new StandardButton("Submit");
-        submitBtn.addActionListener(e -> this.dispose());
+        submitBtn.addActionListener(e -> {
+            this.dispose();
+        });
 
         addRightComponent(submitBtn, ++i);
     }

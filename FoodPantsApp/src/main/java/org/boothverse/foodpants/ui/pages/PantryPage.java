@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
@@ -18,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
@@ -40,15 +42,12 @@ public class PantryPage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+" -> {
-                StandardForm form = new AddFoodInstanceForm(pantryController);
-                form.setLocationRelativeTo(this);
+                StandardForm form = new AddFoodInstanceForm(pantryController, this);
                 form.setVisible(true);
             }
             case "Search" -> {
-                StandardForm form = new SearchForm();
-                form.setLocationRelativeTo(this);
+                StandardForm form = new SearchForm(this);
                 form.setVisible(true);
-                this.setFocusable(false);
             }
             case "Modify" -> {
                 JButton modifyBtn = (JButton) e.getSource();
@@ -76,7 +75,21 @@ public class PantryPage extends Page {
     }
 
     @Override
-    public void notifyPage() {
-        updateList();
+    public void notifyPage(String message, Object oldValue, Object newValue) {
+        if (Objects.equals(message, "add")) {
+            itemDisplay.add(new PantryItem((FoodInstance) newValue));
+        }
+        else if (Objects.equals(message, "remove")) {
+            try {
+                pantryController.removeItem(((StandardItem)oldValue).getFoodInstance().getId());
+            }
+            catch (PantsNotFoundException e) {
+                System.out.println("Austin is bad at frontend");
+                e.printStackTrace();
+            }
+        }
+        else if (Objects.equals(message, "update")) {
+            updateList();
+        }
     }
 }

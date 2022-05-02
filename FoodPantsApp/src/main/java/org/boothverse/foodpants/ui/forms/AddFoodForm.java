@@ -14,9 +14,11 @@ import tech.units.indriya.unit.Units;
 import javax.measure.Quantity;
 import javax.measure.Unit;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.List;
 
 public class AddFoodForm extends StandardForm implements ActionListener {
     private static final int DEFAULT_WIDTH = 500;
@@ -43,8 +45,8 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         }
     }
 
-    public AddFoodForm() {
-        super("Add Food");
+    public AddFoodForm(Component parent) {
+        super("Add Food", parent);
         initSwing();
         initForm();
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);

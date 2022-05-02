@@ -1,8 +1,11 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.persistence.IdObject;
+import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.TimelineDropdown;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.controllers.NutritionController;
 import org.boothverse.foodpants.ui.forms.AddNutritionForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
@@ -67,7 +70,7 @@ public class TimelinePage extends NutritionPage {
 
         SimpleDateFormat dateFormat = null;
 
-        // TODO: get nutrition items in date ranges
+        NutritionController nutritionController = new NutritionController();
 
         // Get timeline dates
         switch (viewType) {
@@ -81,6 +84,18 @@ public class TimelinePage extends NutritionPage {
                     TimelineDropdown dropdown = new TimelineDropdown(
                         new String[]{t}
                     );
+
+                    Date startDate = c.getTime();
+                    c.add(Calendar.HOUR, 4);
+                    Date endDate = c.getTime();
+
+                    // Get nutritional items in select hours
+                    List<NutritionInstance> items = nutritionController.getItems(startDate, endDate);
+
+                    for (NutritionInstance item : items) {
+                        // TODO: get food by id, add to dropdown with quantity
+                        // dropdown.add();
+                    }
 
                     currTimePanel.add(dropdown);
                 }
@@ -139,7 +154,7 @@ public class TimelinePage extends NutritionPage {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                StandardForm form = new AddNutritionForm("Add Nutrition Item");
+                StandardForm form = new AddNutritionForm("Add Nutrition Item", this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;

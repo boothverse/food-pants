@@ -27,7 +27,6 @@ public class QuantitySelector extends JPanel {
         quantityUnitBox = new JComboBox<>(quantityOptions);
         quantityValueField = new JFormattedTextField(NumberFormat.getNumberInstance());
 
-
         add(quantityUnitBox, BorderLayout.WEST);
         add(quantityValueField, BorderLayout.CENTER);
     }

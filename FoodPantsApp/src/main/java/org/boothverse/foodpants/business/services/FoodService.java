@@ -6,9 +6,7 @@ import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundExcept
 import org.boothverse.foodpants.business.services.util.EnumUtils;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
-import org.boothverse.foodpants.persistence.NutritionType;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

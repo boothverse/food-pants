@@ -1,17 +1,16 @@
 package org.boothverse.foodpants.ui;
 
+import lombok.Getter;
 import org.boothverse.foodpants.ui.components.PageViewer;
 import org.boothverse.foodpants.ui.components.Navbar;
 import org.boothverse.foodpants.ui.pages.Page;
-import systems.uom.unicode.CLDR;
-import tech.units.indriya.quantity.Quantities;
-import tech.units.indriya.unit.Units;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PageRunner {
     private static final Dimension MIN_SIZE = new Dimension(1000, 500);
+    @Getter
     private static JFrame frame;
     private static PageViewer pageFrame;
 
@@ -51,5 +50,4 @@ public class PageRunner {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(PageRunner::createAndShowGUI);
     }
-
 }
