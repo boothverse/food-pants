@@ -5,7 +5,6 @@ import org.boothverse.foodpants.persistence.Recipe;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
 import org.boothverse.foodpants.ui.components.RecipeItem;
-import org.boothverse.foodpants.ui.components.standard.ItemList;
 import org.boothverse.foodpants.ui.controllers.FoodInstanceController;
 import org.boothverse.foodpants.ui.controllers.RecipeController;
 import org.boothverse.foodpants.ui.forms.RecipeForm;
@@ -19,17 +18,23 @@ import java.util.List;
 public class RecipePage extends Page {
     private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
 
-    protected ItemList items;
+    protected JPanel listWrapper;
+    protected JPanel recipeListPanel;
     protected RecipeController recipeController = new RecipeController();
 
     // TODO: add grandma cerny's synatactic sugar cookie recipe
     public RecipePage() {
         super(labels);
 
-        items = new ItemList(1, this);
-        items.getListDisplay().setLayout(new GridLayout(0, 1, 0 ,10));
-        add(items);
+        listWrapper = new JPanel(new FlowLayout());
+        recipeListPanel = new JPanel(new GridLayout(0, 1, 0, 10));
+
+        add(listWrapper);
+        listWrapper.add(recipeListPanel);
+
         updateList();
+
+        listWrapper.setBackground(Style.TRANSPARENT);
     }
 
     @Override
@@ -50,9 +55,10 @@ public class RecipePage extends Page {
     protected void updateList() {
         List<Recipe> listItems = recipeController.getRecipes();
 
-        items.removeAll();
+        recipeListPanel.removeAll();
         for (Recipe item : listItems) {
-            items.add(new RecipeItem(item));
+            RecipeItem thisItem = new RecipeItem(item);
+            recipeListPanel.add(thisItem);
         }
         revalidate();
     }
