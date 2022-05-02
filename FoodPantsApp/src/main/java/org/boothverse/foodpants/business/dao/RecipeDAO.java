@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.dao;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
@@ -60,15 +61,21 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
      */
     @Override
     protected String[] objToSQL(Recipe data) {
-
-        return new String[]{
-            SQLUtils.inQuote(data.getId()),
-            SQLUtils.inQuote(data.getName()),
-            SQLUtils.inQuote(data.getFoodGroup().toString()),
-            SQLUtils.inQuote(data.getNutrition().toString()),
-            SQLUtils.inQuote(data.getInstructions()),
-            SQLUtils.inQuote(ingredientsToString(data.getIngredients())),
-            SQLUtils.inQuote(data.getServings().toString())};
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.addMixIn(Quantity.class, QuantityMixin.class);
+        try {
+            return new String[]{
+                SQLUtils.inQuote(data.getId()),
+                SQLUtils.inQuote(data.getName()),
+                SQLUtils.inQuote(data.getFoodGroup().toString()),
+                SQLUtils.inQuote(mapper.writeValueAsString(data.getNutrition())),
+                SQLUtils.inQuote(data.getInstructions()),
+                SQLUtils.inQuote(ingredientsToString(data.getIngredients())),
+                SQLUtils.inQuote(data.getServings().toString())};
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
