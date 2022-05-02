@@ -1,8 +1,8 @@
 package org.boothverse.foodpants.business.dao;
 
-import org.boothverse.foodpants.business.dao.util.JDBCUtils;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.junit.jupiter.api.*;
+import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -45,5 +45,23 @@ public class FoodInstanceDAOTests extends BaseDAOTests {
 
         assertEquals(foodInstance.getQuantity().getUnit(), quantity.getUnit());
         assertEquals(foodInstance.getQuantity().getValue(), quantity.getValue());
+    }
+
+    @Test
+    @Order(3)
+    void foodInstanceSaveTest2() {
+        Quantity<Mass> quantity = Quantities.getQuantity(30.5, CLDR.OUNCE);
+        FoodInstance item = new FoodInstance(testIds.get(1), quantity);
+        pantry.save(item);
+    }
+
+    @Test
+    @Order(4)
+    void foodInstanceLoadTest2() {
+        Map<String, FoodInstance> items = pantry.load();
+        Quantity<Mass> quantity = Quantities.getQuantity(30.5, CLDR.OUNCE);
+        FoodInstance item = new FoodInstance(testIds.get(1), quantity);
+        FoodInstance pantryItem = items.get(testIds.get(1));
+        assertEquals(item, pantryItem);
     }
 }
