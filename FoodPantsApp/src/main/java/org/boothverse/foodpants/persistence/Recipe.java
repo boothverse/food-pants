@@ -43,6 +43,13 @@ public class Recipe extends Food {
         this.servings = servings;
     }
 
+    public Recipe(Food basis, String instructions, List<FoodInstance> ingredients, Double servings) {
+        super(basis.getId(), basis.getName(), basis.getFoodGroup(), basis.getNutrition());
+        this.instructions = instructions;
+        this.ingredients = ingredients;
+        this.servings = servings;
+    }
+
     /**
      * Turns the recipe into a FoodInstance
      *

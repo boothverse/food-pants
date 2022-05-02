@@ -19,14 +19,7 @@ public class PantryController implements FoodInstanceController {
      */
     @Override
     public List<FoodInstance> getItems() {
-        System.out.println("HERE");
-
         PantryService pantryService = Services.PANTRY_SERVICE;
-
-        System.out.println("THERE");
-
-        System.exit(1);
-
         return Services.PANTRY_SERVICE.getItems();
     }
 
