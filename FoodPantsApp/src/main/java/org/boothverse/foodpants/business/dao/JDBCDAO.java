@@ -1,11 +1,11 @@
 package org.boothverse.foodpants.business.dao;
 
-import org.apache.ibatis.jdbc.ScriptRunner;
+import org.boothverse.foodpants.business.dao.util.JDBCUtils;
 
 import java.io.*;
 import java.sql.*;
 
-abstract class JDBCDAO {
+public abstract class JDBCDAO {
     private static final String DB_DRIVER = "org.apache.derby.jdbc.EmbeddedDriver";
     private static final String DB_CONNECTION = "jdbc:derby:db;create=true";
     private static final String DB_USER = "";
@@ -28,6 +28,12 @@ abstract class JDBCDAO {
         if (!tableExists()) {
             createTable();
         }
+    }
+
+    public JDBCDAO() {
+        this.table = null;
+        this.cols = null;
+        this.path = null;
     }
 
     /**
@@ -146,21 +152,7 @@ abstract class JDBCDAO {
      * @throws FileNotFoundException
      */
     protected void createTable() {
-        executeScript(this.path);
-    }
-
-    /**
-     * Runs a SQL file
-     *
-     * @param filepath
-     */
-    public void executeScript(String filepath) {
-        try (Connection conn = getDBConnection(); Reader reader = new BufferedReader(new FileReader(filepath))) {
-            ScriptRunner sr = new ScriptRunner(conn);
-            sr.runScript(reader);
-        } catch (SQLException | IOException e) {
-            e.printStackTrace();
-        }
+        new JDBCUtils().executeScript(this.path);
     }
 
     public void removeAll() {
