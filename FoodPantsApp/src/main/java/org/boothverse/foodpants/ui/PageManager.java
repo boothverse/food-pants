@@ -1,9 +1,11 @@
 package org.boothverse.foodpants.ui;
 
+import lombok.Getter;
 import org.boothverse.foodpants.ui.components.PageViewer;
 import org.boothverse.foodpants.ui.pages.*;
 
 public class PageManager {
+    @Getter
     private static Page activePage;
 
     private static final Page pantryPage = new PantryPage();

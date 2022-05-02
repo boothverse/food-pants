@@ -1,12 +1,13 @@
 package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.persistence.FoodInstance;
+import org.boothverse.foodpants.ui.controllers.FoodInstanceController;
 
 import static org.boothverse.foodpants.ui.components.QuantitySelector.unitClasses;
 
 public class EditFoodInstanceForm extends AddFoodInstanceForm {
-    public EditFoodInstanceForm(FoodInstance editItem) {
-        super();
+    public EditFoodInstanceForm(FoodInstance editItem, FoodInstanceController controller) {
+        super(controller);
         initFormHeader("Edit Food");
 
         // TODO: fix this when foodServices is implemented

@@ -74,6 +74,9 @@ public abstract class StandardForm extends JFrame {
 
     protected void addMiddleComponent(Component c, int row) {
         contentPanel.addMiddleComponent(c, row);
+        if (row > numRows) {
+            numRows = row;
+        }
     }
 
     void addSubmitButton(ActionListener e)  {

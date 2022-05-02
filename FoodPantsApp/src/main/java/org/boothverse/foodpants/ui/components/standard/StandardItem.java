@@ -1,15 +1,11 @@
 package org.boothverse.foodpants.ui.components.standard;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.boothverse.foodpants.persistence.Food;
-import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
-import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
-import org.boothverse.foodpants.ui.forms.StandardForm;
-
-import systems.uom.unicode.CLDR;
-import tech.units.indriya.quantity.Quantities;
+import org.boothverse.foodpants.ui.controllers.FoodController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,32 +26,23 @@ public class StandardItem extends StandardPanel implements ActionListener {
 
     @Getter
     protected FoodInstance foodInstance;
+    protected FoodController foodController = new FoodController();
 
-    // TODO: demo only
-    private final Food demoFood = new Food("1", "Orange", FoodGroup.FRUIT, null);
-
-    public StandardItem(FoodInstance foodInstance) {
+    public StandardItem(@NonNull FoodInstance foodInstance) {
         super();
 
         // Set swing properties
         setLayout(new BorderLayout());
         setPreferredSize(prefSize);
 
-        // NOTE: Must be Quantity from : tech.units:indriya:2.1.2
-        if (foodInstance != null) {
-            this.foodInstance = foodInstance;
-        }
-        else {
-            this.foodInstance = demoFood.createInstance(Quantities.getQuantity(10, CLDR.FLUID_OUNCE));
-        }
+        this.foodInstance = foodInstance;
 
         // Setup fields
         initComponents();
     }
 
     private void initComponents() {
-        // TODO: change so name displays correctly
-        Food food = /*Services.FOOD_SERVICE.getFood(foodInstance.getId());*/ demoFood;
+        Food food = foodController.getFood(foodInstance.getId());
         String name = food.getName();
         Number amt = foodInstance.getQuantity().getValue();
 
@@ -98,15 +85,14 @@ public class StandardItem extends StandardPanel implements ActionListener {
     public void setModification(boolean status) {
         editButton.setVisible(status);
         deleteButton.setVisible(status);
-        quantityLabel.setEditable(status);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
-            StandardForm form = new EditFoodInstanceForm(foodInstance);
-            form.setLocationRelativeTo(this);
-            form.setVisible(true);
+//            StandardForm form = new EditFoodInstanceForm(foodInstance);
+//            form.setLocationRelativeTo(this);
+//            form.setVisible(true);
         } else if (e.getSource() == deleteButton) {
             firePropertyChange("deleteItem", e.getActionCommand(), null);
         }

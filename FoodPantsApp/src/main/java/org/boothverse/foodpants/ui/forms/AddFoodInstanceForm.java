@@ -1,34 +1,40 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
+import org.boothverse.foodpants.ui.controllers.FoodInstanceController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Objects;
 
 public class AddFoodInstanceForm extends StandardForm implements ItemListener, ActionListener {
     FoodSearchBar foodSearchBar;
     QuantitySelector quantityPanel;
-    JButton foodButton;
+    JButton editFoodButton;
     JButton createFoodButton;
+    FoodInstanceController controller;
 
-    public AddFoodInstanceForm() {
+    public AddFoodInstanceForm(FoodInstanceController controller) {
         super("Add Food");
 
+        this.controller = controller;
         initSwing();
         initForm();
     }
 
     private void initSwing() {
-        foodButton = new JButton("Edit Selected");
-        foodButton.setEnabled(false);
+        editFoodButton = new JButton("Edit Selected");
+        editFoodButton.setEnabled(false);
         createFoodButton = new JButton("Create New");
         foodSearchBar = new FoodSearchBar();
         foodSearchBar.addItemListener(this);
-        foodSearchBar.populate();
 
         quantityPanel = new QuantitySelector();
 
@@ -37,7 +43,7 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         quantityPanel.getQuantityValueField().setPreferredSize(
             new Dimension(getWidth() / 2, quantityPanel.getQuantityValueField().getHeight()));
 
-        foodButton.addActionListener(this);
+        editFoodButton.addActionListener(this);
         createFoodButton.addActionListener(this);
     }
 
@@ -47,7 +53,7 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         addLeftComponent(new JLabel("Food"), ++i);
         addRightComponent(foodSearchBar, i);
 
-        addRightComponent(foodButton, ++i);
+        addRightComponent(editFoodButton, ++i);
         addRightComponent(createFoodButton, ++i);
         addRightComponent(new JPanel(),++i);
 
@@ -55,16 +61,20 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         addRightComponent(quantityPanel, i);
         addRightComponent(new JPanel(),++i);
 
-        addSubmitButton(e -> dispose());
+        addSubmitButton(e -> {
+            controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                .getId(), quantityPanel.getSelectedQuantity());
+            PageManager.getActivePage().notifyPage();
+        });
     }
 
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.DESELECTED) {
-            foodButton.setEnabled(false);
+            editFoodButton.setEnabled(false);
         }
         if (e.getStateChange() == ItemEvent.SELECTED) {
-            foodButton.setEnabled(true);
+            editFoodButton.setEnabled(true);
             Object item = e.getItem();
             System.out.println(item.toString());
         }
@@ -74,16 +84,16 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(createFoodButton)) {
             AddFoodForm form = new AddFoodForm();
-            form.addFormToBeNotified(this);
+            form.setFormToBeNotified(this);
             form.setLocationRelativeTo(this);
             form.setVisible(true);
         }
-        else {
+        else if (e.getSource().equals(editFoodButton)) {
 
         }
     }
 
-    public void updateFoodSearchBar() {
-        foodSearchBar.populate();
+    public void updateFoodSearchBar(Food newFood) {
+        foodSearchBar.update(newFood);
     }
 }

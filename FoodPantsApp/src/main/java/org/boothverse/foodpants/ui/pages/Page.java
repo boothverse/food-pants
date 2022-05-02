@@ -43,4 +43,8 @@ public class Page extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
     }
+
+    public void notifyPage() {
+
+    }
 }

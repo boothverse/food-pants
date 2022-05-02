@@ -1,11 +1,10 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
-import org.boothverse.foodpants.ui.components.standard.StandardButton;
-import org.boothverse.foodpants.ui.controllers.RecipeController;
 import org.boothverse.foodpants.ui.controllers.ShoppingController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
@@ -14,9 +13,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
@@ -26,24 +22,25 @@ public class ShoppingPage extends Page {
     private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New"};
 
     protected JPanel shoppingListDisplay;
-    protected StandardButton addItemButton;
+    protected List<ShoppingItem> shoppingItems;
 
-    protected ActionListener shoppingListener;
+    protected ShoppingController shoppingController = new ShoppingController();
+
+    protected ActionListener sideMenuListener;
     protected ActionListener addItemListener;
 
     protected Boolean modifying = false;
-    protected List<ShoppingItem> shoppingItems;
-    private final int numItems = 10;
 
     public ShoppingPage() {
         super(labels);
         shoppingItems = new ArrayList<>();
-        initList();
+        initSwing();
         initActionListeners();
+        updateList();
     }
 
     private void initActionListeners() {
-        shoppingListener = e -> {
+        sideMenuListener = e -> {
             if (e.getActionCommand().equals("Mark All")) {
                 for (ShoppingItem listItem : shoppingItems) {
                     listItem.getCheckBox().setSelected(true);
@@ -85,19 +82,20 @@ public class ShoppingPage extends Page {
                 }
             }
             else if (e.getActionCommand().equals("New List")) {
-
+                shoppingListDisplay.removeAll();
+                shoppingItems.clear();
             }
             else if (e.getActionCommand().equals("+")) {
-                StandardForm form = new AddFoodInstanceForm();
+                StandardForm form = new AddFoodInstanceForm(shoppingController);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
         };
 
-        sideMenu.buttonMap.forEach((name, button) -> button.addActionListener(shoppingListener));
+        sideMenu.buttonMap.forEach((name, button) -> button.addActionListener(sideMenuListener));
     }
 
-    private void initList() {
+    private void initSwing() {
         // Setup display for the items
         shoppingListDisplay = new JPanel();
         shoppingListDisplay.setLayout(new BoxLayout(shoppingListDisplay, BoxLayout.PAGE_AXIS));
@@ -108,14 +106,23 @@ public class ShoppingPage extends Page {
         add(listWrapper);
         listWrapper.add(shoppingListDisplay);
         listWrapper.setBackground(Style.TRANSPARENT);
-        for (int i = 0; i < numItems; i++) {
-            addListItem();
-        }
     }
 
-    protected void addListItem() {
-        ShoppingItem thisItem = new ShoppingItem(null);
-        shoppingItems.add(thisItem);
-        shoppingListDisplay.add(thisItem);
+    protected void updateList() {
+        List<FoodInstance> listItems = shoppingController.getItems();
+
+        shoppingItems.clear();
+        shoppingListDisplay.removeAll();
+        for (FoodInstance item : listItems) {
+            ShoppingItem thisItem = new ShoppingItem(item);
+            shoppingItems.add(thisItem);
+            shoppingListDisplay.add(thisItem);
+        }
+        revalidate();
+    }
+
+    @Override
+    public void notifyPage() {
+        updateList();
     }
 }

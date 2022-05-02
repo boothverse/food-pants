@@ -126,13 +126,13 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         }
 
         NutritionDescriptor nut = new NutritionDescriptor(nutritionMap, Quantities.getQuantity(quantityVal, unit));
-        foodController.addFood(nameField.getText(), FoodGroup.valueOf((String) foodGroupBox.getSelectedItem()), nut);
+        Food newFood = foodController.addFood(nameField.getText(), FoodGroup.valueOf((String) foodGroupBox.getSelectedItem()), nut);
 
-        parent.updateFoodSearchBar();
+        parent.updateFoodSearchBar(newFood);
         dispose();
     }
 
-    public void addFormToBeNotified(AddFoodInstanceForm a) {
+    public void setFormToBeNotified(AddFoodInstanceForm a) {
         parent = a;
     }
 }

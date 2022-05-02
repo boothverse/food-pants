@@ -1,7 +1,10 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
+import org.boothverse.foodpants.ui.components.ShoppingItem;
+import org.boothverse.foodpants.ui.controllers.PantryController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.SearchForm;
 import org.boothverse.foodpants.ui.forms.StandardItemForm;
@@ -10,18 +13,17 @@ import org.boothverse.foodpants.ui.forms.StandardForm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
 
-    private static final String[] tempNames = {"Banana", "Muffin", "Apple", "Ribeye", "Oreos", "Bread Flour", "Vanilla Extract", "Eggs",
-        "Sugar", "Chocolate", "Melon"}; // FOR PROTOTYPE, REMOVE LATER
-    private static final int[] tempQuants = {3, 1, 2, 4, 5, 1, 2, 1, 10, 1, 2}; // FOR PROTOTYPE, REMOVE LATER
-
     private static List<PantryItem> pantryItems;
+    private static JPanel displayPanel;
     private static boolean modifyingPantry;
+    private final PantryController pantryController = new PantryController();
 
     public PantryPage() {
         super(labels);
@@ -30,25 +32,21 @@ public class PantryPage extends Page {
 
         JPanel listWrapper = new JPanel(new FlowLayout());
         listWrapper.setBackground(Style.TRANSPARENT);
-        JPanel panel = new JPanel(new GridLayout(0, 2));
-        panel.setBackground(Style.TRANSPARENT);
 
-        for (int i = 0; i < tempNames.length; i++) {
-            PantryItem newItem = new PantryItem(tempNames[i], tempQuants[i]);
+        displayPanel = new JPanel(new GridLayout(0, 2));
+        displayPanel.setBackground(Style.TRANSPARENT);
 
-            pantryItems.add(newItem);
-            panel.add(newItem);
-        }
-
-        listWrapper.add(panel);
+        listWrapper.add(displayPanel);
         add(listWrapper);
+
+        updateList();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+" -> {
-                StandardForm form = new AddFoodInstanceForm();
+                StandardForm form = new AddFoodInstanceForm(pantryController);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
@@ -56,6 +54,7 @@ public class PantryPage extends Page {
                 StandardForm form = new SearchForm();
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
+                this.setFocusable(false);
             }
             case "Modify" -> {
                 JButton modifyBtn = (JButton) e.getSource();
@@ -70,5 +69,23 @@ public class PantryPage extends Page {
                 }
             }
         }
+    }
+
+    protected void updateList() {
+        List<FoodInstance> listItems = pantryController.getItems();
+
+        pantryItems.clear();
+        displayPanel.removeAll();
+        for (FoodInstance item : listItems) {
+            PantryItem thisItem = new PantryItem(item);
+            pantryItems.add(thisItem);
+            displayPanel.add(thisItem);
+        }
+        revalidate();
+    }
+
+    @Override
+    public void notifyPage() {
+        updateList();
     }
 }
