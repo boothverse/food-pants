@@ -5,6 +5,7 @@ import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.NutritionInstanceDAO;
 import org.boothverse.foodpants.business.dao.ReportDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.business.services.util.EnumUtils;
 import org.boothverse.foodpants.persistence.*;
 
 import java.util.*;
@@ -157,5 +158,14 @@ public class NutritionService {
         if (!reportPeriods.containsKey(id)) throw new PantsNotFoundException("report period " + id + " not found");
         reportPeriods.remove(id);
         reportPeriodDAO.remove(id);
+    }
+
+    /**
+     * Return a list of nutrition types.
+     *
+     * @return
+     */
+    public String[] getNutritionTypes() {
+        return EnumUtils.getEnumOptions(NutritionType.class);
     }
 }

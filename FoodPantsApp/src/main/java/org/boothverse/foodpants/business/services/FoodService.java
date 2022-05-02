@@ -3,7 +3,10 @@ package org.boothverse.foodpants.business.services;
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.business.services.util.EnumUtils;
 import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.persistence.FoodGroup;
+import org.boothverse.foodpants.persistence.NutritionType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -90,12 +93,11 @@ public class FoodService {
     }
 
     /**
-     * Return a list of the enum options in an enum.
+     * Return a list of food groups.
      *
-     * @param e
      * @return
      */
-    public String[] getEnumOptions(Class<? extends Enum<?>> e) {
-        return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
+    public String[] getFoodGroups() {
+        return EnumUtils.getEnumOptions(FoodGroup.class);
     }
 }
