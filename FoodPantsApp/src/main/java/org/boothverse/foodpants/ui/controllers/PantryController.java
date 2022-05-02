@@ -1,9 +1,11 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.boothverse.foodpants.business.services.PantryService;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
+import org.boothverse.foodpants.ui.pages.PantryPage;
 
 import javax.measure.Quantity;
 import java.util.Date;
@@ -17,6 +19,7 @@ public class PantryController implements FoodInstanceController {
      */
     @Override
     public List<FoodInstance> getItems() {
+        PantryService pantryService = Services.PANTRY_SERVICE;
         return Services.PANTRY_SERVICE.getItems();
     }
 

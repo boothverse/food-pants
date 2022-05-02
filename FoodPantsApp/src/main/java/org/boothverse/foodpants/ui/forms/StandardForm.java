@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
@@ -99,9 +100,10 @@ public abstract class StandardForm extends JFrame {
     public void dispose() {
         parent.setEnabled(true);
         if (Page.class.isAssignableFrom(parent.getClass())) {
-            System.out.println("page form released");
             PageRunner.getFrame().setEnabled(true);
         }
         super.dispose();
     }
+
+    protected void updateFoodSearchBar(Food newFood) {}
 }

@@ -2,10 +2,7 @@ package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
-import org.boothverse.foodpants.persistence.FoodGroup;
-import org.boothverse.foodpants.persistence.FoodInstance;
-import org.boothverse.foodpants.persistence.NutritionDescriptor;
-import org.boothverse.foodpants.persistence.Recipe;
+import org.boothverse.foodpants.persistence.*;
 
 import java.util.List;
 
@@ -52,18 +49,14 @@ public class RecipeController {
     /**
      * Adds a new recipe to the system.
      *
-     * @param name
-     * @param foodGroup
-     * @param ingredients
-     * @param nutrition
+     * @param basis
      * @param instructions
      * @param servings
-     * @return
+     * @return Recipe
      */
-    public Recipe addRecipe(String name, FoodGroup foodGroup, List<FoodInstance> ingredients,
-                            NutritionDescriptor nutrition, String instructions, Double servings) {
+    public Recipe addRecipe(Food basis, List<FoodInstance> ingredients, String instructions, Double servings) {
 
-        Recipe recipe = new Recipe(Services.ID_SERVICE.getId(), name, foodGroup, nutrition,
+        Recipe recipe = new Recipe(basis.getId(), basis.getName(), basis.getFoodGroup(), basis.getNutrition(),
             instructions, ingredients, servings);
         Services.RECIPE_SERVICE.addRecipe(recipe);
 

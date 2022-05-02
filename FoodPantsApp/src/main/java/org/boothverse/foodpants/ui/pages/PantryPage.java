@@ -42,7 +42,7 @@ public class PantryPage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+" -> {
-                StandardForm form = new AddFoodInstanceForm(pantryController, this);
+                StandardForm form = new AddFoodInstanceForm("Add Food",pantryController,this);
                 form.setVisible(true);
             }
             case "Search" -> {
@@ -57,9 +57,7 @@ public class PantryPage extends Page {
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
-                for (StandardItem pantryPanel : itemDisplay.getItems()) {
-                    pantryPanel.setModification(modifyingPantry);
-                }
+                itemDisplay.setModifiable(modifyingPantry);
             }
         }
     }
@@ -75,7 +73,7 @@ public class PantryPage extends Page {
     }
 
     @Override
-    public void notifyPage(String message, Object oldValue, Object newValue) {
+    public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add")) {
             itemDisplay.add(new PantryItem((FoodInstance) newValue));
         }

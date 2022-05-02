@@ -80,16 +80,13 @@ public class ShoppingPage extends Page {
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
-
-                for (StandardItem listItem : itemDisplay.getItems()) {
-                    listItem.setModification(modifying);
-                }
+                itemDisplay.setModifiable(modifying);
             }
             else if (e.getActionCommand().equals("New List")) {
                 itemDisplay.removeAll();
             }
             else if (e.getActionCommand().equals("+")) {
-                StandardForm form = new AddFoodInstanceForm(shoppingController, this);
+                StandardForm form = new AddFoodInstanceForm("Add Item", shoppingController, this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
@@ -109,7 +106,7 @@ public class ShoppingPage extends Page {
     }
 
     @Override
-    public void notifyPage(String message, Object oldValue, Object newValue) {
+    public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add")) {
             itemDisplay.add(new ShoppingItem((FoodInstance) newValue));
         }

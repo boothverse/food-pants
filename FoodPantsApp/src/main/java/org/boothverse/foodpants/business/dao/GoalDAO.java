@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+import org.boothverse.foodpants.business.dao.util.QuantityParser;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.persistence.GoalType;
@@ -45,13 +47,13 @@ public class GoalDAO extends JDBCListDAO<Goal> {
      * @throws SQLException
      */
     @Override
-    protected Map<String, Goal> SQLToObj(ResultSet rs) throws SQLException {
+    protected Map<String, Goal> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, Goal> data = new HashMap<>();
 
         while (rs.next()) {
             String id = rs.getString(1);
             GoalType goalType = GoalType.valueOf(rs.getString(2));
-            Quantity<?> quantity = Quantities.getQuantity(rs.getString(3));
+            Quantity<?> quantity = QuantityParser.parse(rs.getString(3));
             NutritionType nutritionType = NutritionType.valueOf(rs.getString(4));
 
             data.put(id, new Goal(id, goalType, quantity, nutritionType));

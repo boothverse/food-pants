@@ -28,7 +28,7 @@ public class PageManager {
             case "Goals" -> activePage = goalsPage;
             case "Report" -> activePage = reportPage;
         }
-        activePage.notifyPage("update", null, activePage);
+        activePage.notifyChange("update", null, activePage);
         pageViewer.setViewportView(activePage);
     }
 }

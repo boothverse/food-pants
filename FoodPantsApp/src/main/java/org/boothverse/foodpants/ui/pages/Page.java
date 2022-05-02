@@ -2,13 +2,14 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.SideMenu;
+import org.boothverse.foodpants.ui.components.standard.Notifiable;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Page extends JPanel implements ActionListener {
+public class Page extends JPanel implements ActionListener, Notifiable {
     protected SideMenu sideMenu;
     protected JPanel sidePanel;
 
@@ -44,5 +45,7 @@ public class Page extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     }
 
-    public void notifyPage(String message, Object oldValue, Object newValue) {}
+    @Override
+    public void notifyChange(String message, Object oldValue, Object newValue) {
+    }
 }
