@@ -9,7 +9,7 @@ import javax.measure.Quantity;
 import java.util.Objects;
 
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class Food extends IdObject {
     @Getter
     protected String name;

@@ -9,7 +9,7 @@ import javax.measure.Quantity;
 import java.util.Date;
 
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class NutritionInstance extends FoodInstance {
     @Getter
     private String foodId;
