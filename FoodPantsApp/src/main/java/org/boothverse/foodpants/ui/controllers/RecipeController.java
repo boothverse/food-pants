@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
@@ -9,7 +10,7 @@ import org.boothverse.foodpants.persistence.Recipe;
 import java.util.List;
 
 public class RecipeController {
-    public Recipe getRecipe(String id) {
+    public Recipe getRecipe(String id) throws PantsNotFoundException {
         return Services.RECIPE_SERVICE.getRecipe(id);
     }
 
@@ -35,24 +36,21 @@ public class RecipeController {
         return recipe;
     }
 
-    public void editRecipe(Recipe recipe) {
+    public void editRecipe(Recipe recipe) throws PantsNotFoundException {
         Services.RECIPE_SERVICE.editRecipe(recipe);
     }
 
-    public void addIngredientsToCart(String recipeId) {
-        Recipe recipe = Services.RECIPE_SERVICE.getRecipe(recipeId);
-
-        List<FoodInstance> ingredients = recipe.getIngredients();
+    public void addIngredientsToCart(String recipeId) throws PantsNotFoundException {
+        List<FoodInstance> ingredients = Services.RECIPE_SERVICE.getIngredients(recipeId);
         Services.SHOPPING_SERVICE.addItems(ingredients);
     }
 
-    public void addMissingIngredientsToCart(String recipeId) {
-        // TODO: this
-        // I think the recipe service is missing something guys :0
+    public void addMissingIngredientsToCart(String recipeId) throws PantsNotFoundException {
+        Services.RECIPE_SERVICE.addMissingIngredientsToCart(recipeId);
     }
 
     public void produceCookedRecipe(String recipeId, boolean isUsePantry,
-                                    Double consumedServings, Double leftoverServings) {
+                                    Double consumedServings, Double leftoverServings) throws PantsNotFoundException {
 
         Services.RECIPE_SERVICE.produceCookedRecipe(recipeId, isUsePantry,
             consumedServings, leftoverServings);

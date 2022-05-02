@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
@@ -13,7 +14,7 @@ public class FoodController {
      * @param id
      * @return
      */
-    public Food getFood(String id) {
+    public Food getFood(String id) throws PantsNotFoundException {
         return Services.FOOD_SERVICE.getFood(id);
     }
 
@@ -38,7 +39,7 @@ public class FoodController {
      * @param nutrition
      * @return
      */
-    public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) {
+    public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) throws PantsNotFoundException{
         Food food = new Food(id, name, category, nutrition);
         Services.FOOD_SERVICE.editFood(food);
         return food;
@@ -48,7 +49,7 @@ public class FoodController {
      *
      * @param id
      */
-    public void removeFood(String id) {
+    public void removeFood(String id) throws PantsNotFoundException {
         Services.FOOD_SERVICE.removeFood(id);
     }
 

@@ -70,7 +70,8 @@ public class NutritionService {
      *
      * @param id
      */
-    public void removeItem(String id) {
+    public void removeItem(String id) throws PantsNotFoundException {
+        if (!items.containsKey(id)) throw new PantsNotFoundException("nutrition instance " + id + " not found");
         items.remove(id);
         nutritionInstanceDAO.remove(id);
     }
@@ -108,8 +109,9 @@ public class NutritionService {
      * @param goal
      */
     public void editGoal(Goal<?> goal) throws PantsNotFoundException {
-        if (!goals.containsKey(goal.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
-        goals.replace(goal.getId(), goal);
+        String id = goal.getId();
+        if (!goals.containsKey(id)) throw new PantsNotFoundException("goal " + id + " not found");
+        goals.replace(id, goal);
         goalDAO.save(goal);
     }
 
@@ -118,7 +120,8 @@ public class NutritionService {
      *
      * @param id
      */
-    public void removeGoal(String id) {
+    public void removeGoal(String id) throws PantsNotFoundException {
+        if (!goals.containsKey(id)) throw new PantsNotFoundException("goal " + id + " not found");
         goals.remove(id);
         goalDAO.remove(id);
     }
@@ -139,8 +142,9 @@ public class NutritionService {
      * @param period
      */
     public void editReport(ReportPeriod period) throws PantsNotFoundException{
-        if (!reportPeriods.containsKey(period.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
-        reportPeriods.replace(period.getId(), period);
+        String id = period.getId();
+        if (!reportPeriods.containsKey(id)) { throw new PantsNotFoundException("report period " + id + " not found"); }
+        reportPeriods.replace(id, period);
         reportPeriodDAO.save(period);
     }
 
@@ -149,7 +153,8 @@ public class NutritionService {
      *
      * @param id
      */
-    public void removeReport(String id) {
+    public void removeReport(String id) throws PantsNotFoundException {
+        if (!reportPeriods.containsKey(id)) throw new PantsNotFoundException("report period " + id + " not found");
         reportPeriods.remove(id);
         reportPeriodDAO.remove(id);
     }

@@ -2,6 +2,7 @@ package org.boothverse.foodpants.business.services;
 
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 
 import java.util.Arrays;
@@ -34,8 +35,9 @@ public class FoodService {
      * @param id
      * @return
      */
-    public Food getFood(String id) {
-        // TODO: throw custom exception if not found
+    public Food getFood(String id) throws PantsNotFoundException {
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         return foods.get(id);
     }
 
@@ -55,9 +57,11 @@ public class FoodService {
      *
      * @param food
      */
-    public void editFood(Food food) {
-        // TODO: throw custom exception if not found
-        foods.put(food.getId(), food);
+    public void editFood(Food food) throws PantsNotFoundException {
+        String id = food.getId();
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
+        foods.replace(id, food);
         dao.save(food);
     }
 
@@ -67,7 +71,9 @@ public class FoodService {
      *
      * @param id
      */
-    public void removeFood(String id) {
+    public void removeFood(String id) throws PantsNotFoundException {
+        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+
         foods.remove(id);
         dao.remove(id);
     }
@@ -79,9 +85,8 @@ public class FoodService {
      * @param id
      * @return
      */
-    public String getFoodName(String id) {
-        // TODO: throw custom exception if not found
-        return foods.get(id).getName();
+    public String getFoodName(String id) throws PantsNotFoundException {
+        return getFood(id).getName();
     }
 
     public String[] getEnumOptions(Class<? extends Enum<?>> e) {

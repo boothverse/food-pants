@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 
@@ -36,7 +37,7 @@ public class PantryController implements FoodInstanceController {
      * @return
      */
     @Override
-    public FoodInstance editItem(String foodId, Quantity<?> quantity) {
+    public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         return Services.PANTRY_SERVICE.editItem(foodId, quantity);
     }
 
@@ -45,7 +46,7 @@ public class PantryController implements FoodInstanceController {
      * @param foodId
      */
     @Override
-    public void removeItem(String foodId) {
+    public void removeItem(String foodId) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId);
     }
 
@@ -54,7 +55,7 @@ public class PantryController implements FoodInstanceController {
      * @param foodId
      * @param quantity
      */
-    public void consume(String foodId, Quantity<?> quantity) {
+    public void consume(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId, quantity);
 
         NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),

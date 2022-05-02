@@ -19,8 +19,6 @@ public class IdService {
      */
     public IdService() {
         registerIds(new FoodDAO().load());
-        registerIds(new FoodInstanceDAO("shoppingList").load());
-        registerIds(new FoodInstanceDAO("pantry").load());
         registerIds(new GoalDAO().load());
         registerIds(new NutritionInstanceDAO().load());
         registerIds(new RecipeDAO().load());

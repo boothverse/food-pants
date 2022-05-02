@@ -2,6 +2,7 @@ package org.boothverse.foodpants.ui.controllers;
 
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
@@ -20,16 +21,16 @@ public class ShoppingController implements FoodInstanceController {
     }
 
     @Override
-    public FoodInstance editItem(String foodId, Quantity<?> quantity) {
+    public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         return Services.SHOPPING_SERVICE.editItem(foodId, quantity);
     }
 
     @Override
-    public void removeItem(String foodId) {
+    public void removeItem(String foodId) throws PantsNotFoundException {
         Services.SHOPPING_SERVICE.removeItem(foodId);
     }
 
-    public Integer purchaseItems(List<String> foodIds) {
+    public Integer purchaseItems(List<String> foodIds) throws PantsNotFoundException {
         List<FoodInstance> items = Services.SHOPPING_SERVICE.getItems();
         Services.SHOPPING_SERVICE.removeItems(foodIds);
         Services.PANTRY_SERVICE.addItems(items);
@@ -37,12 +38,7 @@ public class ShoppingController implements FoodInstanceController {
         return items.size();
     }
 
-    public void export(Path destination) {
-        // TODO: maybe don't try catch here???
-        try {
-            Services.SHOPPING_SERVICE.export(destination);
-        } catch (PantsExportShoppingListException e) {
-            e.printStackTrace();
-        }
+    public void export(Path destination) throws PantsExportShoppingListException {
+        Services.SHOPPING_SERVICE.export(destination);
     }
 }

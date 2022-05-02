@@ -24,19 +24,15 @@ public class NutritionController {
     }
 
     public Goal editGoal(String id, GoalType goalType,
-                         Quantity quantity, NutritionType nutritionType) {
+                         Quantity quantity, NutritionType nutritionType) throws PantsNotFoundException {
 
         Goal goal = new Goal(id, goalType, quantity, nutritionType);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editGoal(goal);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editGoal(goal);
+
         return goal;
     }
 
-    public void removeGoal(String id) {
+    public void removeGoal(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeGoal(id);
     }
 
@@ -54,20 +50,15 @@ public class NutritionController {
         return nutInstance;
     }
 
-    public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) {
+    public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) throws PantsNotFoundException {
 
         NutritionInstance nutInstance = new NutritionInstance(id, foodId, quantity, consumedAt);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editItem(nutInstance);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editItem(nutInstance);
 
         return nutInstance;
     }
 
-    public void removeItem(String id) {
+    public void removeItem(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeItem(id);
     }
 
@@ -79,17 +70,12 @@ public class NutritionController {
         return reportPeriod;
     }
 
-    public void editReport(String id, Date startDate, Date endDate) {
+    public void editReport(String id, Date startDate, Date endDate) throws PantsNotFoundException {
         ReportPeriod period = new ReportPeriod(id, startDate, endDate);
-        //TODO: Maybe error handling shoudln't be here
-        try {
-            Services.NUTRITION_SERVICE.editReport(period);
-        } catch (PantsNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+        Services.NUTRITION_SERVICE.editReport(period);
     }
 
-    public void removeReport(String id) {
+    public void removeReport(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeReport(id);
     }
 }

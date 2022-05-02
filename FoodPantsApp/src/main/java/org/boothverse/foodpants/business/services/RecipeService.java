@@ -3,6 +3,7 @@ package org.boothverse.foodpants.business.services;
 import lombok.NonNull;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.RecipeDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.persistence.Recipe;
@@ -40,7 +41,8 @@ public class RecipeService {
      * @param id
      * @return
      */
-    public Recipe getRecipe(String id) {
+    public Recipe getRecipe(String id) throws PantsNotFoundException {
+        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
         return recipes.get(id);
     }
 
@@ -86,8 +88,11 @@ public class RecipeService {
      *
      * @param recipe
      */
-    public void editRecipe(Recipe recipe) {
-        recipes.put(recipe.getId(), recipe);
+    public void editRecipe(Recipe recipe) throws PantsNotFoundException {
+        String id = recipe.getId();
+        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
+
+        recipes.replace(id, recipe);
         dao.save(recipe);
     }
 
@@ -97,8 +102,8 @@ public class RecipeService {
      * @param recipeId
      * @return
      */
-    public List<FoodInstance> getIngredients(String recipeId) {
-        return recipes.get(recipeId).getIngredients();
+    public List<FoodInstance> getIngredients(String recipeId) throws PantsNotFoundException {
+        return getRecipe(recipeId).getIngredients();
     }
 
     /**
@@ -109,10 +114,10 @@ public class RecipeService {
      * @param consumedServings
      * @param leftoverServings
      */
-    public void produceCookedRecipe(String recipeId, Boolean isUsingPantry, Double consumedServings, Double leftoverServings) {
+    public void produceCookedRecipe(String recipeId, Boolean isUsingPantry, Double consumedServings, Double leftoverServings) throws PantsNotFoundException {
         PantryService pantryService = Services.PANTRY_SERVICE;
         NutritionService nutritionService = Services.NUTRITION_SERVICE;
-        Recipe recipe = recipes.get(recipeId);
+        Recipe recipe = getRecipe(recipeId);
 
         // Remove used pantry items
         if (isUsingPantry) {
@@ -136,5 +141,13 @@ public class RecipeService {
      */
     public List<Recipe> getRecommendedRecipes() {
         return getRecipesByIngredients(Services.PANTRY_SERVICE.getItems());
+    }
+
+    public void addMissingIngredientsToCart(String recipeId) throws PantsNotFoundException {
+        PantryService pantryService = Services.PANTRY_SERVICE;
+        ShoppingService shoppingService = Services.SHOPPING_SERVICE;
+
+        List<FoodInstance> missingIngredients = pantryService.getMissing(getIngredients(recipeId));
+        shoppingService.addItems(missingIngredients);
     }
 }
