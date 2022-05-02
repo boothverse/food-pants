@@ -42,8 +42,7 @@ public class GoalsPage extends NutritionPage {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                StandardForm form = new AddGoalForm("Add Nutrition Goal");
-                form.setLocationRelativeTo(this);
+                StandardForm form = new AddGoalForm("Add Nutrition Goal", this);
                 form.setVisible(true);
                 break;
             default:

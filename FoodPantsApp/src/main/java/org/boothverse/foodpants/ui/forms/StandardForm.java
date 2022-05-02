@@ -1,13 +1,17 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardGridBagPanel;
+import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
 public abstract class StandardForm extends JFrame {
     // Form panel
@@ -18,12 +22,20 @@ public abstract class StandardForm extends JFrame {
     protected StandardGridBagPanel contentPanel;
     protected JPanel wrapperPanel;
     protected JLabel title;
+    protected Component parent;
 
-    public StandardForm(String header) {
+    public StandardForm(String header, Component parent) {
         super();
+        this.parent = parent;
+        setLocationRelativeTo(parent);
+
+        // Disable prior forms/ pages while this one is open
+        parent.setEnabled(false);
+        if (Page.class.isAssignableFrom(parent.getClass())) {
+            PageRunner.getFrame().setEnabled(false);
+        }
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(PageRunner.getPageViewer());
         setResizable(false);
 
         // Content goes in this panel
@@ -81,5 +93,15 @@ public abstract class StandardForm extends JFrame {
 
     void addSubmitButton(ActionListener e)  {
         contentPanel.addSubmitButton(e, ++numRows);
+    }
+
+    @Override
+    public void dispose() {
+        parent.setEnabled(true);
+        if (Page.class.isAssignableFrom(parent.getClass())) {
+            System.out.println("page form released");
+            PageRunner.getFrame().setEnabled(true);
+        }
+        super.dispose();
     }
 }

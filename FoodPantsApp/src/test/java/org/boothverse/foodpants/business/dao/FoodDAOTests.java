@@ -8,8 +8,6 @@ import org.junit.jupiter.api.*;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,21 +15,17 @@ import static tech.units.indriya.AbstractQuantity.ONE;
 
 public class FoodDAOTests extends BaseDAOTests {
 
-    static List<Food> backup;
     static ListDAO<Food> dao;
 
     @BeforeAll
     static void setup() {
-        // Clear table
         dao = new FoodDAO();
-        backup = new ArrayList<>(dao.load().values());
-        dao.removeAll();
-
-        initIds();
+        setup(dao);
     }
 
     @Test
     @Order(1)
+    @Disabled
     void foodSaveTest() {
         NutritionDescriptor nutrition = new NutritionDescriptor();
         nutrition.setNutritionInfo(Map.of(

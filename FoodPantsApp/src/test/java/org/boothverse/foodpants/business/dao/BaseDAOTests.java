@@ -1,10 +1,8 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.business.dao.util.JDBCUtils;
 import org.boothverse.foodpants.business.services.IdService;
 import org.boothverse.foodpants.business.services.Services;
-import org.boothverse.foodpants.persistence.FoodInstance;
-import org.boothverse.foodpants.persistence.IdObject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 
@@ -18,25 +16,7 @@ public abstract class BaseDAOTests {
 
     static List<String> testIds;
     static IdService idService;
-
     static List<?> backup;
-    static ListDAO<?> dao;
-
-    static ListDAO<?> createDao() {
-        return null;
-    }
-
-    @BeforeAll
-    static void setup() {
-        // Clear table
-        dao = createDao();
-        dao = new FoodInstanceDAO("pantry");
-        backup = new ArrayList<>(dao.load().values());
-        dao.removeAll();
-
-        initIds();
-    }
-
 
     static void initIds() {
         idService = Services.ID_SERVICE;
@@ -44,6 +24,20 @@ public abstract class BaseDAOTests {
         for (int i = 0; i < NUM_TEST_IDS; i++) {
             testIds.add(idService.getId());
         }
+    }
+
+    static void clearTable(ListDAO<?> dao) {
+        backup = new ArrayList<>(dao.load().values());
+        dao.removeAll();
+    }
+
+    static void setup(ListDAO<?> dao) {
+        clearTable(dao);
+        initIds();
+    }
+
+    static void executeScript(String filename) {
+        new JDBCUtils().executeScript("src/test/resources/sql/" + filename);
     }
 
 }

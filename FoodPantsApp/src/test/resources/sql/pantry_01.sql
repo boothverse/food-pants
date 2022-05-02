@@ -1,0 +1,1 @@
+INSERT INTO PANTRY VALUES ('qilwIegFu8mxj8wF17oj', '50 g');

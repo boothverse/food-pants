@@ -10,8 +10,8 @@ import java.awt.*;
 public class SearchForm extends StandardForm {
     protected FoodSearchBar searchBar;
 
-    public SearchForm() {
-        super("Search");
+    public SearchForm(Component parent) {
+        super("Search", parent);
         searchBar = new FoodSearchBar();
         setSize(300, 200);
         initForm();

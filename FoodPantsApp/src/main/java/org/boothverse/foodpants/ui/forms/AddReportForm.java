@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddReportForm extends StandardItemForm {
-    public AddReportForm(String header) {
+    public AddReportForm(String header, Component parent) {
         // , new String[]{"ChartType", "Fields"}
-        super(header);
+        super(header, parent);
     }
 }

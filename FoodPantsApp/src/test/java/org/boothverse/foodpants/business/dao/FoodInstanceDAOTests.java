@@ -2,31 +2,25 @@ package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.junit.jupiter.api.*;
+import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FoodInstanceDAOTests extends BaseDAOTests {
 
-    static List<FoodInstance> backup;
     static ListDAO<FoodInstance> pantry;
 
     @BeforeAll
     static void setup() {
-        // Clear table
         pantry = new FoodInstanceDAO("pantry");
-        backup = new ArrayList<>(pantry.load().values());
-        pantry.removeAll();
-
-        initIds();
+        setup(pantry);
+        executeScript("pantry_01.sql");
     }
 
     @Test
@@ -42,15 +36,32 @@ public class FoodInstanceDAOTests extends BaseDAOTests {
     @Test
     @Order(2)
     void foodInstanceLoadTest() {
-        ListDAO<FoodInstance> dao = new FoodInstanceDAO("PANTRY");
         Quantity<Mass> quantity = Quantities.getQuantity(50, Units.GRAM);
 
-        Map<String, FoodInstance> foodInstances = dao.load();
-        assertEquals(1, foodInstances.size());
+        Map<String, FoodInstance> foodInstances = pantry.load();
+        assertEquals(2, foodInstances.size());
 
         FoodInstance foodInstance = foodInstances.get(testIds.get(0));
 
         assertEquals(foodInstance.getQuantity().getUnit(), quantity.getUnit());
         assertEquals(foodInstance.getQuantity().getValue(), quantity.getValue());
+    }
+
+    @Test
+    @Order(3)
+    void foodInstanceSaveTest2() {
+        Quantity<Mass> quantity = Quantities.getQuantity(30.5, CLDR.OUNCE);
+        FoodInstance item = new FoodInstance(testIds.get(1), quantity);
+        pantry.save(item);
+    }
+
+    @Test
+    @Order(4)
+    void foodInstanceLoadTest2() {
+        Map<String, FoodInstance> items = pantry.load();
+        Quantity<Mass> quantity = Quantities.getQuantity(30.5, CLDR.OUNCE);
+        FoodInstance item = new FoodInstance(testIds.get(1), quantity);
+        FoodInstance pantryItem = items.get(testIds.get(1));
+        assertEquals(item, pantryItem);
     }
 }

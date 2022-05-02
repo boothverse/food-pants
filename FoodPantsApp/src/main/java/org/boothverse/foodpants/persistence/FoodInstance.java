@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.measure.Quantity;
 
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class FoodInstance extends IdObject {
     @Getter @Setter
     protected Quantity<?> quantity;

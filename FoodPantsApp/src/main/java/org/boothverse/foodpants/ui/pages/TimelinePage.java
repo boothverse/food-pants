@@ -154,7 +154,7 @@ public class TimelinePage extends NutritionPage {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                StandardForm form = new AddNutritionForm("Add Nutrition Item");
+                StandardForm form = new AddNutritionForm("Add Nutrition Item", this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;
