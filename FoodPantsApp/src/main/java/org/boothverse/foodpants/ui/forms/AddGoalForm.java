@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddGoalForm extends StandardItemForm {
-    public AddGoalForm(String header) {
+    public AddGoalForm(String header, Component parent) {
         // , new String[]{"Nutrition", "Value", "GoalType"}
-        super(header);
+        super(header, parent);
     }
 }

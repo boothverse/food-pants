@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.persistence.Food;
+import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
@@ -21,8 +22,8 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
     JButton createFoodButton;
     FoodInstanceController controller;
 
-    public AddFoodInstanceForm(FoodInstanceController controller) {
-        super("Add Food");
+    public AddFoodInstanceForm(FoodInstanceController controller, Component parent) {
+        super("Add Food", parent);
 
         this.controller = controller;
         initSwing();
@@ -63,9 +64,10 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
 
         addSubmitButton(e -> {
             if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
-                controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                FoodInstance newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
                     .getId(), quantityPanel.getSelectedQuantity());
-                PageManager.getActivePage().notifyPage();
+
+                PageManager.getActivePage().notifyPage("add", null, newFood);
                 dispose();
             }
             else {
@@ -89,9 +91,9 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(createFoodButton)) {
-            AddFoodForm form = new AddFoodForm();
+            AddFoodForm form = new AddFoodForm(this);
+            form.setLocationRelativeTo(parent);
             form.setFormToBeNotified(this);
-            form.setLocationRelativeTo(this);
             form.setVisible(true);
         }
         else if (e.getSource().equals(editFoodButton)) {

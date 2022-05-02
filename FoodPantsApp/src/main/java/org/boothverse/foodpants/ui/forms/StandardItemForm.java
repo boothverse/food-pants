@@ -14,13 +14,13 @@ public class StandardItemForm extends StandardForm {
     protected List<JTextField> textFields;
     protected String[] textLabels = {"Name", "Quantity", "Calories"};
 
-    public StandardItemForm(String header) {
-        super(header);
+    public StandardItemForm(String header, Component parent) {
+        super(header, parent);
         initForm();
     }
 
-    public StandardItemForm(String header, String[] labels) {
-        super(header);
+    public StandardItemForm(String header, Component parent, String[] labels) {
+        super(header, parent);
         setSize(WIDTH, HEIGHT);
         textLabels = labels;
         initForm();

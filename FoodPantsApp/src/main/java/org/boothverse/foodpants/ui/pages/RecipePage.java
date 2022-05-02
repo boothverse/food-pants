@@ -14,6 +14,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RecipePage extends Page {
     private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
@@ -41,7 +42,7 @@ public class RecipePage extends Page {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                RecipeForm form = new RecipeForm("Create Recipe");
+                RecipeForm form = new RecipeForm("Create Recipe", this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;
@@ -64,7 +65,16 @@ public class RecipePage extends Page {
     }
 
     @Override
-    public void notifyPage() {
-        updateList();
+    public void notifyPage(String message, Object oldValue, Object newValue) {
+        if (Objects.equals(message, "add")) {
+            recipeListPanel.add(new RecipeItem((Recipe) newValue));
+        }
+        else if (Objects.equals(message, "remove")) {
+
+        }
+        else if (Objects.equals(message, "update")) {
+            updateList();
+        }
+
     }
 }

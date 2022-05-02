@@ -44,5 +44,5 @@ public class Page extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
     }
 
-    public void notifyPage() {}
+    public void notifyPage(String message, Object oldValue, Object newValue) {}
 }

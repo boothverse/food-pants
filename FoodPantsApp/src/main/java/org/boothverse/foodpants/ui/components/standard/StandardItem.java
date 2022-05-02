@@ -100,7 +100,7 @@ public class StandardItem extends StandardPanel implements ActionListener {
 //            form.setLocationRelativeTo(this);
 //            form.setVisible(true);
         } else if (e.getSource() == deleteButton) {
-            firePropertyChange("deleteItem", e.getActionCommand(), null);
+            firePropertyChange("deleteItem", this, null);
         }
     }
 }

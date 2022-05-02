@@ -13,10 +13,10 @@ import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ShoppingPage extends Page {
@@ -25,13 +25,13 @@ public class ShoppingPage extends Page {
     protected ShoppingController shoppingController = new ShoppingController();
 
     protected ActionListener sideMenuListener;
-    protected ItemList items;
+    protected ItemList itemDisplay;
     protected Boolean modifying = false;
 
     public ShoppingPage() {
         super(labels);
-        items = new ItemList(1, this);
-        add(items);
+        itemDisplay = new ItemList(1, this);
+        add(itemDisplay);
 
         initActionListeners();
         updateList();
@@ -40,7 +40,7 @@ public class ShoppingPage extends Page {
     private void initActionListeners() {
         sideMenuListener = e -> {
             if (e.getActionCommand().equals("Mark All")) {
-                for (StandardItem listItem : items.getItems()) {
+                for (StandardItem listItem : itemDisplay.getItems()) {
                     ((ShoppingItem)listItem).getCheckBox().setSelected(true);
                 }
             }
@@ -80,15 +80,15 @@ public class ShoppingPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                for (StandardItem listItem : items.getItems()) {
+                for (StandardItem listItem : itemDisplay.getItems()) {
                     listItem.setModification(modifying);
                 }
             }
             else if (e.getActionCommand().equals("New List")) {
-                items.removeAll();
+                itemDisplay.removeAll();
             }
             else if (e.getActionCommand().equals("+")) {
-                StandardForm form = new AddFoodInstanceForm(shoppingController);
+                StandardForm form = new AddFoodInstanceForm(shoppingController, this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
             }
@@ -100,15 +100,23 @@ public class ShoppingPage extends Page {
     protected void updateList() {
         List<FoodInstance> listItems = shoppingController.getItems();
 
-        items.removeAll();
+        itemDisplay.removeAll();
         for (FoodInstance item : listItems) {
-            items.add(new ShoppingItem(item));
+            itemDisplay.add(new ShoppingItem(item));
         }
         revalidate();
     }
 
     @Override
-    public void notifyPage() {
-        updateList();
+    public void notifyPage(String message, Object oldValue, Object newValue) {
+        if (Objects.equals(message, "add")) {
+            itemDisplay.add(new ShoppingItem((FoodInstance) newValue));
+        }
+        else if (Objects.equals(message, "remove")) {
+
+        }
+        else if (Objects.equals(message, "update")) {
+            updateList();
+        }
     }
 }

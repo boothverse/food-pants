@@ -1,12 +1,17 @@
 package org.boothverse.foodpants.ui.components.standard;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class StandardGridBagPanel extends JPanel {
+
     public StandardGridBagPanel() {
         setLayout(new GridBagLayout());
         setBackground(Style.TRANSPARENT);
@@ -70,6 +75,9 @@ public class StandardGridBagPanel extends JPanel {
     public void addSubmitButton(ActionListener e, int row)  {
         JButton submitBtn = new StandardButton("Submit");
         submitBtn.addActionListener(e);
+        submitBtn.addActionListener(e1 -> firePropertyChange("submit", null, null));
+        submitBtn.addPropertyChangeListener(evt -> firePropertyChange(evt.getPropertyName(), null, null));
+
         addRightComponent(submitBtn, row);
     }
 }

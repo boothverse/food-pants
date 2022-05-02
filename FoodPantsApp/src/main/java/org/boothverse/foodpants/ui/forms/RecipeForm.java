@@ -10,8 +10,8 @@ public class RecipeForm extends StandardItemForm {
     protected final int WIDTH = 640;
     protected final int HEIGHT = 480;
 
-    public RecipeForm(String header) {
-        super(header);
+    public RecipeForm(String header, Component parent) {
+        super(header, parent);
         setSize(WIDTH, HEIGHT);
     }
 
