@@ -14,6 +14,6 @@ public class StartupController {
      */
     public void register(String name, Map<String, String> info) {
         User user = Services.USER_SERVICE.register(name, info);
-        Services.NUTRITION_SERVICE.getRecommendedGoal(user);
+        Services.NUTRITION_SERVICE.getRecommendedCalorieGoal();
     }
 }
