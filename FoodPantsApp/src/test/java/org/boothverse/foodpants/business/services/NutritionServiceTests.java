@@ -17,22 +17,36 @@ import java.util.Date;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NutritionServiceTests {
-    NutritionService service = new NutritionService();
-    Quantity<Mass> quantity = Quantities.getQuantity(5, Units.KILOGRAM);
-    Date consumedAt = Date.from(Instant.now());
-    NutritionInstance nullFields = new NutritionInstance();
-    NutritionInstance nutritionInstance = new NutritionInstance("dajkkjad", "banana", quantity, consumedAt);
-    NutritionInstance nutritionInstanceEdited = new NutritionInstance("dajkkjad", "apple", quantity, consumedAt);
-    Goal<Mass> goal = new Goal<>("adsbjkadbnk", GoalType.MAXIMIZE, quantity, NutritionType.CALORIES);
-    Goal<Mass> editedGoal = new Goal<>("adsbjkadbnk", GoalType.MINIMIZE, quantity, NutritionType.SODIUM);
-    ReportPeriod reportPeriod = new ReportPeriod("wtohjbnahb", Date.from(Instant.now()), Date.from(Instant.now()));
-    ReportPeriod editedReportPeriod = new ReportPeriod("wtohjbnahb", Date.from(Instant.now()), Date.from(Instant.now().plus(5, ChronoUnit.DAYS)));
+    static NutritionService service;
+    static Quantity<Mass> quantity;
+    static Date consumedAt;
+    static NutritionInstance nullFields;
+    static NutritionInstance nutritionInstance;
+    static NutritionInstance nutritionInstanceEdited;
+    static Goal<Mass> goal;
+    static Goal<Mass> editedGoal;
+    static ReportPeriod reportPeriod;
+    static ReportPeriod editedReportPeriod;
+
+    @BeforeAll
+    public static void init(){
+        service = new NutritionService();
+        quantity = Quantities.getQuantity(5, Units.KILOGRAM);
+        consumedAt = Date.from(Instant.now());
+        nullFields = new NutritionInstance();
+        nutritionInstance = new NutritionInstance("dajkkjad", "banana", quantity, consumedAt);
+        nutritionInstanceEdited = new NutritionInstance("dajkkjad", "apple", quantity, consumedAt);
+        goal = new Goal<>("adsbjkadbnk", GoalType.MAXIMIZE, quantity, NutritionType.CALORIES);
+        editedGoal = new Goal<>("adsbjkadbnk", GoalType.MINIMIZE, quantity, NutritionType.SODIUM);
+        reportPeriod = new ReportPeriod("wtohjbnahb", Date.from(Instant.now()), Date.from(Instant.now()));
+        editedReportPeriod = new ReportPeriod("wtohjbnahb", Date.from(Instant.now()), Date.from(Instant.now().plus(5, ChronoUnit.DAYS)));
+    }
 
     @Test
     @Order(1)
     public void addItemTest(){
         service.addItem(nutritionInstance);
-        Assertions.assertTrue(service.items.containsKey(nutritionInstance.getFoodId()));
+        Assertions.assertTrue(service.items.containsKey(nutritionInstance.getId()));
     }
 
     @Test
@@ -45,7 +59,8 @@ public class NutritionServiceTests {
         tomorrow.set(Calendar.HOUR_OF_DAY, 0);
         Date begin = today.getTime();
         Date end = tomorrow.getTime();
-        Assertions.assertTrue(service.getItems(begin, end).contains(nutritionInstance));
+        Assertions.assertTrue(service.getItems(begin, end).get(0).equals(nutritionInstance));
+
     }
 
     @Test
