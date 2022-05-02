@@ -89,6 +89,12 @@ public class FoodService {
         return getFood(id).getName();
     }
 
+    /**
+     * Return a list of the enum options in an enum.
+     *
+     * @param e
+     * @return
+     */
     public String[] getEnumOptions(Class<? extends Enum<?>> e) {
         return Arrays.stream(e.getEnumConstants()).map(Enum::name).toArray(String[]::new);
     }
