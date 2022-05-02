@@ -17,7 +17,7 @@ import static tech.units.indriya.AbstractUnit.ONE;
 
 @NoArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class Recipe extends Food {
     private String instructions;
     private List<FoodInstance> ingredients;

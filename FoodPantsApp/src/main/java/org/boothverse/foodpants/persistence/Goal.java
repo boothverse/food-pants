@@ -9,7 +9,7 @@ import javax.measure.Quantity;
 
 @NoArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class Goal<Q extends Quantity<Q>> extends IdObject {
 
     private GoalType goalType;

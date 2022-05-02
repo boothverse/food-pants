@@ -1,1 +1,1 @@
-INSERT INTO PANTRY (ID, QUANTITY) VALUES ('qilwIegFu8mxj8wF17oj', '50 g');
+INSERT INTO PANTRY VALUES ('qilwIegFu8mxj8wF17oj', '50 g');
