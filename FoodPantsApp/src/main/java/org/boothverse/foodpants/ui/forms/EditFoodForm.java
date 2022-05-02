@@ -10,7 +10,6 @@ public class EditFoodForm extends AddFoodForm {
     EditFoodForm(Food editFood, Component parent) {
         super(parent);
 
-
         for (QuantitySelector q : nutritionQuantitySelectors) {
 
         }

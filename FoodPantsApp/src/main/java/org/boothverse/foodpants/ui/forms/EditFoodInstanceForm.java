@@ -9,8 +9,7 @@ import static org.boothverse.foodpants.ui.components.QuantitySelector.unitClasse
 
 public class EditFoodInstanceForm extends AddFoodInstanceForm {
     public EditFoodInstanceForm(FoodInstance editItem, FoodInstanceController controller, Component parent) {
-        super(controller, parent);
-        initFormHeader("Edit Food");
+        super("Edit Food",controller, parent);
 
         // TODO: fix this when foodServices is implemented
         //foodSearchBar.setSelectedItem(Services.FOOD_SERVICE.getFoodName(editItem.getId()));

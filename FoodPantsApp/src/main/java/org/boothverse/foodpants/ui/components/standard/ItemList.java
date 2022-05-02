@@ -1,7 +1,6 @@
 package org.boothverse.foodpants.ui.components.standard;
 
 import lombok.Getter;
-import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
@@ -16,13 +15,13 @@ import java.util.Objects;
 public class ItemList extends JPanel implements PropertyChangeListener {
     protected List<StandardItem> items;
     protected JPanel listDisplay;
-    protected Page parent;
+    protected Component parental;
 
-    public ItemList(int numColumns, Page parent) {
+    public ItemList(int numColumns, Component parent) {
         super();
         listDisplay = new JPanel(new GridLayout(0, numColumns));
         items = new ArrayList<>();
-        this.parent = parent;
+        this.parental = parent;
         setBackground(parent.getBackground());
         add(listDisplay);
     }
@@ -65,9 +64,20 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         listDisplay.remove(item);
         item.removePropertyChangeListener(this);
         items.remove(item);
-        parent.notifyPage("remove", item, null);
+
+        if (Page.class.isAssignableFrom(parental.getClass())) {
+            ((Page)parental).notifyChange("remove", item, null);
+        }
+        else {
+            parental.revalidate();
+            parental.repaint();
+        }
         revalidate();
         repaint();
+    }
+
+    public void setModifiable(boolean status) {
+        items.forEach(item -> item.setModification(status));
     }
 
     @Override

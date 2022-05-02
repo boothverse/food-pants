@@ -6,6 +6,7 @@ import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import org.boothverse.foodpants.persistence.NutritionType;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
+import org.boothverse.foodpants.ui.components.standard.Searchable;
 import org.boothverse.foodpants.ui.controllers.FoodController;
 import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
@@ -30,9 +31,9 @@ public class AddFoodForm extends StandardForm implements ActionListener {
     protected JComboBox<String> foodGroupBox;
     protected static List<JLabel> nutritionLabels;
     protected QuantitySelector[] nutritionQuantitySelectors;
-    protected AddFoodInstanceForm parent;
+    protected Searchable formToNotify;
 
-    private FoodController foodController;
+    private final FoodController foodController;
 
     static {
         String[] nutritionNames = Services.NUTRITION_SERVICE.getNutritionTypes();
@@ -130,11 +131,11 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         NutritionDescriptor nut = new NutritionDescriptor(nutritionMap, Quantities.getQuantity(quantityVal, unit));
         Food newFood = foodController.addFood(nameField.getText(), FoodGroup.valueOf((String) foodGroupBox.getSelectedItem()), nut);
 
-        parent.updateFoodSearchBar(newFood);
+        formToNotify.updateFoodSearchBar(newFood);
         dispose();
     }
 
-    public void setFormToBeNotified(AddFoodInstanceForm a) {
-        parent = a;
+    public void setFormToBeNotified(Searchable a) {
+        formToNotify = a;
     }
 }
