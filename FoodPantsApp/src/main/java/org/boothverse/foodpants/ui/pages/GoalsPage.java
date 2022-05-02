@@ -1,10 +1,15 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.persistence.Goal;
+import org.boothverse.foodpants.persistence.GoalType;
+import org.boothverse.foodpants.persistence.NutritionType;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.GoalItem;
 import org.boothverse.foodpants.ui.forms.AddGoalForm;
 import org.boothverse.foodpants.ui.forms.AddNutritionForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +20,17 @@ public class GoalsPage extends NutritionPage {
     public GoalsPage() {
         JPanel listWrapper = new JPanel(new FlowLayout());
         JPanel panel = new JPanel(new GridLayout(0, 2));
-        panel.add(new GoalItem("Protein (grams)", 140, true));
-        panel.add(new GoalItem("Carbs (grams)", 200, true));
-        panel.add(new GoalItem("Fat (grams)", 70, true));
+
+        // TODO: remove static data
+        panel.add(new GoalItem(new Goal("1", GoalType.MINIMIZE,
+            Quantities.getQuantity(15, Units.GRAM), NutritionType.PROTEIN)));
+
+        panel.add(new GoalItem(new Goal("2", GoalType.MAXIMIZE,
+            Quantities.getQuantity(10, Units.GRAM), NutritionType.TOTAL_SUGAR)));
+
+        panel.add(new GoalItem(new Goal("3", GoalType.MAXIMIZE,
+            Quantities.getQuantity(30, Units.GRAM), NutritionType.TOTAL_FAT)));
+
         listWrapper.add(panel);
         add(listWrapper);
 
