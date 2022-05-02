@@ -27,6 +27,16 @@ public class ShoppingService extends FoodInstanceService {
         }
     }
 
+    public void removeAllItems() {
+        items.keySet().forEach(id -> {
+            try {
+                removeItem(id);
+            } catch (PantsNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     /**
      * Translates the shopping list into a pdf.
      *

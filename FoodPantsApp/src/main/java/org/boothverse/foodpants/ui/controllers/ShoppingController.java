@@ -56,6 +56,10 @@ public class ShoppingController implements FoodInstanceController {
         Services.SHOPPING_SERVICE.removeItem(foodId);
     }
 
+    public void removeAllItems() {
+        Services.SHOPPING_SERVICE.removeAllItems();
+    }
+
     /**
      * Removes the list of items from the shopping list and adds them to the pantry.
      *
