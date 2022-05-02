@@ -20,7 +20,6 @@ public class SearchForm extends StandardForm {
 
     SearchForm(List<Food> foods) {
         this();
-        searchBar.populate(foods.stream().map(Food::getName).toList());
     }
 
     @Override

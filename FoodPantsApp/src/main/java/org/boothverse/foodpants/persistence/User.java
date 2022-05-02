@@ -9,6 +9,7 @@ import javax.measure.quantity.Mass;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @ToString
+@EqualsAndHashCode
 public class User {
     protected String name;
     protected String gender;

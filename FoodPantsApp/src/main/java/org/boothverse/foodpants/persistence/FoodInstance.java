@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.persistence;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 import javax.measure.Quantity;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 public class FoodInstance extends IdObject {
     @Getter @Setter
     protected Quantity<?> quantity;

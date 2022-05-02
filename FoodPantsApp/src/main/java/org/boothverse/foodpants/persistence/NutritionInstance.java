@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.persistence;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.measure.Quantity;
 import java.util.Date;
 
 @NoArgsConstructor
+@EqualsAndHashCode
 public class NutritionInstance extends FoodInstance {
     @Getter
     private String foodId;

@@ -50,9 +50,7 @@ public class PantryService extends FoodInstanceService {
      */
     public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException {
         // TODO: test with quantities of diff types and units
-        if (!items.containsKey(foodId)) {
-            throw new PantsNotFoundException("food " + foodId + " not found");
-        }
+        if (!items.containsKey(foodId)) throw new PantsNotFoundException("food " + foodId + " not found");
 
         FoodInstance item = items.get(foodId);
         quantity = item.getQuantity().subtract(quantity);

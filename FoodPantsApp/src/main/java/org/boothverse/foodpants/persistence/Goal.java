@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.persistence;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.measure.Quantity;
 
 @NoArgsConstructor
 @Getter @Setter
+@EqualsAndHashCode
 public class Goal<Q extends Quantity<Q>> extends IdObject {
 
     private GoalType goalType;

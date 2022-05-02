@@ -1,37 +1,66 @@
 package org.boothverse.foodpants.ui.components;
 
 
+import org.boothverse.foodpants.persistence.Goal;
+import org.boothverse.foodpants.persistence.GoalType;
+import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardLabel;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
 
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.NumberFormat;
 
 public class GoalItem extends StandardPanel {
-    protected JLabel itemName;
-    protected JLabel quantity;
+    protected JLabel nameLabel;
+    protected JTextField quantityLabel;
 
     protected int WIDTH = 250;
     protected int HEIGHT = 50;
 
-    public GoalItem(String nutrition, double value, boolean goalType) {
+    Goal goal;
+
+    public GoalItem(Goal g) {
         super();
 
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        initChildren(nutrition, value);
+
+        goal = g;
+        initChildren();
     }
 
-    private void initChildren(String name, double amt) {
+    private void initChildren() {
+        String name = goal.getNutritionType().toString();
+        Number amt = goal.getDailyQuantity().getValue();
+
+        String goalType = (goal.getGoalType() == GoalType.MAXIMIZE) ? "Max" : "Min";
+
         JPanel panel = new JPanel();
-
-        itemName = new StandardLabel(name);
-        quantity = new StandardLabel(amt + "");
-
-        panel.add(quantity);
-
-        add(itemName, BorderLayout.WEST);
+        panel.setBackground(Style.TRANSPARENT);
         add(panel, BorderLayout.EAST);
+
+        // Setup Name of the item
+        nameLabel = new JLabel(name);
+        nameLabel.setHorizontalAlignment(JLabel.CENTER);
+        add(nameLabel);
+
+        // Set up quantity text field
+        quantityLabel = new JFormattedTextField(NumberFormat.getIntegerInstance());
+        quantityLabel.setEditable(false);
+        quantityLabel.setText(amt + "");
+        quantityLabel.setHorizontalAlignment(JLabel.CENTER);
+        quantityLabel.setPreferredSize(new Dimension(40, 40));
+
+        JLabel unitLabel = new JLabel("(" + goal.getDailyQuantity().getUnit().toString() + ")");
+        unitLabel.setHorizontalAlignment(JLabel.LEFT);
+
+        JLabel goalTypeLabel = new JLabel(goalType);
+        goalTypeLabel.setHorizontalAlignment(JLabel.LEFT);
+
+        panel.add(goalTypeLabel);
+        panel.add(unitLabel);
+        panel.add(quantityLabel);
     }
 }

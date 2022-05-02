@@ -23,6 +23,17 @@ public class StandardGridBagPanel extends JPanel {
         add(new JSeparator(SwingConstants.HORIZONTAL), gbc);
     }
 
+    public void addMiddleComponent(Component c, int row) {
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.gridx = 0;
+        gbc.gridy = row;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(c, gbc);
+    }
+
     public void addLeftComponent(Component c, int row) {
         GridBagConstraints gbc = new GridBagConstraints();
 

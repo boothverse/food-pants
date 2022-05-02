@@ -1,12 +1,14 @@
 package org.boothverse.foodpants.persistence;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Getter @NoArgsConstructor
+@EqualsAndHashCode
 public class ReportPeriod extends IdObject {
 
     private Date startDate;

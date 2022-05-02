@@ -60,7 +60,7 @@ public class NutritionService {
      * @param nutritionInstance
      */
     public void editItem(NutritionInstance nutritionInstance) throws PantsNotFoundException {
-        if (items.containsKey(nutritionInstance.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
+        if (!items.containsKey(nutritionInstance.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
         items.replace(nutritionInstance.getId(), nutritionInstance);
         nutritionInstanceDAO.save(nutritionInstance);
     }
