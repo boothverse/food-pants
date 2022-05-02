@@ -10,6 +10,7 @@ import java.util.Objects;
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode
+@ToString
 public class NutritionDescriptor {
     private Map<NutritionType, Quantity<?>> nutritionInfo = new HashMap<>();
     private Quantity<?> servingSize;
