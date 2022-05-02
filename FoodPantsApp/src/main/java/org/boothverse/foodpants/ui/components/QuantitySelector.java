@@ -46,6 +46,7 @@ public class QuantitySelector extends JPanel {
     public Quantity<?> getSelectedQuantity() {
         Unit<?> unit = unitClasses[quantityUnitBox.getSelectedIndex()];
         String enteredText = quantityValueField.getText();
+        enteredText = enteredText.replaceAll(",", "");
         double quantityVal;
 
         if (!Objects.equals(enteredText, "")) {

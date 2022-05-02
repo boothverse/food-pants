@@ -97,11 +97,19 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
             form.setVisible(true);
         }
         else if (e.getSource().equals(editFoodButton)) {
-
+            Food food = (Food) foodSearchBar.getModel().getSelectedItem();
+            EditFoodForm form = new EditFoodForm(food, this);
+            form.setFormToBeNotified(this);
+            form.setLocationRelativeTo(parent);
+            form.setVisible(true);
         }
     }
 
     public void updateFoodSearchBar(Food newFood) {
         foodSearchBar.update(newFood);
+    }
+
+    public void removeAndUpdateFoodSearchBar(Food oldFood, Food newFood) {
+        foodSearchBar.removeAndUpdate(oldFood, newFood);
     }
 }
