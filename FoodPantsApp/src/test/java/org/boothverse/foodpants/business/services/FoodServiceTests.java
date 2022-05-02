@@ -43,12 +43,18 @@ public class FoodServiceTests {
 
     @Test
     @Order(4)
-    public void getFoodName() throws PantsNotFoundException {
+    public void getFoodNameTest() throws PantsNotFoundException {
         Assertions.assertTrue(service.getFoodName("sfkjsfks").equals(foodEdited.getName()));
     }
 
     @Test
     @Order(5)
+    public void getFoodsTest(){
+        Assertions.assertTrue(service.getFoods().contains(foodEdited));
+    }
+
+    @Test
+    @Order(6)
     public void removeFoodTest() throws PantsNotFoundException {
         service.removeFood("sfkjsfks");
         Assertions.assertFalse(service.getFoods().contains(foodEdited));
