@@ -2,6 +2,7 @@ package org.boothverse.foodpants.ui.components.standard;
 
 import lombok.Getter;
 import lombok.NonNull;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
@@ -42,7 +43,12 @@ public class StandardItem extends StandardPanel implements ActionListener {
     }
 
     private void initComponents() {
-        Food food = foodController.getFood(foodInstance.getId());
+        Food food = null;
+        try {
+            food = foodController.getFood(foodInstance.getId());
+        } catch (PantsNotFoundException e) {
+            System.err.println("Pants not found at item creation");
+        }
         String name = food.getName();
         Number amt = foodInstance.getQuantity().getValue();
 
