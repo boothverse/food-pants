@@ -17,9 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 public class TimelinePage extends NutritionPage {
@@ -27,6 +25,7 @@ public class TimelinePage extends NutritionPage {
 
     protected static JPanel timeContainer;
     private JPanel currTimeline;
+    private String timeType;
 
     NutritionController nutritionController;
 
@@ -56,7 +55,10 @@ public class TimelinePage extends NutritionPage {
             timeButton.setBackground(Style.GREY_3);
             timeButton.addActionListener(holdColor);
             timeButton.setPreferredSize(new Dimension(150, 30));
-            timeButton.addActionListener((e) -> setTimeLineView(timeButton.getText()));
+            timeButton.addActionListener((e) -> {
+                timeType = timeButton.getText();
+                setTimeLineView(timeType);
+            });
 
             timeContainer.add(timeButton);
         }
@@ -176,5 +178,18 @@ public class TimelinePage extends NutritionPage {
                 panel.add(new NutritionItem(item));
             } catch (PantsNotFoundException e) {};
         }
+    }
+
+    @Override
+    public void notifyChange(String message, Object oldValue, Object newValue) {
+        if (Objects.equals(message, "add")) {
+            setTimeLineView(timeType);
+        }
+//        else if (Objects.equals(message, "remove")) {
+//        }
+//        else if (Objects.equals(message, "edit")) {
+//        }
+//        else if (Objects.equals(message, "update")) {
+//        }
     }
 }
