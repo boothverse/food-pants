@@ -8,7 +8,7 @@ import tech.units.indriya.unit.Units;
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 
-public class FoodTester {
+public class FoodTests {
     NutritionDescriptor nd = new NutritionDescriptor();
     Food food = new Food("1", "1", FoodGroup.FRUIT, nd);
 

@@ -24,6 +24,11 @@ public class RecipeServiceTests {
         service = new RecipeService();
     }
 
+    @AfterAll
+    public static void clear(){
+        service.dao.removeAll();
+    }
+
     @Test
     @Order(1)
     public void getRecipesEmptyTest(){

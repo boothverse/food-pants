@@ -6,12 +6,11 @@ import tech.units.indriya.quantity.Quantities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static tech.units.indriya.AbstractUnit.ONE;
 
-public class RecipeTester {
+public class RecipeTests {
     NutritionDescriptor nd = new NutritionDescriptor();
     List<FoodInstance> ingredients = new ArrayList<>();
     Recipe recipe = new Recipe("dkgjcjad", "Good stuff", FoodGroup.OTHER, nd, "Make", ingredients, 5d);
