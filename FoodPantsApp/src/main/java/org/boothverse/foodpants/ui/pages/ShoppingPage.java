@@ -6,7 +6,7 @@ import org.boothverse.foodpants.business.services.exceptions.PantsExportShopping
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.ShoppingItem;
-import org.boothverse.foodpants.ui.components.standard.ItemList;
+import org.boothverse.foodpants.ui.components.ItemList;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.ShoppingController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;

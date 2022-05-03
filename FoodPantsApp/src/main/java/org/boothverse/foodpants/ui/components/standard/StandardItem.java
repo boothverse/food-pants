@@ -10,6 +10,8 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.QuantitySelector;
 import org.boothverse.foodpants.ui.controllers.FoodController;
+import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.measure.Unit;
 import javax.swing.*;
@@ -101,9 +103,7 @@ public class StandardItem extends StandardPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
-//            StandardForm form = new EditFoodInstanceForm(foodInstance);
-//            form.setLocationRelativeTo(this);
-//            form.setVisible(true);
+            firePropertyChange("editItem", this, null);
         } else if (e.getSource() == deleteButton) {
             firePropertyChange("deleteItem", this, null);
         }

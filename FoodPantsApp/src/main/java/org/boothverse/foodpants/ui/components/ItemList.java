@@ -1,6 +1,8 @@
-package org.boothverse.foodpants.ui.components.standard;
+package org.boothverse.foodpants.ui.components;
 
 import lombok.Getter;
+import org.boothverse.foodpants.ui.components.standard.Notifiable;
+import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
@@ -15,14 +17,14 @@ import java.util.Objects;
 public class ItemList extends JPanel implements PropertyChangeListener {
     protected List<StandardItem> items;
     protected JPanel listDisplay;
-    protected Component parental;
+    protected Notifiable parental;
 
-    public ItemList(int numColumns, Component parent) {
+    public ItemList(int numColumns, Notifiable parent) {
         super();
         listDisplay = new JPanel(new GridLayout(0, numColumns));
         items = new ArrayList<>();
         this.parental = parent;
-        setBackground(parent.getBackground());
+        setBackground(((Component)parent).getBackground());
         add(listDisplay);
     }
 
@@ -65,15 +67,16 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         item.removePropertyChangeListener(this);
         items.remove(item);
 
-        if (Page.class.isAssignableFrom(parental.getClass())) {
-            ((Page)parental).notifyChange("remove", item, null);
-        }
-        else {
-            parental.revalidate();
-            parental.repaint();
-        }
+        parental.notifyChange("remove", item, null);
+
         revalidate();
         repaint();
+    }
+
+    public void edit(StandardItem item) {
+        remove(item);
+        //parental.notifyChange("edit", item, );
+        //add();
     }
 
     public void setModifiable(boolean status) {
@@ -85,6 +88,10 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         if (Objects.equals(evt.getPropertyName(), "deleteItem")) {
             System.out.println("delete " + evt.getOldValue());
             remove((StandardItem) evt.getOldValue());
+        }
+        else if (Objects.equals(evt.getPropertyName(), "editItem")) {
+            System.out.println("delete " + evt.getOldValue());
+            edit((StandardItem) evt.getOldValue());
         }
     }
 }

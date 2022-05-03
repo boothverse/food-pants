@@ -31,6 +31,7 @@ public class PageRunner {
 
         // Add Interface Panel (scroll pane)
         pageFrame = new PageViewer(new Page());
+        pageFrame.getVerticalScrollBar().setUnitIncrement(16);
         frame.add(pageFrame);
 
         // Set page to pantry on load

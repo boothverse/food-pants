@@ -5,6 +5,7 @@ import org.boothverse.foodpants.persistence.Recipe;
 import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
+import org.boothverse.foodpants.ui.components.ItemList;
 import org.boothverse.foodpants.ui.components.standard.*;
 import org.boothverse.foodpants.ui.controllers.RecipeController;
 import org.boothverse.foodpants.ui.pages.Page;
