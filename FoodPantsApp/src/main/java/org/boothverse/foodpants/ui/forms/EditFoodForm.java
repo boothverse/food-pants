@@ -23,6 +23,7 @@ import java.util.Objects;
 public class EditFoodForm extends AddFoodForm {
     private FoodController foodController;
     private Food food;
+    private String[] optionsQuantity = {"US.liq.gal/128", "(US.liq.gal/128)*8", "US.liq.gal", "l", "(J*4184)/1000"};
 
     EditFoodForm(Food editFood, Component parent) {
         super("Edit Food", parent);
@@ -41,8 +42,26 @@ public class EditFoodForm extends AddFoodForm {
 
         for (QuantitySelector q : nutritionQuantitySelectors) {
             if (j == 0) {
+                // checks required as some Units != value displayed in combo box
+                if (nutritionDescriptor.getServingSize().getUnit().toString().equals(optionsQuantity[0])) {
+                    q.getQuantityUnitBox().setSelectedItem("fl oz");
+                }
+                else if (nutritionDescriptor.getServingSize().getUnit().toString().equals(optionsQuantity[1])) {
+                    q.getQuantityUnitBox().setSelectedItem("cup");
+                }
+                else if (nutritionDescriptor.getServingSize().getUnit().toString().equals(optionsQuantity[2])) {
+                    q.getQuantityUnitBox().setSelectedItem("gallon");
+                }
+                else if (nutritionDescriptor.getServingSize().getUnit().toString().equals(optionsQuantity[3])) {
+                    q.getQuantityUnitBox().setSelectedItem("L");
+                }
+                else if (nutritionDescriptor.getServingSize().getUnit().toString().equals(optionsQuantity[4])) {
+                    q.getQuantityUnitBox().setSelectedItem("calorie");
+                }
+                else {
+                    q.getQuantityUnitBox().setSelectedItem(nutritionDescriptor.getServingSize().getUnit().toString());
+                }
                 q.getQuantityValueField().setValue(nutritionDescriptor.getServingSize().getValue());
-                q.getQuantityUnitBox().setSelectedItem(nutritionDescriptor.getServingSize().getUnit().toString());
                 j++;
             }
             else {
@@ -93,7 +112,7 @@ public class EditFoodForm extends AddFoodForm {
             ex.printStackTrace();
         }
 
-        parent.removeAndUpdateFoodSearchBar(food, newFood);
+        formToNotify.removeAndUpdateFoodSearchBar(food, newFood);
         dispose();
     }
 }
