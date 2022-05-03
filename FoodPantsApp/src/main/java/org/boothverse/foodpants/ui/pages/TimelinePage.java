@@ -63,6 +63,9 @@ public class TimelinePage extends NutritionPage {
             timeContainer.add(timeButton);
         }
 
+        // Set day timeline view by default
+        setTimeLineView("Day");
+
         add(timeWrapper, BorderLayout.NORTH);
         add(currTimeline);
     }

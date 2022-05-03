@@ -29,6 +29,7 @@ public class EditFoodForm extends AddFoodForm {
         super("Edit Food", parent);
         food = editFood;
         foodController = new FoodController();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
         NutritionDescriptor nutritionDescriptor = editFood.getNutrition();
         Map<NutritionType, Quantity<?>> nutritionInfo = nutritionDescriptor.getNutritionInfo();

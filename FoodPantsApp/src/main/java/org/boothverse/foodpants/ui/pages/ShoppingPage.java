@@ -109,7 +109,7 @@ public class ShoppingPage extends Page {
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add")) {
-            itemDisplay.add(new ShoppingItem((FoodInstance) newValue));
+            updateList();
         }
         else if (Objects.equals(message, "remove")) {
             try {
