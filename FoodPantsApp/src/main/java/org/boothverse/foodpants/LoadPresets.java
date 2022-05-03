@@ -53,6 +53,7 @@ public class LoadPresets {
     }
 
     private static void loadPresets(String table) {
+        // TODO: update this to target before packaging
         String filepath = "src/main/resources/sql/preset_" + table.toLowerCase() + ".sql";
         System.out.println("Loading presets from " + filepath);
         new JDBCUtils().executeScript(filepath);
