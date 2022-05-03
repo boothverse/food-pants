@@ -11,6 +11,29 @@ import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
+class ComboKeyValue {
+    private String key;
+    private String value;
+
+    public ComboKeyValue(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    @Override
+    public String toString(){
+        return key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}
+
 public class TimelineDropdown extends JComboBox {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 30;
@@ -34,15 +57,9 @@ public class TimelineDropdown extends JComboBox {
             try {
                 Food food = foodController.getFood(item.getFoodId());
 
-                JLabel foodLabel = new JLabel(food.getName());
-                JLabel quantityLabel = new JLabel(item.getQuantity().toString());
-
-                add(foodLabel, ++row);
-                add(quantityLabel, ++row);
+                String comboValue = food.getName() + "(" + item.getQuantity().toString() + ")";
+                addItem(new ComboKeyValue(comboValue, String.valueOf(++row)));
             } catch (PantsNotFoundException e) {};
         }
-
-        this.revalidate();
-        this.repaint();
     }
 }

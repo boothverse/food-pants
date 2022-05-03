@@ -37,7 +37,7 @@ public class AddNutritionForm extends AddFoodInstanceForm {
         addRightComponent(new JPanel(),++i);
 
         addLeftComponent(new JLabel("Consumed At"), ++i);
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
         JFormattedTextField dateField = new JFormattedTextField(dateFormat);
         addRightComponent(dateField, i);
 
@@ -52,7 +52,7 @@ public class AddNutritionForm extends AddFoodInstanceForm {
                     PageManager.getActivePage().notifyChange("add", null, newFood);
                     dispose();
                 } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(this, "Must specify a date in MM/dd/yyyy format!",
+                    JOptionPane.showMessageDialog(this, "Must specify a date in MM/dd/yyyy hh:mm format.",
                         "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }

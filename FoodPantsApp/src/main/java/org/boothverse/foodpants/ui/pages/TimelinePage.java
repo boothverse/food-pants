@@ -78,10 +78,14 @@ public class TimelinePage extends NutritionPage {
         SimpleDateFormat dateFormat = null;
         TimelineDropdown dropdown;
 
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+
         // Get timeline dates
         switch (viewType) {
             case "Day":
-                c.set(Calendar.MINUTE, 0);
                 String[] timeNames = new String[]{"Early Morning", "Morning", "Noon",
                     "Afternoon", "Evening", "Late Night"};
 

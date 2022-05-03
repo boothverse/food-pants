@@ -47,7 +47,9 @@ public class NutritionService {
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
         List<NutritionInstance> result = new ArrayList<>();
         for(NutritionInstance n: items.values()){
-            if(n.getConsumedAt().after(startDate) && n.getConsumedAt().before(endDate) ){
+            if((n.getConsumedAt().after(startDate) || n.getConsumedAt().equals(startDate))
+                    && n.getConsumedAt().before(endDate) ){
+
                 result.add(n);
             }
         }
