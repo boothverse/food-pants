@@ -7,6 +7,11 @@ import org.boothverse.foodpants.persistence.IdObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Preset data is in "src/main/resources/sql/preset_[TABLE].sql"
+ * Make your own additional preset files if you want more data, and set the relevant
+ * boolean variable below to true.
+ */
 public class LoadPresets {
 
     /** Set to true if you wanna use the presets */
