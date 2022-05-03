@@ -88,7 +88,6 @@ public class PantryService extends FoodInstanceService {
                 try {
                     return foodService.getFood(item.getId()).getName().startsWith(query);
                 } catch (PantsNotFoundException e) {
-                    e.printStackTrace();
                     return false;
                 }
             })

@@ -52,7 +52,7 @@ public abstract class StandardForm extends JFrame {
         setTitle(header);
         add(wrapperPanel);
         wrapperPanel.add(contentPanel);
-        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     }
 
     protected void initFormHeader(String header) {

@@ -37,7 +37,9 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         for (FoodInstance food : ingredients) {
             result = result + food.getId() + ":" + food.getQuantity().toString() + ",";
         }
-        result = result.substring(0, result.length() - 1);
+        if(!ingredients.isEmpty()) {
+            result = result.substring(0, result.length() - 1);
+        }
         return result;
 
     }

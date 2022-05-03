@@ -1,10 +1,13 @@
 package org.boothverse.foodpants.ui.pages;
 
-import org.boothverse.foodpants.persistence.IdObject;
+import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.TimelineDropdown;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
+import org.boothverse.foodpants.ui.controllers.FoodController;
 import org.boothverse.foodpants.ui.controllers.NutritionController;
 import org.boothverse.foodpants.ui.forms.AddNutritionForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
@@ -25,6 +28,8 @@ public class TimelinePage extends NutritionPage {
     protected static JPanel timeContainer;
     private JPanel currTimeline;
 
+    NutritionController nutritionController;
+
     protected static final ActionListener holdColor = e -> {
         // Handle button color change
         for (Component c : timeContainer.getComponents()) {
@@ -34,6 +39,7 @@ public class TimelinePage extends NutritionPage {
     };
 
     public TimelinePage() {
+        nutritionController = new NutritionController();
         initTimeline();
     }
 
@@ -63,14 +69,14 @@ public class TimelinePage extends NutritionPage {
         if (currTimeline != null) { currTimeline.removeAll(); }
 
         Calendar c = Calendar.getInstance();
-        List<Date> times = new ArrayList<>();
+        List<Date> startTimes = new ArrayList<>();
+        List<Date> endTimes = new ArrayList<>();
 
         JPanel currTimePanel = new JPanel();
         currTimePanel.setLayout(new BoxLayout(currTimePanel, BoxLayout.Y_AXIS));
 
         SimpleDateFormat dateFormat = null;
-
-        NutritionController nutritionController = new NutritionController();
+        TimelineDropdown dropdown;
 
         // Get timeline dates
         switch (viewType) {
@@ -81,22 +87,13 @@ public class TimelinePage extends NutritionPage {
 
                 // Add time names to time panel
                 for (String t : timeNames) {
-                    TimelineDropdown dropdown = new TimelineDropdown(
-                        new String[]{t}
-                    );
+                    dropdown = new TimelineDropdown(new String[]{t});
 
                     Date startDate = c.getTime();
                     c.add(Calendar.HOUR, 4);
                     Date endDate = c.getTime();
 
-                    // Get nutritional items in select hours
-                    List<NutritionInstance> items = nutritionController.getItems(startDate, endDate);
-
-                    for (NutritionInstance item : items) {
-                        // TODO: get food by id, add to dropdown with quantity
-                        // dropdown.add();
-                    }
-
+                    dropdown.addNutritionalTime(startDate, endDate);
                     currTimePanel.add(dropdown);
                 }
 
@@ -104,8 +101,9 @@ public class TimelinePage extends NutritionPage {
             case "Week":
                 c.set(Calendar.DAY_OF_WEEK, Calendar.getInstance().getFirstDayOfWeek());
                 for (int i = 0; i < 7; i++) {
+                    startTimes.add(c.getTime());
                     c.add(Calendar.DAY_OF_MONTH, 1);
-                    times.add(c.getTime());
+                    endTimes.add(c.getTime());
                 }
 
                 dateFormat = new SimpleDateFormat("MMM dd EE");
@@ -122,8 +120,9 @@ public class TimelinePage extends NutritionPage {
 
                 // Get each week until end of month
                 for (int i = 1; i <= nDays; i += 7) {
-                    times.add(c.getTime());
+                    startTimes.add(c.getTime());
                     c.add(Calendar.DATE, 7);
+                    endTimes.add(c.getTime());
                 }
 
                 dateFormat = new SimpleDateFormat("'Week' MM/dd/yyyy");
@@ -132,13 +131,11 @@ public class TimelinePage extends NutritionPage {
 
         // Parse calendar dates if not day timeline
         if (!viewType.equals("Day")) {
-            for (Date time : times) {
-                String formattedTime = dateFormat.format(time);
+            for (int i = 0; i < startTimes.size(); i++) {
+                String formattedTime = dateFormat.format(startTimes.get(i));
 
-                // TODO: add nutrition instances to each corresponding time
-                TimelineDropdown dropdown = new TimelineDropdown(
-                    new String[]{formattedTime}
-                );
+                dropdown = new TimelineDropdown(new String[]{formattedTime});
+                dropdown.addNutritionalTime(startTimes.get(i), endTimes.get(i));
 
                 currTimePanel.add(dropdown);
             }
@@ -154,7 +151,7 @@ public class TimelinePage extends NutritionPage {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                StandardForm form = new AddNutritionForm("Add Nutrition Item", this);
+                StandardForm form = new AddNutritionForm(nutritionController, this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;

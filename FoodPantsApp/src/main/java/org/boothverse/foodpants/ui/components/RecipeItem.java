@@ -57,12 +57,10 @@ public class RecipeItem extends StandardPanel {
         ingredientPanel.setBackground(Style.TRANSPARENT);
         ingredientPanel.setLayout(new BoxLayout(ingredientPanel, BoxLayout.Y_AXIS));
         ingredientDisplays.stream().limit(3).forEach(display -> ingredientPanel.add(display));
-        if (ingredientPanel.getComponentCount() < ingredientDisplays.size()) {
-            JPanel seeMoreWrapper = new JPanel(new BorderLayout());
-            seeMoreWrapper.setBackground(Style.TRANSPARENT);
-            seeMoreWrapper.add(seeMoreButton, BorderLayout.EAST);
-            ingredientPanel.add(seeMoreWrapper);
-        }
+
+        JPanel seeMoreWrapper = new JPanel(new BorderLayout());
+        seeMoreWrapper.setBackground(Style.TRANSPARENT);
+        seeMoreWrapper.add(seeMoreButton, BorderLayout.EAST);
 
         JLabel ingredientLabel = new JLabel("Ingredients");
         ingredientLabel.setFont(Style.headerStyle.deriveFont(13f));
@@ -85,6 +83,7 @@ public class RecipeItem extends StandardPanel {
         spacer.setBackground(Style.TRANSPARENT);
         contentPanel.addRightComponent(spacer, ++i);
         contentPanel.addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
+        contentPanel.addRightComponent(seeMoreWrapper, ++i);
     }
 
     protected void initHeader(String header) {

@@ -74,6 +74,5 @@ public class RecipePage extends Page {
         else if (Objects.equals(message, "update")) {
             updateList();
         }
-
     }
 }

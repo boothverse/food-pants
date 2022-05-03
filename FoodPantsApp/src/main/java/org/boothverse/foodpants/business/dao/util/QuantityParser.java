@@ -9,7 +9,6 @@ import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;
-import javax.measure.format.UnitFormat;
 
 public class QuantityParser {
     public static Quantity<?> parse(String str) throws PantsNotParsedException {

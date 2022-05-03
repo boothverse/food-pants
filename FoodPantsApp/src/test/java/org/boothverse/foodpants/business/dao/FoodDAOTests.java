@@ -25,7 +25,6 @@ public class FoodDAOTests extends BaseDAOTests {
 
     @Test
     @Order(1)
-    @Disabled
     void foodSaveTest() {
         NutritionDescriptor nutrition = new NutritionDescriptor();
         nutrition.setNutritionInfo(Map.of(
