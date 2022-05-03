@@ -1,16 +1,23 @@
 package org.boothverse.foodpants.business.dao.util;
 
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+import org.decimal4j.util.DoubleRounder;
 import systems.uom.unicode.CLDR;
 import tech.units.indriya.AbstractUnit;
-import tech.units.indriya.internal.format.UnitFormatParser;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.Quantity;
 import javax.measure.Unit;
 
-public class QuantityParser {
+public class QuantityUtils {
+
+    public static String toString(Quantity<?> quantity) {
+        Double value = DoubleRounder.round(quantity.getValue().doubleValue(), 4);
+        Unit<?> unit = quantity.getUnit();
+        return value + " " + unit;
+    }
+
     public static Quantity<?> parse(String str) throws PantsNotParsedException {
         Number value;
         Unit<?> unit;
