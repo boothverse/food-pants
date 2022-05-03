@@ -19,6 +19,8 @@ public class RecipePage extends Page {
     protected JPanel recipeListPanel;
     protected RecipeController recipeController = new RecipeController();
 
+    private static boolean modifyingRecipes;
+
     public RecipePage() {
         super(labels);
 
@@ -42,6 +44,22 @@ public class RecipePage extends Page {
                 form.setVisible(true);
                 break;
             case "Recommend":
+                JButton modifyBtn = (JButton) e.getSource();
+                modifyingRecipes = !modifyingRecipes;
+                if (modifyingRecipes) {
+                    modifyBtn.setBackground(Style.GREY_0);
+                    List<Recipe> recipes = recipeController.getRecommendedRecipes();
+                    recipeListPanel.removeAll();
+                    for (Recipe item : recipes) {
+                        RecipeItem thisItem = new RecipeItem(item);
+                        recipeListPanel.add(thisItem);
+                    }
+                    revalidate();
+                    repaint();
+                } else {
+                    modifyBtn.setBackground(Style.GREY_1);
+                    updateList();
+                }
             case "Nutrition":
             case "Search":
                 break;
