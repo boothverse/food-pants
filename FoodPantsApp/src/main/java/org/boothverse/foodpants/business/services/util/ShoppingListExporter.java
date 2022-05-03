@@ -31,7 +31,7 @@ public class ShoppingListExporter {
             document.add(new Paragraph("\n"));
 
             // Content
-            PdfPTable table = new PdfPTable(2);
+            PdfPTable table = new PdfPTable(new float[] { 20, 80 });
             addRows(table, items);
             document.add(table);
 

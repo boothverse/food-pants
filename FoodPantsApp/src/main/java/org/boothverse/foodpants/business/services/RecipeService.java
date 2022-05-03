@@ -122,7 +122,11 @@ public class RecipeService {
         // Remove used pantry items
         if (isUsingPantry) {
             for (FoodInstance ingredient : recipe.getIngredients()) {
-                pantryService.removeItem(ingredient.getId(), ingredient.getQuantity());
+                try {
+                    pantryService.removeItem(ingredient.getId(), ingredient.getQuantity());
+                } catch (PantsNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
