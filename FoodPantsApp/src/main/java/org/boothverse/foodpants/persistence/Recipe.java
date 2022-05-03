@@ -57,6 +57,7 @@ public class Recipe extends Food {
      * @return
      */
     public FoodInstance createFoodInstance(Double instanceServings) {
+        if(instanceServings == null){ return null; }
         return new FoodInstance(id, Quantities.getQuantity(instanceServings / this.servings, ONE));
     }
 
@@ -67,6 +68,7 @@ public class Recipe extends Food {
      * @return
      */
     public NutritionInstance createNutritionInstance(Double instanceServings) {
+        if(instanceServings == null){ return null; }
         String id = Services.ID_SERVICE.getId();
         String foodId = this.id;
         Quantity<Dimensionless> quantity = Quantities.getQuantity(instanceServings / this.servings, ONE);

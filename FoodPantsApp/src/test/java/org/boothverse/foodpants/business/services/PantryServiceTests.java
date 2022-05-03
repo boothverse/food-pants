@@ -5,6 +5,7 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionDescriptor;
+import org.junit.After;
 import org.junit.jupiter.api.*;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
@@ -17,7 +18,7 @@ public class PantryServiceTests {
     static PantryService service = new PantryService();
     static NutritionDescriptor nd = new NutritionDescriptor();
     static Food food = new Food("kdfkjalnad", "Banana", FoodGroup.FRUIT, nd);
-    static FoodService foodService = new FoodService();
+    static FoodService foodService = Services.FOOD_SERVICE;
     static Food foodItem1 = new Food("fwjadjda", "Apple", FoodGroup.FRUIT, nd);
     Food foodItem2 = new Food("eqvhjdbj", "Orange", FoodGroup.FRUIT, nd);
 
@@ -33,6 +34,11 @@ public class PantryServiceTests {
         });
         foodService.addFood(food);
         foodService.addFood(foodItem1);
+    }
+
+    @AfterAll
+    public static void clear(){
+        service.dao.removeAll();
     }
 
     @Test
@@ -162,7 +168,7 @@ public class PantryServiceTests {
     @Test
     @Order(12)
     public void searchByFoodNameTrueTest(){
-        Assertions.assertEquals(service.searchByFoodName("Apple").size(), 1);
+        Assertions.assertTrue(service.searchByFoodName("Apple").contains(foodItem1.createInstance(Quantities.getQuantity(2, Units.KILOGRAM))));
     }
 
     @Test

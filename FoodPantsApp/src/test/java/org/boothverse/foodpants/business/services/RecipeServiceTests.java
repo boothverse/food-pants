@@ -16,11 +16,17 @@ public class RecipeServiceTests {
     List<FoodInstance> ingredients = new ArrayList<>();
     Recipe recipe = new Recipe("dkgjcjad", "Good stuff", FoodGroup.OTHER, nd, "Make", ingredients, 5d);
     static Recipe editedRecipe;
+    static List<FoodInstance> editedIngredients = new ArrayList<>();
 
     @BeforeAll
     public static void init(){
         service.dao.removeAll();
         service = new RecipeService();
+    }
+
+    @AfterAll
+    public static void clear(){
+        service.dao.removeAll();
     }
 
     @Test
@@ -55,8 +61,17 @@ public class RecipeServiceTests {
 
     @Test
     @Order(5)
+    public void getIngredientsEmptyTest(){
+        try {
+            Assertions.assertTrue(service.getIngredients(recipe.getId()).isEmpty());
+        } catch (PantsNotFoundException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    @Order(6)
     public void editRecipeTest(){
-        List<FoodInstance> editedIngredients = new ArrayList<>();
         Food food1 = new Food("kdfkjalnad", "Banana", FoodGroup.FRUIT, nd);
         Food food2 = new Food("fwjadjda", "Apple", FoodGroup.FRUIT, nd);
         Food food3 = new Food("eqvhjdbj", "Orange", FoodGroup.FRUIT, nd);
@@ -72,25 +87,35 @@ public class RecipeServiceTests {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
+    public void getIngredientsTest(){
+        try {
+            Assertions.assertTrue(service.getIngredients(recipe.getId()).equals(editedIngredients));
+        } catch (PantsNotFoundException e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    @Order(8)
     public void getRecipeByNameMatchingTest(){
         Assertions.assertTrue(service.getRecipesNameStartsWith("Good stuff").contains(editedRecipe));
     }
 
     @Test
-    @Order(7)
+    @Order(9)
     public void getRecipeByNameStartsWithTest(){
         Assertions.assertTrue(service.getRecipesNameStartsWith("Go").contains(editedRecipe));
     }
 
     @Test
-    @Order(8)
+    @Order(10)
     public void getRecipeByNameNoneTest(){
         Assertions.assertTrue(service.getRecipesNameStartsWith("wowza").isEmpty());
     }
 
     @Test
-    @Order(9)
+    @Order(11)
     public void getRecipeByIngredientsTrueTest(){
         List<FoodInstance> editedIngredients = new ArrayList<>();
         Food food1 = new Food("kdfkjalnad", "Banana", FoodGroup.FRUIT, nd);
@@ -101,7 +126,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    @Order(10)
+    @Order(12)
     public void getRecipeByIngredientsFalseTest(){
         List<FoodInstance> editedIngredients = new ArrayList<>();
         Food food3 = new Food("eqvhjdbj", "Orange", FoodGroup.FRUIT, nd);
@@ -110,7 +135,7 @@ public class RecipeServiceTests {
     }
 
     @Test
-    @Order(11)
+    @Order(13)
     public void getRecipeByIngredientsWrongQuantityTest(){
         List<FoodInstance> editedIngredients = new ArrayList<>();
         Food food1 = new Food("kdfkjalnad", "Banana", FoodGroup.FRUIT, nd);
