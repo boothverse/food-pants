@@ -8,7 +8,7 @@ import tech.units.indriya.unit.Units;
 import javax.measure.Quantity;
 import javax.measure.quantity.Mass;
 
-public class GoalTester {
+public class GoalTests {
     Quantity<Mass> quantity = Quantities.getQuantity(5, Units.KILOGRAM);
     Quantity<Mass> lowQuantity = Quantities.getQuantity(4, Units.KILOGRAM);
     Quantity<Mass> highQuantity = Quantities.getQuantity(6, Units.KILOGRAM);

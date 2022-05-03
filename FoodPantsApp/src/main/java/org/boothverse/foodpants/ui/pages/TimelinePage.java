@@ -1,10 +1,10 @@
 package org.boothverse.foodpants.ui.pages;
 
-import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.NutritionItem;
 import org.boothverse.foodpants.ui.components.TimelineDropdown;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.controllers.FoodController;
@@ -97,7 +97,7 @@ public class TimelinePage extends NutritionPage {
                     c.add(Calendar.HOUR, 4);
                     Date endDate = c.getTime();
 
-                    dropdown.addNutritionalTime(startDate, endDate);
+                    addNutritionalTime(startDate, endDate);
                     currTimePanel.add(dropdown);
                 }
 
@@ -139,7 +139,7 @@ public class TimelinePage extends NutritionPage {
                 String formattedTime = dateFormat.format(startTimes.get(i));
 
                 dropdown = new TimelineDropdown(new String[]{formattedTime});
-                dropdown.addNutritionalTime(startTimes.get(i), endTimes.get(i));
+                addNutritionalTime(startTimes.get(i), endTimes.get(i));
 
                 currTimePanel.add(dropdown);
             }
@@ -162,6 +162,19 @@ public class TimelinePage extends NutritionPage {
             default:
                 super.actionPerformed(e);
                 break;
+        }
+    }
+
+    void addNutritionalTime(Date startDate, Date endDate) {
+        NutritionController nutritionController = new NutritionController();
+
+        // Get nutritional items in select hours
+        List<NutritionInstance> items = nutritionController.getItems(startDate, endDate);
+
+        for (NutritionInstance item : items) {
+            try {
+                add(new NutritionItem(item));
+            } catch (PantsNotFoundException e) {};
         }
     }
 }

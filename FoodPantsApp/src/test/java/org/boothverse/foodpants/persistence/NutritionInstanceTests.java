@@ -10,7 +10,7 @@ import javax.measure.quantity.Mass;
 import java.time.Instant;
 import java.util.Date;
 
-public class NutritionInstanceTester {
+public class NutritionInstanceTests {
     Quantity<Mass> quantity = Quantities.getQuantity(5, Units.KILOGRAM);
     Date consumedAt = Date.from(Instant.now());
     NutritionInstance nullFields = new NutritionInstance();

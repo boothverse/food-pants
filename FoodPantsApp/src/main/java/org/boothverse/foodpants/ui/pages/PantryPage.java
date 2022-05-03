@@ -2,22 +2,19 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
-import org.boothverse.foodpants.ui.components.ShoppingItem;
-import org.boothverse.foodpants.ui.components.standard.ItemList;
+import org.boothverse.foodpants.ui.components.ItemList;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.PantryController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
+import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.SearchForm;
-import org.boothverse.foodpants.ui.forms.StandardItemForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,6 +82,10 @@ public class PantryPage extends Page {
                 System.out.println("Austin is bad at frontend");
                 e.printStackTrace();
             }
+        }
+        else if (Objects.equals(message, "edit")) {
+            StandardForm editItemForm = new EditFoodInstanceForm(((StandardItem) oldValue).getFoodInstance(), pantryController, this);
+            editItemForm.setVisible(true);
         }
         else if (Objects.equals(message, "update")) {
             updateList();

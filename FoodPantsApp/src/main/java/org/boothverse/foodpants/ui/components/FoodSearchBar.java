@@ -61,7 +61,9 @@ public class FoodSearchBar extends JComboBox<Food> {
                 setForeground(list.getForeground());
             }
 
-            setText(value.getName());
+            if (value != null) {
+                setText(value.getName());
+            }
             return this;
 
         }

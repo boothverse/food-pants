@@ -1,12 +1,20 @@
 package org.boothverse.foodpants.ui.components;
 
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
+
+import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.*;
+import org.boothverse.foodpants.ui.PageManager;
+import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardGridBagPanel;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
+import org.boothverse.foodpants.ui.forms.StandardForm;
+import org.boothverse.foodpants.ui.forms.ViewRecipeForm;
 import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
@@ -17,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Getter @Setter
 public class RecipeItem extends StandardPanel {
     protected JLabel title;
     protected List<StandardItem> ingredientDisplays;
@@ -25,8 +34,10 @@ public class RecipeItem extends StandardPanel {
     protected JPanel wrapperPanel;
     protected JPanel ingredientPanel;
     protected JButton seeMoreButton;
+    protected JPanel seeMoreWrapper;
 
     protected Recipe recipe;
+    protected int numRows;
 
     public RecipeItem(@NonNull Recipe r) {
         super();
@@ -52,13 +63,18 @@ public class RecipeItem extends StandardPanel {
         recipe.getIngredients().forEach(ingredient -> ingredientDisplays.add(new StandardItem(ingredient)));
 
         seeMoreButton = new StandardButton("See more");
+        seeMoreButton.addActionListener(e -> {
+            ViewRecipeForm recipeForm = new ViewRecipeForm(recipe, PageRunner.getFrame());
+            recipeForm.setLocationRelativeTo(PageManager.getActivePage());
+            recipeForm.setVisible(true);
+        });
 
         ingredientPanel = new JPanel();
         ingredientPanel.setBackground(Style.TRANSPARENT);
         ingredientPanel.setLayout(new BoxLayout(ingredientPanel, BoxLayout.Y_AXIS));
         ingredientDisplays.stream().limit(3).forEach(display -> ingredientPanel.add(display));
 
-        JPanel seeMoreWrapper = new JPanel(new BorderLayout());
+        seeMoreWrapper = new JPanel(new BorderLayout());
         seeMoreWrapper.setBackground(Style.TRANSPARENT);
         seeMoreWrapper.add(seeMoreButton, BorderLayout.EAST);
 
@@ -69,7 +85,7 @@ public class RecipeItem extends StandardPanel {
         JLabel servingLabel = new JLabel();
         servingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         servingLabel.setFont(Style.headerStyle.deriveFont(12f));
-        servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
+        servingLabel.setText("Servings: " + recipe.getServings() + " (" + UnitToString.convertUnitToString(recipe.getNutrition().getServingSize().getUnit()) + "/each)");
 
         int i = 0;
         contentPanel.addRightComponent(servingLabel, i);
@@ -84,6 +100,7 @@ public class RecipeItem extends StandardPanel {
         contentPanel.addRightComponent(spacer, ++i);
         contentPanel.addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
         contentPanel.addRightComponent(seeMoreWrapper, ++i);
+        numRows = i;
     }
 
     protected void initHeader(String header) {

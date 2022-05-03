@@ -6,6 +6,7 @@ import org.boothverse.foodpants.business.services.util.ShoppingListExporter;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 
 public class ShoppingService extends FoodInstanceService {
 
@@ -28,13 +29,12 @@ public class ShoppingService extends FoodInstanceService {
     }
 
     public void removeAllItems() {
-        items.keySet().forEach(id -> {
-            try {
-                removeItem(id);
-            } catch (PantsNotFoundException e) {
-                e.printStackTrace();
-            }
-        });
+        List<String> ids = items.keySet().stream().toList();
+        try {
+            removeItems(ids);
+        } catch (PantsNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
