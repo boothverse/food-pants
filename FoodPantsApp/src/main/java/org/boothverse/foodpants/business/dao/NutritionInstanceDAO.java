@@ -1,10 +1,9 @@
 package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
-import org.boothverse.foodpants.business.dao.util.QuantityParser;
+import org.boothverse.foodpants.business.dao.util.QuantityUtils;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.NutritionInstance;
-import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;
@@ -33,7 +32,7 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             SQLUtils.inQuote(data.getFoodId()),
-            SQLUtils.inQuote(data.getQuantity().toString()),
+            SQLUtils.inQuote(QuantityUtils.toString(data.getQuantity())),
             data.getConsumedAt().getTime() + ""
         };
     }
@@ -52,7 +51,7 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
         while (rs.next()) {
             String id = rs.getString(1);
             String foodId = rs.getString(2);
-            Quantity<?> quantity = QuantityParser.parse(rs.getString(3));
+            Quantity<?> quantity = QuantityUtils.parse(rs.getString(3));
             Long consumedAt = rs.getLong(4);
 
             data.put(id, new NutritionInstance(id, foodId, quantity, new Date(consumedAt)));

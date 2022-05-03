@@ -41,8 +41,15 @@ public abstract class FoodInstanceService {
      * @return the newly created item
      */
     public FoodInstance addItem(String id, Quantity<?> quantity) {
-        FoodInstance item = new FoodInstance(id, quantity);
-        items.put(id, item);
+        FoodInstance item;
+        if (items.containsKey(id)) {    // add to existing food
+            Quantity curQuantity = items.get(id).getQuantity();
+            item = new FoodInstance(id, quantity.add(curQuantity));
+            items.replace(id, item);
+        } else {                        // insert new food
+            item = new FoodInstance(id, quantity);
+            items.put(id, item);
+        }
         dao.save(item);
         return item;
     }

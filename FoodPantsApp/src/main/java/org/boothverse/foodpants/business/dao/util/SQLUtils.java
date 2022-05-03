@@ -8,6 +8,10 @@ public class SQLUtils {
      * @return
      */
     public static String inQuote(String str) {
-        return "'" + str + "'";
+        return "'" + escapeSingleQuotes(str) + "'";
+    }
+
+    protected static String escapeSingleQuotes(String str) {
+        return str.replace("'", "''");
     }
 }

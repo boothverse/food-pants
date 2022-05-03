@@ -1,14 +1,12 @@
 package org.boothverse.foodpants.business.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
-import org.boothverse.foodpants.business.dao.util.QuantityParser;
+import org.boothverse.foodpants.business.dao.util.QuantityUtils;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
 import org.boothverse.foodpants.persistence.*;
-import tech.units.indriya.quantity.Quantities;
 
 import javax.measure.Quantity;
 import java.sql.ResultSet;
@@ -54,7 +52,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         String[] items = ingredients.split(",");
         for (String s : items) {
             String[] temp = s.split(":");
-            list.add(new FoodInstance(temp[0], QuantityParser.parse(temp[1])));
+            list.add(new FoodInstance(temp[0], QuantityUtils.parse(temp[1])));
         }
         return list;
     }
