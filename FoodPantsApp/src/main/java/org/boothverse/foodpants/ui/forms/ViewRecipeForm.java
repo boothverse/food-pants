@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ViewRecipeForm extends StandardForm {
-    private static final int WIDTH = 640;
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 800;
     DetailedRecipeItem recipeItem;
     Recipe recipe;
 
@@ -24,7 +24,12 @@ public class ViewRecipeForm extends StandardForm {
     }
 
     private void initSwing() {
-        wrapperPanel.add(new JScrollPane(recipeItem));
+        JPanel recipeViewer = new JPanel(new BorderLayout());
+        recipeViewer.add(recipeItem, BorderLayout.CENTER);
+        JScrollPane recipeScroller = new JScrollPane(recipeViewer);
+        recipeScroller.setPreferredSize(new Dimension(WIDTH - 20, HEIGHT));
+        recipeItem.setPreferredSize(new Dimension(WIDTH - 20, HEIGHT));
+        wrapperPanel.add(recipeScroller);
     }
 
     @Override

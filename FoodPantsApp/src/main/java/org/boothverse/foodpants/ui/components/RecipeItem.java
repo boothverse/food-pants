@@ -85,7 +85,7 @@ public class RecipeItem extends StandardPanel {
         JLabel servingLabel = new JLabel();
         servingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         servingLabel.setFont(Style.headerStyle.deriveFont(12f));
-        servingLabel.setText("Servings: " + recipe.getServings() + " (" + UnitToString.convertUnitToString(recipe.getNutrition().getServingSize().getUnit()) + "/each)");
+        servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().getValue() + " " + UnitToString.convertUnitToString(recipe.getNutrition().getServingSize().getUnit()) + "/each)");
 
         int i = 0;
         contentPanel.addRightComponent(servingLabel, i);

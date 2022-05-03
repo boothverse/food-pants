@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DetailedRecipeItem extends RecipeItem {
+    protected JButton makeRecipeButton;
+    protected JButton editRecipeButton;
+
     public DetailedRecipeItem(@NonNull Recipe r) {
         super(r);
         ingredientPanel.removeAll();
@@ -23,5 +26,19 @@ public class DetailedRecipeItem extends RecipeItem {
         instructionArea.setEditable(false);
         instructionArea.setBackground(getBackground());
         contentPanel.addRightComponent(instructionArea, numRows);
+
+        makeRecipeButton = new JButton("Make Recipe");
+        editRecipeButton = new JButton("Edit Recipe");
+
+        JPanel spacer = new JPanel();
+        spacer.setBackground(getBackground());
+        contentPanel.addRightComponent(spacer, ++numRows);
+        contentPanel.addMiddleComponent(new JSeparator(), ++numRows);
+        contentPanel.addRightComponent(spacer, ++numRows);
+        contentPanel.addRightComponent(makeRecipeButton, ++numRows);
+        contentPanel.addRightComponent(editRecipeButton, ++numRows);
+
+
+
     }
 }

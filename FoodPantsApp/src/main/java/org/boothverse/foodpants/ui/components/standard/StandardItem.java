@@ -31,6 +31,8 @@ public class StandardItem extends StandardPanel implements ActionListener {
     protected JButton editButton;
     protected Dimension prefSize = new Dimension(400, 50);
 
+    protected JPanel rightFormat;
+
     @Getter
     protected FoodInstance foodInstance;
     protected FoodController foodController = new FoodController();
@@ -59,7 +61,7 @@ public class StandardItem extends StandardPanel implements ActionListener {
         Number amt = foodInstance.getQuantity().getValue();
 
         //Add right hand side formatter
-        JPanel rightFormat = new JPanel();
+        rightFormat = new JPanel();
         rightFormat.setBackground(Style.TRANSPARENT);
         add(rightFormat, BorderLayout.EAST);
 

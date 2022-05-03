@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components;
 
 
+import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.persistence.GoalType;
 import org.boothverse.foodpants.ui.Style;
@@ -53,7 +54,7 @@ public class GoalItem extends StandardPanel {
         quantityLabel.setHorizontalAlignment(JLabel.CENTER);
         quantityLabel.setPreferredSize(new Dimension(40, 40));
 
-        JLabel unitLabel = new JLabel("(" + goal.getDailyQuantity().getUnit().toString() + ")");
+        JLabel unitLabel = new JLabel("(" + UnitToString.convertUnitToString(goal.getDailyQuantity().getUnit()) + ")");
         unitLabel.setHorizontalAlignment(JLabel.LEFT);
 
         JLabel goalTypeLabel = new JLabel(goalType);
