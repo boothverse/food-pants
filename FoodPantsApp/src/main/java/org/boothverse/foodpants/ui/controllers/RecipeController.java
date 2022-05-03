@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.boothverse.foodpants.business.services.PantryService;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.*;
@@ -108,5 +109,15 @@ public class RecipeController {
 
         Services.RECIPE_SERVICE.produceCookedRecipe(recipeId, isUsePantry,
             consumedServings, leftoverServings);
+    }
+
+    public List<FoodInstance> getMissingItems(Recipe recipe) {
+        PantryService p =  new PantryService();
+        return p.getMissing(recipe.getIngredients());
+    }
+
+    public void addItemsToPantry(List<FoodInstance> itemsToAdd) {
+        PantryService p = new PantryService();
+        p.addItems(itemsToAdd);
     }
 }
