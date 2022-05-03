@@ -4,7 +4,7 @@ INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JB', 'Chicken', 'MEAT', '{"nutritio
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JC', 'Whipped Cream', 'DAIRY', '{"nutritionInfo":{"CALORIES":"1000"},"servingSize":"1"}');
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JD', 'Pepper', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0"},"servingSize":"1"}');
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JE', 'Cinnamon', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0"},"servingSize":"1"}');
-INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JF', 'Czech Pivo', 'OTHER', '{"nutritionInfo":{"CALORIES":"805"},"servingSize":"1 pt"}');
+INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JF', 'Czech Pivo', 'OTHER', '{"nutritionInfo":{"CALORIES":"805"},"servingSize":"16 oz"}');
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JG', 'Peach', 'FRUIT', '{"nutritionInfo":{"CALORIES":"79"},"servingSize":"1"}');
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JH', 'Eggplant', 'VEGETABLE', '{"nutritionInfo":{"CALORIES":"120"},"servingSize":"1"}');
 INSERT INTO FOODS VALUES ('ja2f039jawoiefj029JI', 'Bacon', 'MEAT', '{"nutritionInfo":{"CALORIES":"500"},"servingSize":"3"}');
