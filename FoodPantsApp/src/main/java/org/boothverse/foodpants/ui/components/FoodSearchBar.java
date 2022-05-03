@@ -39,6 +39,11 @@ public class FoodSearchBar extends JComboBox<Food> {
         model.addElement(newFood);
     }
 
+    public void removeAndUpdate(Food oldFood, Food newFood) {
+        model.removeElement(oldFood);
+        model.addElement(newFood);
+    }
+
     static class ComboBoxRenderer extends JLabel implements ListCellRenderer<Food> {
         public ComboBoxRenderer() {
             setOpaque(true);

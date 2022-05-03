@@ -54,6 +54,14 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         foodController = new FoodController();
     }
 
+    public AddFoodForm(String s, Component parent) {
+        super(s, parent);
+        initSwing();
+        initForm();
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        foodController = new FoodController();
+    }
+
     private void initSwing() {
         nutritionQuantitySelectors = new QuantitySelector[nutritionLabels.size()];
         nameField = new JTextField(30);
@@ -105,6 +113,7 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         for (int i = 1; i < nutritionQuantitySelectors.length; i++) {
             double quantityVal = 0.0;
             String enteredText = nutritionQuantitySelectors[i].getQuantityValueField().getText();
+            enteredText = enteredText.replaceAll(",", "");
 
             if (!Objects.equals(enteredText, "")) {
                 quantityVal = Double.parseDouble(enteredText);
@@ -125,6 +134,7 @@ public class AddFoodForm extends StandardForm implements ActionListener {
         double quantityVal = 0.0;
 
         if (!Objects.equals(servingText, "")) {
+            servingText = servingText.replaceAll(",", "");
             quantityVal = Double.parseDouble(servingText);
         }
 
