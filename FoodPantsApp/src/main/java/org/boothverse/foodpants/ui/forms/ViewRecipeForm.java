@@ -1,39 +1,34 @@
 package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.persistence.Recipe;
+import org.boothverse.foodpants.ui.components.DetailedRecipeItem;
 import org.boothverse.foodpants.ui.components.RecipeItem;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ViewRecipeForm extends StandardForm {
-    RecipeItem recipeItem;
+    private static final int WIDTH = 640;
+    private static final int HEIGHT = 600;
+    DetailedRecipeItem recipeItem;
     Recipe recipe;
 
     public ViewRecipeForm(Recipe recipe, Component parent) {
         super(recipe.getName(), parent);
         initFormHeader("");
-        this.recipeItem = new RecipeItem(recipe);
+        this.recipeItem = new DetailedRecipeItem(recipe);
         this.recipe = recipeItem.getRecipe();
-
+        setSize(WIDTH, HEIGHT);
         initSwing();
         initForm();
     }
 
     private void initSwing() {
-        recipeItem.getIngredientPanel().removeAll();
-        recipeItem.getIngredientDisplays().forEach(display -> recipeItem.getIngredientPanel().add(display));
-        recipeItem.getContentPanel().remove(recipeItem.getSeeMoreWrapper());
-        recipeItem.getContentPanel().revalidate();
-        recipeItem.getContentPanel().repaint();
-        add(recipeItem);
+        wrapperPanel.add(new JScrollPane(recipeItem));
     }
 
     @Override
     void initForm() {
-        int i = 0;
 
-        addLeftComponent(new JLabel("Food Group"), i);
-        //addRightComponent(, i);
     }
 }

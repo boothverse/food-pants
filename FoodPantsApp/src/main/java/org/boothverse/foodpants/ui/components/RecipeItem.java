@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.*;
 import org.boothverse.foodpants.ui.PageManager;
+import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardGridBagPanel;
@@ -36,6 +37,7 @@ public class RecipeItem extends StandardPanel {
     protected JPanel seeMoreWrapper;
 
     protected Recipe recipe;
+    protected int numRows;
 
     public RecipeItem(@NonNull Recipe r) {
         super();
@@ -62,7 +64,7 @@ public class RecipeItem extends StandardPanel {
 
         seeMoreButton = new StandardButton("See more");
         seeMoreButton.addActionListener(e -> {
-            StandardForm recipeForm = new ViewRecipeForm(recipe, PageManager.getActivePage());
+            ViewRecipeForm recipeForm = new ViewRecipeForm(recipe, PageRunner.getFrame());
             recipeForm.setLocationRelativeTo(PageManager.getActivePage());
             recipeForm.setVisible(true);
         });
@@ -98,6 +100,7 @@ public class RecipeItem extends StandardPanel {
         contentPanel.addRightComponent(spacer, ++i);
         contentPanel.addMiddleComponent(new JSeparator(SwingConstants.HORIZONTAL), ++i);
         contentPanel.addRightComponent(seeMoreWrapper, ++i);
+        numRows = i;
     }
 
     protected void initHeader(String header) {

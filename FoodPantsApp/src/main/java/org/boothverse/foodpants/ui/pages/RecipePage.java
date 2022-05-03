@@ -19,7 +19,6 @@ public class RecipePage extends Page {
     protected JPanel recipeListPanel;
     protected RecipeController recipeController = new RecipeController();
 
-    // TODO: add grandma cerny's synatactic sugar cookie recipe
     public RecipePage() {
         super(labels);
 

@@ -82,8 +82,9 @@ public class ShoppingPage extends Page {
                 }
                 itemDisplay.setModifiable(modifying);
             }
-            else if (e.getActionCommand().equals("New List")) {
+            else if (e.getActionCommand().equals("New")) {
                 itemDisplay.removeAll();
+                shoppingController.removeAllItems();
             }
             else if (e.getActionCommand().equals("+")) {
                 StandardForm form = new AddFoodInstanceForm("Add Item", shoppingController, this);

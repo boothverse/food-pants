@@ -1,8 +1,11 @@
 package org.boothverse.foodpants.ui.components;
 
 import lombok.Getter;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.components.standard.Notifiable;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
+import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
@@ -18,6 +21,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
     protected List<StandardItem> items;
     protected JPanel listDisplay;
     protected Notifiable parental;
+    protected boolean editing = false;
 
     public ItemList(int numColumns, Notifiable parent) {
         super();
@@ -50,6 +54,7 @@ public class ItemList extends JPanel implements PropertyChangeListener {
         items.add(item);
         listDisplay.add(item);
         item.addPropertyChangeListener(this);
+        item.setModification(editing);
         revalidate();
         repaint();
     }
@@ -75,11 +80,11 @@ public class ItemList extends JPanel implements PropertyChangeListener {
 
     public void edit(StandardItem item) {
         remove(item);
-        //parental.notifyChange("edit", item, );
-        //add();
+        parental.notifyChange("edit", item, null);
     }
 
     public void setModifiable(boolean status) {
+        editing = status;
         items.forEach(item -> item.setModification(status));
     }
 

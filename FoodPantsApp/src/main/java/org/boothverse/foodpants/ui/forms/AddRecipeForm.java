@@ -92,6 +92,7 @@ public class AddRecipeForm extends StandardForm implements ActionListener, Notif
                     instructionArea.getText(), Double.parseDouble(servingsPanel.getText()));
 
                 PageManager.getActivePage().notifyChange("add recipe", null, newRecipe);
+                dispose();
             }
             else {
                 JOptionPane.showMessageDialog(this, "Must select a recipe and number of servings.",
