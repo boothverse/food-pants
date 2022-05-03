@@ -97,8 +97,8 @@ public class TimelinePage extends NutritionPage {
                     c.add(Calendar.HOUR, 4);
                     Date endDate = c.getTime();
 
-                    addNutritionalTime(startDate, endDate);
                     currTimePanel.add(dropdown);
+                    addNutritionalTime(currTimePanel, startDate, endDate);
                 }
 
                 break;
@@ -139,9 +139,9 @@ public class TimelinePage extends NutritionPage {
                 String formattedTime = dateFormat.format(startTimes.get(i));
 
                 dropdown = new TimelineDropdown(new String[]{formattedTime});
-                addNutritionalTime(startTimes.get(i), endTimes.get(i));
 
                 currTimePanel.add(dropdown);
+                addNutritionalTime(currTimePanel, startTimes.get(i), endTimes.get(i));
             }
         }
 
@@ -165,7 +165,7 @@ public class TimelinePage extends NutritionPage {
         }
     }
 
-    void addNutritionalTime(Date startDate, Date endDate) {
+    void addNutritionalTime(final JPanel panel, Date startDate, Date endDate) {
         NutritionController nutritionController = new NutritionController();
 
         // Get nutritional items in select hours
@@ -173,7 +173,7 @@ public class TimelinePage extends NutritionPage {
 
         for (NutritionInstance item : items) {
             try {
-                add(new NutritionItem(item));
+                panel.add(new NutritionItem(item));
             } catch (PantsNotFoundException e) {};
         }
     }
