@@ -2,12 +2,16 @@ package org.boothverse.foodpants.ui.components.standard;
 
 import lombok.Getter;
 import lombok.NonNull;
+import org.apache.commons.lang.ArrayUtils;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
+import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.Style;
+import org.boothverse.foodpants.ui.components.QuantitySelector;
 import org.boothverse.foodpants.ui.controllers.FoodController;
 
+import javax.measure.Unit;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -69,7 +73,8 @@ public class StandardItem extends StandardPanel implements ActionListener {
         quantityLabel.setHorizontalAlignment(JLabel.CENTER);
         quantityLabel.setPreferredSize(new Dimension(40, 40));
 
-        unitLabel = new JLabel("(" + foodInstance.getQuantity().getUnit().toString() + ")");
+
+        unitLabel = new JLabel("(" + UnitToString.convertUnitToString(foodInstance.getQuantity().getUnit()) + ")");
         unitLabel.setHorizontalAlignment(JLabel.LEFT);
         rightFormat.add(unitLabel);
         rightFormat.add(quantityLabel);

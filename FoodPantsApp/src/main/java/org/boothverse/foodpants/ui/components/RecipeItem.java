@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.components;
 
 import lombok.NonNull;
+import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.*;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
@@ -69,7 +70,7 @@ public class RecipeItem extends StandardPanel {
         JLabel servingLabel = new JLabel();
         servingLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         servingLabel.setFont(Style.headerStyle.deriveFont(12f));
-        servingLabel.setText("Servings: " + recipe.getServings() + " (" + recipe.getNutrition().getServingSize().toString() + "/each)");
+        servingLabel.setText("Servings: " + recipe.getServings() + " (" + UnitToString.convertUnitToString(recipe.getNutrition().getServingSize().getUnit()) + "/each)");
 
         int i = 0;
         contentPanel.addRightComponent(servingLabel, i);
