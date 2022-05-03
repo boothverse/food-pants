@@ -122,6 +122,8 @@ public class NutritionController {
         Services.NUTRITION_SERVICE.removeItem(id);
     }
 
+    public List<ReportPeriod> getReports() { return Services.NUTRITION_SERVICE.getReports(); }
+
     /**
      * Adds a report to the system
      *

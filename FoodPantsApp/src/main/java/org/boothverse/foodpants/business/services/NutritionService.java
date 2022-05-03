@@ -178,6 +178,8 @@ public class NutritionService {
         goalDAO.remove(id);
     }
 
+    public List<ReportPeriod> getReports() { return new ArrayList<>(reportPeriods.values()); }
+
     /**
      * Adds a report to the service and database
      *
