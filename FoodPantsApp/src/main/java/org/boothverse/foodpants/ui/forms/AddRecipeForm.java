@@ -118,6 +118,10 @@ public class AddRecipeForm extends StandardForm implements ActionListener, Notif
         foodSearchBar.update(newFood);
     }
 
+    public void removeAndUpdateFoodSearchBar(Food oldFood, Food newFood) {
+        foodSearchBar.removeAndUpdate(oldFood, newFood);
+    }
+
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add")) {

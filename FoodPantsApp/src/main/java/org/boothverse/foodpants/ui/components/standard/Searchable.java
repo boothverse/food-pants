@@ -4,4 +4,5 @@ import org.boothverse.foodpants.persistence.Food;
 
 public interface Searchable {
     void updateFoodSearchBar(Food newFood);
+    void removeAndUpdateFoodSearchBar(Food oldFood, Food newFood);
 }
