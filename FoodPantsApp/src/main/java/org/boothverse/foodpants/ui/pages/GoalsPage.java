@@ -1,21 +1,12 @@
 package org.boothverse.foodpants.ui.pages;
 
-import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
-import org.boothverse.foodpants.persistence.FoodInstance;
+
 import org.boothverse.foodpants.persistence.Goal;
-import org.boothverse.foodpants.persistence.GoalType;
-import org.boothverse.foodpants.persistence.NutritionType;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.GoalItem;
-import org.boothverse.foodpants.ui.components.PantryItem;
-import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.NutritionController;
 import org.boothverse.foodpants.ui.forms.AddGoalForm;
-import org.boothverse.foodpants.ui.forms.AddNutritionForm;
-import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
-import tech.units.indriya.quantity.Quantities;
-import tech.units.indriya.unit.Units;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,7 +53,6 @@ public class GoalsPage extends NutritionPage {
             contentPanel.add(new GoalItem(goal));
         }
     }
-
 
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
