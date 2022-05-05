@@ -19,6 +19,7 @@ public class SearchForm extends StandardForm {
     public SearchForm(Notifiable parent) {
         super("Search", (Component) parent);
         searchBar = new FoodSearchBar();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         toNotifySearch = parent;
         setSize(300, 200);
         initForm();

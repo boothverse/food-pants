@@ -11,12 +11,13 @@ import java.util.Map;
 
 public class NewUserForm extends StandardForm {
     private int numRows = 0;
-    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)"};
+    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)", "Age"};
 
     private JTextField name;
     private JComboBox<String> gender;
     private JPanel heightPanel;
     private JFormattedTextField weight;
+    private JSpinner age;
 
     private JSpinner feet;
     private JSpinner in;
@@ -50,6 +51,7 @@ public class NewUserForm extends StandardForm {
         weightFormat.setGroupingUsed(false);
 
         weight = new JFormattedTextField(weightFormat);
+        age = new JSpinner(new SpinnerNumberModel(20, 0, 150, 1));
 
         JPanel spacer = new JPanel();
         spacer.setBackground(getBackground());
@@ -62,13 +64,14 @@ public class NewUserForm extends StandardForm {
 
         addMiddleComponent(spacer, ++numRows);
 
-
         addLeftComponent(new JLabel(labels[2]), ++numRows);
         addRightComponent(heightPanel, numRows);
 
-
         addLeftComponent(new JLabel(labels[3]), ++numRows);
         addRightComponent(weight, numRows);
+
+        addLeftComponent(new JLabel(labels[4]), ++numRows);
+        addRightComponent(age, numRows);
 
         addMiddleComponent(spacer, ++numRows);
 
