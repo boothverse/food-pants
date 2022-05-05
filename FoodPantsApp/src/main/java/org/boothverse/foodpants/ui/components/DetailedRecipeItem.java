@@ -4,8 +4,11 @@ import lombok.NonNull;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.Recipe;
+import org.boothverse.foodpants.ui.PageRunner;
+import org.boothverse.foodpants.ui.components.standard.Notifiable;
 import org.boothverse.foodpants.ui.controllers.RecipeController;
 import org.boothverse.foodpants.ui.forms.CookedRecipeForm;
+import org.boothverse.foodpants.ui.forms.EditRecipeForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +21,12 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
     protected JButton editRecipeButton;
     private RecipeController recipeController = new RecipeController();
     private Recipe recipe;
+    private Notifiable parent;
 
-    public DetailedRecipeItem(@NonNull Recipe r) {
+    public DetailedRecipeItem(@NonNull Recipe r, Notifiable notifiable) {
         super(r);
         recipe = r;
+        parent = notifiable;
         ingredientPanel.removeAll();
         ingredientDisplays.forEach(display -> ingredientPanel.add(display));
 
@@ -68,6 +73,7 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
                         recipeController.addMissingIngredientsToCart(recipe.getId());
                     }
                     catch (PantsNotFoundException e) {
+                        e.printStackTrace();
                     }
                     break;
                 case 1:
@@ -88,10 +94,6 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
         }
     }
 
-    public void editRecipe(Recipe recipe) {
-
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -100,8 +102,10 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
                 makeRecipe(recipe);
                 break;
             case "Edit Recipe":
-                editRecipe(recipe);
-
+                EditRecipeForm form = new EditRecipeForm("Edit", this, recipe);
+                form.setVisible(true);
+                form.setLocationRelativeTo(PageRunner.getFrame());
+                parent.notifyChange("edit", this, null);
         }
     }
 }

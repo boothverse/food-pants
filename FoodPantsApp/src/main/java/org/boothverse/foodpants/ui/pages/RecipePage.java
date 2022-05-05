@@ -99,12 +99,9 @@ public class RecipePage extends Page {
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add recipe")) {
-            recipeListPanel.add(new RecipeItem((Recipe) newValue));
+            updateList();
             revalidate();
             repaint();
-        }
-        else if (Objects.equals(message, "remove")) {
-
         }
         else if (Objects.equals(message, "search")) {
             updateList(recipeController.searchByRecipeName((String)newValue));

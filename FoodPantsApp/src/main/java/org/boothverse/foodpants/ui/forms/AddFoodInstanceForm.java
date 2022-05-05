@@ -74,7 +74,7 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
                 }
                 else {
                     newFood = ((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem())).createInstance(quantityPanel.getSelectedQuantity());
-                    if (parent.getClass().equals(AddRecipeForm.class)) {
+                    if (AddRecipeForm.class.isAssignableFrom(parent.getClass())) {
                         ((AddRecipeForm)parent).ingredients.add(new IngredientItem(newFood));
                         parent.revalidate();
                         parent.repaint();
