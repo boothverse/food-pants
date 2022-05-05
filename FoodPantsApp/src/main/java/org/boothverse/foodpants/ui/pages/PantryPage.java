@@ -25,6 +25,8 @@ public class PantryPage extends Page {
     private final PantryController pantryController = new PantryController();
     private final ItemList itemDisplay;
 
+    JButton searchBtn;
+
     public PantryPage() {
         super(labels);
         modifyingPantry = false;
@@ -44,7 +46,7 @@ public class PantryPage extends Page {
                 form.setVisible(true);
             }
             case "Search" -> {
-                JButton searchBtn = (JButton) e.getSource();
+                searchBtn = (JButton) e.getSource();
                 searchingPantry = !searchingPantry;
                 if (searchingPantry) {
                     StandardForm form = new SearchForm(this);
@@ -107,6 +109,10 @@ public class PantryPage extends Page {
             updateList(pantryController.searchByFoodName((String)newValue));
         }
         else if (Objects.equals(message, "update")) {
+            if (searchBtn != null) {
+                searchBtn.setBackground(Style.GREY_1);
+                searchingPantry = false;
+            }
             updateList();
         }
     }

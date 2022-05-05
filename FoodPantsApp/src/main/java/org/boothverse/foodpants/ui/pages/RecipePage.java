@@ -5,6 +5,8 @@ import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.RecipeItem;
 import org.boothverse.foodpants.ui.controllers.RecipeController;
 import org.boothverse.foodpants.ui.forms.AddRecipeForm;
+import org.boothverse.foodpants.ui.forms.SearchForm;
+import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,13 +15,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecipePage extends Page {
-    private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
+    private static final String[] labels = {"+", "Recommend", "Search"};
 
     protected JPanel listWrapper;
     protected JPanel recipeListPanel;
     protected RecipeController recipeController = new RecipeController();
 
     private static boolean modifyingRecipes;
+    private static boolean searchingRecipes = false;
+    
+    private JButton searchBtn;
 
     public RecipePage() {
         super(labels);
@@ -48,20 +53,23 @@ public class RecipePage extends Page {
                 modifyingRecipes = !modifyingRecipes;
                 if (modifyingRecipes) {
                     modifyBtn.setBackground(Style.GREY_0);
-                    List<Recipe> recipes = recipeController.getRecommendedRecipes();
-                    recipeListPanel.removeAll();
-                    for (Recipe item : recipes) {
-                        RecipeItem thisItem = new RecipeItem(item);
-                        recipeListPanel.add(thisItem);
-                    }
-                    revalidate();
-                    repaint();
+                    updateList(recipeController.getRecommendedRecipes());
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                     updateList();
                 }
-            case "Nutrition":
+                break;
             case "Search":
+                searchBtn = (JButton) e.getSource();
+                searchingRecipes = !searchingRecipes;
+                if (searchingRecipes) {
+                    StandardForm searchForm = new SearchForm(this);
+                    searchForm.setVisible(true);
+                    searchBtn.setBackground(Style.GREY_0);
+                } else {
+                    searchBtn.setBackground(Style.GREY_1);
+                    updateList();
+                }
                 break;
         }
     }
@@ -78,17 +86,31 @@ public class RecipePage extends Page {
         repaint();
     }
 
+    protected void updateList(List<Recipe> listItems) {
+        recipeListPanel.removeAll();
+        for (Recipe item : listItems) {
+            RecipeItem thisItem = new RecipeItem(item);
+            recipeListPanel.add(thisItem);
+        }
+        revalidate();
+        repaint();
+    }
+
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add recipe")) {
-            recipeListPanel.add(new RecipeItem((Recipe) newValue));
+            updateList();
             revalidate();
             repaint();
         }
-        else if (Objects.equals(message, "remove")) {
-
+        else if (Objects.equals(message, "search")) {
+            updateList(recipeController.searchByRecipeName((String)newValue));
         }
         else if (Objects.equals(message, "update")) {
+            if (searchBtn != null) {
+                searchBtn.setBackground(Style.GREY_1);
+                searchingRecipes = false;
+            }
             updateList();
         }
     }

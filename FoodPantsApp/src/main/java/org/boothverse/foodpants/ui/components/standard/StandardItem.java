@@ -75,8 +75,8 @@ public class StandardItem extends StandardPanel implements ActionListener {
         quantityLabel.setEditable(false);
         quantityLabel.setText(amt + "");
         quantityLabel.setHorizontalAlignment(JLabel.CENTER);
-        quantityLabel.setPreferredSize(new Dimension(40, 40));
-
+        quantityLabel.setPreferredSize(new Dimension(50, 40));
+        quantityLabel.setMargin(new Insets(0,0,0,0));
 
         unitLabel = new JLabel("(" + UnitToString.convertUnitToString(foodInstance.getQuantity().getUnit()) + ")");
         unitLabel.setHorizontalAlignment(JLabel.LEFT);

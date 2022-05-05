@@ -15,6 +15,6 @@ public class SideMenuButton extends StandardButton {
         setBackground(Style.GREY_1);
         setForeground(Style.PLATINUM);
         setPreferredSize(MAX_SIZE);
+        setMargin(new Insets(1,1,1,1));
     }
-
 }

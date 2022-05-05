@@ -2,21 +2,28 @@ package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.controllers.StartupController;
+import systems.uom.unicode.CLDR;
+import tech.units.indriya.quantity.Quantities;
 
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Mass;
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewUserForm extends StandardForm {
     private int numRows = 0;
-    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)"};
+    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)", "Age"};
 
     private JTextField name;
     private JComboBox<String> gender;
     private JPanel heightPanel;
     private JFormattedTextField weight;
+    private JSpinner age;
 
     private JSpinner feet;
     private JSpinner in;
@@ -50,6 +57,7 @@ public class NewUserForm extends StandardForm {
         weightFormat.setGroupingUsed(false);
 
         weight = new JFormattedTextField(weightFormat);
+        age = new JSpinner(new SpinnerNumberModel(20, 0, 150, 1));
 
         JPanel spacer = new JPanel();
         spacer.setBackground(getBackground());
@@ -62,34 +70,36 @@ public class NewUserForm extends StandardForm {
 
         addMiddleComponent(spacer, ++numRows);
 
-
         addLeftComponent(new JLabel(labels[2]), ++numRows);
         addRightComponent(heightPanel, numRows);
 
-
         addLeftComponent(new JLabel(labels[3]), ++numRows);
         addRightComponent(weight, numRows);
+
+        addLeftComponent(new JLabel(labels[4]), ++numRows);
+        addRightComponent(age, numRows);
 
         addMiddleComponent(spacer, ++numRows);
 
         addSubmitButton(e -> {
             if (!(name.getText().isEmpty() || weight.getText().isEmpty())) {
                 PageRunner.getFrame().setVisible(true);
-                Map<String, String> info = new HashMap<>();
-                info.put("gender", (String) gender.getSelectedItem());
-                double heightInFeet = (Integer)feet.getValue() + (((Integer)in.getValue())/12.0);
+                Double heightInFeet = (Integer)feet.getValue() + (((Integer)in.getValue())/12.0);
 
-                info.put("height", Double.toString(heightInFeet));
-                info.put("weight", weight.getText());
+                String nameVal = name.getText();
+                String genderVal = (String) gender.getSelectedItem();
+                Quantity<Length> heightVal = Quantities.getQuantity(heightInFeet, CLDR.FOOT);
+                Quantity<Mass> weightVal = Quantities.getQuantity(Double.valueOf(weight.getText()), CLDR.POUND);
+                // Sorry I'm cranky
+                // TODO: @Austin can u set this date val
+                Date dobVal = null;
 
-                controller.register(name.getText(), info);
+                controller.register(nameVal, genderVal, heightVal, weightVal, dobVal);
                 dispose();
             }
             else {
                 JOptionPane.showMessageDialog(this, "All fields must be filled.", "Submit Error", JOptionPane.ERROR_MESSAGE);
             }
-
         });
-
     }
 }
