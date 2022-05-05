@@ -42,10 +42,18 @@ public class UserService {
         user.setName(name);
         user.setGender(info.get(attributes[0]));
 
-        Quantity<Length> height = Quantities.getQuantity(Double.parseDouble((info.get(attributes[1]))), CLDR.FOOT);
+        double heightVal = Double.parseDouble((info.get(attributes[1])));
+
+        // Convert to Meters
+        heightVal /= 3.28084;
+        Quantity<Length> height = Quantities.getQuantity(heightVal, Units.METRE);
         user.setHeight(height);
 
-        Quantity<Mass> weight = Quantities.getQuantity(Double.parseDouble(info.get(attributes[2])), CLDR.POUND);
+        double weightVal = Double.parseDouble(info.get(attributes[2]));
+
+        // Convert to Kilograms
+        weightVal /= 2.20462;
+        Quantity<Mass> weight = Quantities.getQuantity(weightVal, Units.KILOGRAM);
         user.setWeight(weight);
 
         dao.save(user);
