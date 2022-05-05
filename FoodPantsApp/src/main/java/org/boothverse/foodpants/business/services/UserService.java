@@ -39,10 +39,9 @@ public class UserService {
      * @param dob
      * @return
      */
-    public User register(String name, String gender, Quantity<Length> height, Quantity<Mass> weight, Date dob) {
+    public void register(String name, String gender, Quantity<Length> height, Quantity<Mass> weight, Date dob) {
         user = new User(name, gender, height, weight, dob);
         dao.save(user);
-        return user;
     }
 
     protected Boolean userIsFemale() {
