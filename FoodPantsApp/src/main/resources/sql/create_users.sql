@@ -6,6 +6,7 @@ create table USERS
     NAME   VARCHAR(40) not null,
     GENDER VARCHAR(40) not null,
     HEIGHT VARCHAR(40) not null,
-    WEIGHT VARCHAR(40) not null
+    WEIGHT VARCHAR(40) not null,
+    DOB    BIGINT      not null
 );
 

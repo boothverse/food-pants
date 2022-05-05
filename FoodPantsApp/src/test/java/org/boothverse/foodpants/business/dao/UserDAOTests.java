@@ -12,6 +12,8 @@ import javax.measure.Quantity;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -27,7 +29,7 @@ public class UserDAOTests {
         Quantity<Length> height = Quantities.getQuantity(1.65, Units.METRE);
         Quantity<Mass> weight = Quantities.getQuantity(60, Units.KILOGRAM);
 
-        User user = new User(name, gender, height, weight);
+        User user = new User(name, gender, height, weight, new Date());
 
         dao.save(user);
     }

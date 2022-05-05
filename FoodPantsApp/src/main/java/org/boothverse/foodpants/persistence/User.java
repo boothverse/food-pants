@@ -5,6 +5,7 @@ import lombok.*;
 import javax.measure.Quantity;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
+import java.util.Date;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
@@ -15,4 +16,5 @@ public class User {
     protected String gender;
     protected Quantity<Length> height;
     protected Quantity<Mass> weight;
+    protected Date dob;
 }
