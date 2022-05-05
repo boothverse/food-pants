@@ -43,9 +43,14 @@ public class AddReportForm extends AddFoodInstanceForm {
 
         addSubmitButton(e -> {
             try {
+                SimpleDateFormat finalFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+
+                startField.setText(startField.getText() + " 00:00:00");
+                endField.setText(endField.getText() + " 23:59:59");
+
                 ReportPeriod reportPeriod = nutritionController.addReport(
-                    dateFormat.parse(startField.getText()),
-                    dateFormat.parse(endField.getText()));
+                    finalFormat.parse(startField.getText()),
+                    finalFormat.parse(endField.getText()));
 
                 PageManager.getActivePage().notifyChange("add", null, reportPeriod);
                 dispose();
