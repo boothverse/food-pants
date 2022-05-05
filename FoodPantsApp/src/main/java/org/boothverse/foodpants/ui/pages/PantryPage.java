@@ -22,12 +22,14 @@ public class PantryPage extends Page {
     private static final String[] labels = {"+", "Search", "Modify"};
 
     private static boolean modifyingPantry;
+    private static boolean searchingPantry;
     private final PantryController pantryController = new PantryController();
     private final ItemList itemDisplay;
 
     public PantryPage() {
         super(labels);
         modifyingPantry = false;
+        searchingPantry = false;
 
         itemDisplay = new ItemList(2, this);
         add(itemDisplay);
@@ -43,8 +45,16 @@ public class PantryPage extends Page {
                 form.setVisible(true);
             }
             case "Search" -> {
-                StandardForm form = new SearchForm(this);
-                form.setVisible(true);
+                JButton searchBtn = (JButton) e.getSource();
+                searchingPantry = !searchingPantry;
+                if (searchingPantry) {
+                    StandardForm form = new SearchForm(this);
+                    form.setVisible(true);
+                    searchBtn.setBackground(Style.GREY_0);
+                } else {
+                    searchBtn.setBackground(Style.GREY_1);
+                    updateList();
+                }
             }
             case "Modify" -> {
                 JButton modifyBtn = (JButton) e.getSource();
@@ -69,6 +79,14 @@ public class PantryPage extends Page {
         revalidate();
     }
 
+    protected void updateList(List<FoodInstance> listItems) {
+        itemDisplay.removeAll();
+        for (FoodInstance food : listItems) {
+            itemDisplay.add(new PantryItem(food));
+        }
+        revalidate();
+    }
+
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "add")) {
@@ -86,6 +104,9 @@ public class PantryPage extends Page {
         else if (Objects.equals(message, "edit")) {
             StandardForm editItemForm = new EditFoodInstanceForm(((StandardItem) oldValue).getFoodInstance(), pantryController, this);
             editItemForm.setVisible(true);
+        }
+        else if (Objects.equals(message, "search")) {
+            updateList(pantryController.searchByFoodName((String)newValue));
         }
         else if (Objects.equals(message, "update")) {
             updateList();

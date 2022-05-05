@@ -3,16 +3,23 @@ package org.boothverse.foodpants.ui.forms;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
+import org.boothverse.foodpants.ui.components.standard.Notifiable;
+import org.boothverse.foodpants.ui.controllers.PantryController;
+import org.boothverse.foodpants.ui.pages.PantryPage;
+import org.boothverse.foodpants.ui.pages.RecipePage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class SearchForm extends StandardForm {
     protected FoodSearchBar searchBar;
+    private Notifiable toNotifySearch;
 
-    public SearchForm(Component parent) {
-        super("Search", parent);
+    public SearchForm(Notifiable parent) {
+        super("Search", (Component) parent);
         searchBar = new FoodSearchBar();
+        toNotifySearch = parent;
         setSize(300, 200);
         initForm();
     }
@@ -29,6 +36,14 @@ public class SearchForm extends StandardForm {
 
         addRightComponent(spacer, ++i);
 
-        addSubmitButton(e -> dispose());
+        addSubmitButton(e -> {
+            if (searchBar.getSelectedItem() == null) {
+                toNotifySearch.notifyChange("update", null, null);
+            }
+            else {
+                toNotifySearch.notifyChange("search", null, Objects.requireNonNull(((Food)searchBar.getSelectedItem()).getName()));
+            }
+            dispose();
+        });
     }
 }
