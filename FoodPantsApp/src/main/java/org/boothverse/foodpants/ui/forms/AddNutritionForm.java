@@ -15,9 +15,11 @@ import java.util.Objects;
 public class AddNutritionForm extends AddFoodInstanceForm {
 
     protected NutritionController nutritionController;
+    protected JFormattedTextField dateField;
+    protected SimpleDateFormat dateFormat;
 
-    public AddNutritionForm(NutritionController controller, Component parent) {
-        super("Add Nutritional Item", null, parent);
+    public AddNutritionForm(String header, NutritionController controller, Component parent) {
+        super(header, null, parent);
         nutritionController = controller;
     }
 
@@ -36,8 +38,8 @@ public class AddNutritionForm extends AddFoodInstanceForm {
         addRightComponent(new JPanel(),++i);
 
         addLeftComponent(new JLabel("Consumed At"), ++i);
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
-        JFormattedTextField dateField = new JFormattedTextField(dateFormat);
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+        dateField = new JFormattedTextField(dateFormat);
         addRightComponent(dateField, i);
 
         addSubmitButton(e -> {

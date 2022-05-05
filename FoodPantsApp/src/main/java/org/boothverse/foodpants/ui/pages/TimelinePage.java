@@ -28,6 +28,7 @@ public class TimelinePage extends NutritionPage {
     private String timeType;
 
     NutritionController nutritionController;
+    private List<NutritionItem> items;
 
     protected static final ActionListener holdColor = e -> {
         // Handle button color change
@@ -73,6 +74,7 @@ public class TimelinePage extends NutritionPage {
 
     private void setTimeLineView(String viewType) {
         if (currTimeline != null) { currTimeline.removeAll(); }
+        items = new ArrayList<>();
 
         Calendar c = Calendar.getInstance();
         List<Date> startTimes = new ArrayList<>();
@@ -161,7 +163,7 @@ public class TimelinePage extends NutritionPage {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "+":
-                StandardForm form = new AddNutritionForm(nutritionController, this);
+                StandardForm form = new AddNutritionForm("Add Nutritional Item", nutritionController, this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
                 break;
@@ -175,11 +177,14 @@ public class TimelinePage extends NutritionPage {
         NutritionController nutritionController = new NutritionController();
 
         // Get nutritional items in select hours
-        List<NutritionInstance> items = nutritionController.getItems(startDate, endDate);
+        List<NutritionInstance> nutritionInstances = nutritionController.getItems(startDate, endDate);
 
-        for (NutritionInstance item : items) {
+        for (NutritionInstance item : nutritionInstances) {
             try {
-                panel.add(new NutritionItem(item));
+                NutritionItem nutritionItem = new NutritionItem(item, this);
+
+                items.add(nutritionItem);
+                panel.add(nutritionItem);
             } catch (PantsNotFoundException e) {};
         }
     }
@@ -189,11 +194,15 @@ public class TimelinePage extends NutritionPage {
         if (Objects.equals(message, "add")) {
             setTimeLineView(timeType);
         }
+        else if (Objects.equals(message, "edit")) {
+            for (NutritionItem item : items) {
+                item.setModification(NutritionPage.isModifyingPage());
+            }
+        }
+        else if (Objects.equals(message, "update")) {
+
+        }
 //        else if (Objects.equals(message, "remove")) {
-//        }
-//        else if (Objects.equals(message, "edit")) {
-//        }
-//        else if (Objects.equals(message, "update")) {
 //        }
     }
 }

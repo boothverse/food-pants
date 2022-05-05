@@ -2,7 +2,6 @@ package org.boothverse.foodpants.ui.pages;
 
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
-import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.PantryItem;
 import org.boothverse.foodpants.ui.components.ItemList;
@@ -97,7 +96,6 @@ public class PantryPage extends Page {
                 pantryController.removeItem(((StandardItem)oldValue).getFoodInstance().getId());
             }
             catch (PantsNotFoundException e) {
-                System.out.println("Austin is bad at frontend");
                 e.printStackTrace();
             }
         }
