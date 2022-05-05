@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class DetailedRecipeItem extends RecipeItem implements ActionListener {
     protected JButton makeRecipeButton;
     protected JButton editRecipeButton;
+    protected JButton deleteRecipeButton;
     private RecipeController recipeController = new RecipeController();
     private Recipe recipe;
     private Notifiable parent;
@@ -45,6 +46,8 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
         makeRecipeButton.addActionListener(this);
         editRecipeButton = new JButton("Edit Recipe");
         editRecipeButton.addActionListener(this);
+        deleteRecipeButton = new JButton("Delete Recipe");
+        deleteRecipeButton.addActionListener(this);
 
         JPanel spacer = new JPanel();
         spacer.setBackground(getBackground());
@@ -106,6 +109,16 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
                 form.setVisible(true);
                 form.setLocationRelativeTo(PageRunner.getFrame());
                 parent.notifyChange("edit", this, null);
+            case "Delete Recipe":
+                int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
+                    "Are you sure?", JOptionPane.YES_NO_OPTION);
+
+                if (option == JOptionPane.NO_OPTION) {
+                    return;
+                }
+
+                parent.notifyChange("remove", this, null);
+                break;
         }
     }
 }

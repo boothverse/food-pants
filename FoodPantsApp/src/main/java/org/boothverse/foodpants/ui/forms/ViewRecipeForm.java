@@ -1,6 +1,7 @@
 package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.persistence.Recipe;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.components.DetailedRecipeItem;
 import org.boothverse.foodpants.ui.components.RecipeItem;
 import org.boothverse.foodpants.ui.components.standard.Notifiable;
@@ -37,6 +38,10 @@ public class ViewRecipeForm extends StandardForm implements Notifiable {
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
         if (Objects.equals(message, "edit")) {
+            dispose();
+        }
+        else if (Objects.equals(message, "remove")) {
+            PageManager.getActivePage().notifyChange("remove", recipe, null);
             dispose();
         }
     }

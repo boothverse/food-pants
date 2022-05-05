@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.pages;
 
+import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.persistence.Recipe;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.RecipeItem;
@@ -105,6 +106,9 @@ public class RecipePage extends Page {
         }
         else if (Objects.equals(message, "search")) {
             updateList(recipeController.searchByRecipeName((String)newValue));
+        }
+        else if (Objects.equals(message, "remove")) {
+            
         }
         else if (Objects.equals(message, "update")) {
             if (searchBtn != null) {
