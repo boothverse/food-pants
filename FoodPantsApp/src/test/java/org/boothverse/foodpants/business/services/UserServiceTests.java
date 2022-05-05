@@ -1,22 +1,25 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
+import org.boothverse.foodpants.business.dao.util.QuantityUtils;
 import org.junit.jupiter.api.*;
 
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Mass;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceTests {
     UserService service = new UserService();
-    Map<String, String> info = new HashMap<>();
+    Map<String, Object> info = new HashMap<>();
 
     @Test
     @Order(1)
-    public void registerMaleTest(){
-        info.put("gender", "Male");
-        info.put("height", "3");
-        info.put("weight", "5");
-        service.register("Pat", info);
+    public void registerMaleTest() throws PantsNotParsedException {
+        service.register("Pat", "Male", (Quantity<Length>) QuantityUtils.parse("6 m"), (Quantity<Mass>) QuantityUtils.parse("175 lb"), new Date());
         info.clear();
     }
 
@@ -28,11 +31,8 @@ public class UserServiceTests {
 
     @Test
     @Order(3)
-    public void overrideRegisterTest(){
-        info.put("gender", "f");
-        info.put("height", "3");
-        info.put("weight", "5");
-        service.register("Patricia", info);
+    public void overrideRegisterTest() throws PantsNotParsedException {
+        service.register("Patricia", "f", (Quantity<Length>) QuantityUtils.parse("1.54 m"), (Quantity<Mass>) QuantityUtils.parse("6000 g"), new Date());
         info.clear();
     }
 
@@ -45,12 +45,12 @@ public class UserServiceTests {
     @Test
     @Order(5)
     public void getBodyWeightKgTest(){
-        Assertions.assertEquals(service.getBodyWeightKg(), 5);
+        Assertions.assertEquals(service.getBodyWeightKg(), 6);
     }
 
     @Test
     @Order(6)
     public void getHeightCmTest(){
-        Assertions.assertEquals(service.getHeightCm(), 300);
+        Assertions.assertEquals(service.getHeightCm(), 154);
     }
 }

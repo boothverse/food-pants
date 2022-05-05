@@ -9,6 +9,7 @@ import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class UserDAO extends JDBCSingleDAO<User> {
 
@@ -16,7 +17,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
      * Constructs UserDAO
      */
     public UserDAO() {
-        super("users", new String[] {"id", "name", "gender", "height", "weight"});
+        super("users", new String[] {"id", "name", "gender", "height", "weight", "dob"});
     }
 
     /**
@@ -31,8 +32,9 @@ public class UserDAO extends JDBCSingleDAO<User> {
             ID.toString(),
             SQLUtils.inQuote(data.getName()),
             SQLUtils.inQuote(data.getGender()),
-            SQLUtils.inQuote(data.getHeight().toString()),
-            SQLUtils.inQuote(data.getWeight().toString())
+            SQLUtils.inQuote(QuantityUtils.toString(data.getHeight())),
+            SQLUtils.inQuote(QuantityUtils.toString(data.getWeight())),
+            data.getDob().getTime() + ""
         };
     }
 
@@ -45,15 +47,34 @@ public class UserDAO extends JDBCSingleDAO<User> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected User SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
+    protected User SQLToObj(ResultSet rs) throws SQLException {
         User data = null;
         if (rs.next()) {
             String name = rs.getString(2);
             String gender = rs.getString(3);
-            Quantity<Length> height = (Quantity<Length>) QuantityUtils.parse(rs.getString(4));
-            Quantity<Mass> weight = (Quantity<Mass>) QuantityUtils.parse(rs.getString(5));
 
-            data = new User(name, gender, height, weight);
+            Quantity<Length> height;
+            try {
+                height = (Quantity<Length>) QuantityUtils.parse(rs.getString(4));
+            } catch (PantsNotParsedException e) {
+                height = null;
+            }
+
+            Quantity<Mass> weight;
+            try {
+                weight = (Quantity<Mass>) QuantityUtils.parse(rs.getString(5));
+            } catch (PantsNotParsedException e) {
+                weight = null;
+            }
+
+            Date dob;
+            try {
+                dob = new Date(rs.getLong(6));
+            } catch (Exception e) {
+                dob = null;
+            }
+
+            data = new User(name, gender, height, weight, dob);
         }
         return data;
     }
