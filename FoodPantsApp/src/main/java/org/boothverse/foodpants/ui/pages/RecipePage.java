@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecipePage extends Page {
-    private static final String[] labels = {"+", "Recommend", "Nutrition", "Search"};
+    private static final String[] labels = {"+", "Recommend", "Search"};
 
     protected JPanel listWrapper;
     protected JPanel recipeListPanel;
@@ -53,19 +53,12 @@ public class RecipePage extends Page {
                 modifyingRecipes = !modifyingRecipes;
                 if (modifyingRecipes) {
                     modifyBtn.setBackground(Style.GREY_0);
-                    List<Recipe> recipes = recipeController.getRecommendedRecipes();
-                    recipeListPanel.removeAll();
-                    for (Recipe item : recipes) {
-                        RecipeItem thisItem = new RecipeItem(item);
-                        recipeListPanel.add(thisItem);
-                    }
-                    revalidate();
-                    repaint();
+                    updateList(recipeController.getRecommendedRecipes());
                 } else {
                     modifyBtn.setBackground(Style.GREY_1);
                     updateList();
                 }
-            case "Nutrition":
+                break;
             case "Search":
                 searchBtn = (JButton) e.getSource();
                 searchingRecipes = !searchingRecipes;
