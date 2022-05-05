@@ -16,4 +16,13 @@ public class StartupController {
         User user = Services.USER_SERVICE.register(name, info);
         Services.NUTRITION_SERVICE.getRecommendedCalorieGoal();
     }
+
+    public boolean userExists() {
+        if (Services.USER_SERVICE.getUser() != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

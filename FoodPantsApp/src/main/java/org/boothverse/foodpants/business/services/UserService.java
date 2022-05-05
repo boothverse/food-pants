@@ -1,8 +1,10 @@
 package org.boothverse.foodpants.business.services;
 
+import lombok.Getter;
 import org.boothverse.foodpants.business.dao.SingleDAO;
 import org.boothverse.foodpants.business.dao.UserDAO;
 import org.boothverse.foodpants.persistence.User;
+import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -16,6 +18,8 @@ public class UserService {
 
     private final SingleDAO<User> dao = new UserDAO();
     private final String[] attributes = {"gender", "height", "weight"};
+
+    @Getter
     User user;
 
     /**
@@ -38,10 +42,10 @@ public class UserService {
         user.setName(name);
         user.setGender(info.get(attributes[0]));
 
-        Quantity<Length> height = Quantities.getQuantity(Double.parseDouble((info.get(attributes[1]))), Units.METRE);
+        Quantity<Length> height = Quantities.getQuantity(Double.parseDouble((info.get(attributes[1]))), CLDR.FOOT);
         user.setHeight(height);
 
-        Quantity<Mass> weight = Quantities.getQuantity(Double.parseDouble(info.get(attributes[2])), Units.KILOGRAM);
+        Quantity<Mass> weight = Quantities.getQuantity(Double.parseDouble(info.get(attributes[2])), CLDR.POUND);
         user.setWeight(weight);
 
         dao.save(user);

@@ -64,7 +64,8 @@ public class TimelinePage extends NutritionPage {
         }
 
         // Set day timeline view by default
-        setTimeLineView("Day");
+        timeType = "Day";
+        setTimeLineView(timeType);
 
         add(timeWrapper, BorderLayout.NORTH);
         add(currTimeline);

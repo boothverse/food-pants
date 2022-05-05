@@ -3,6 +3,8 @@ package org.boothverse.foodpants.ui;
 import lombok.Getter;
 import org.boothverse.foodpants.ui.components.PageViewer;
 import org.boothverse.foodpants.ui.components.Navbar;
+import org.boothverse.foodpants.ui.controllers.StartupController;
+import org.boothverse.foodpants.ui.forms.NewUserForm;
 import org.boothverse.foodpants.ui.pages.Page;
 
 import javax.swing.*;
@@ -13,13 +15,14 @@ public class PageRunner {
     @Getter
     private static JFrame frame;
     private static PageViewer pageFrame;
+    private static StartupController startupController = new StartupController();
 
     private static void setupWindow() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(MIN_SIZE);
         frame.setTitle("FoodPants");
-        frame.setVisible(true);
+        frame.setVisible(false);
         frame.setIconImage(ImageIconGenerator.logo.getImage());
         frame.setLayout(new BorderLayout());
     }
@@ -42,6 +45,18 @@ public class PageRunner {
         Style.setupLookAndFeel();
         setupWindow();
         setupChildren();
+        registerUser();
+    }
+
+    private static void registerUser() {
+        if (!startupController.userExists()) {
+            NewUserForm form = new NewUserForm();
+            form.setLocationRelativeTo(frame);
+            form.setVisible(true);
+        }
+        else {
+            frame.setVisible(true);
+        }
     }
 
     public static PageViewer getPageViewer() {
