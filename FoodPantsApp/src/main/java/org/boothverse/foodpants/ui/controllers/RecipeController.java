@@ -74,6 +74,10 @@ public class RecipeController {
         Services.RECIPE_SERVICE.editRecipe(recipe);
     }
 
+    public void removeRecipe(String id) throws PantsNotFoundException {
+        Services.RECIPE_SERVICE.removeRecipe(id);
+    }
+
     /**
      * Adds the ingredients ina  recipe to the shopping list.
      *

@@ -8,10 +8,7 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.persistence.Recipe;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RecipeService {
 
@@ -56,8 +53,10 @@ public class RecipeService {
         return recipes.values().stream()
             .sorted(Comparator.comparingDouble(recipe -> {
                 long count = recipe.getIngredients().stream().filter(ingredients::contains).count();
-                return (double) count / recipe.getIngredients().size();
+                System.out.println(count + " matches");
+                return (double) recipe.getIngredients().size() / count;
             }))
+            .limit(recipes.size() / 3 + 1)
             .toList();
     }
 
@@ -94,6 +93,13 @@ public class RecipeService {
 
         recipes.replace(id, recipe);
         dao.save(recipe);
+    }
+
+    public void removeRecipe(String id) throws PantsNotFoundException {
+        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
+
+        recipes.remove(id);
+        dao.remove(id);
     }
 
     /**
