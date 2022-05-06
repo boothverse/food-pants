@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
@@ -9,6 +11,8 @@ import org.boothverse.foodpants.persistence.NutritionDescriptor;
 import java.util.List;
 
 public class FoodController {
+
+    private static Logger logger = LogManager.getLogger(FoodController.class);
     /**
      * Gets the food with the specified id
      *
@@ -16,6 +20,7 @@ public class FoodController {
      * @return
      */
     public Food getFood(String id) throws PantsNotFoundException {
+        logger.info("getting food " + id);
         return Services.FOOD_SERVICE.getFood(id);
     }
 
@@ -28,6 +33,8 @@ public class FoodController {
      * @return
      */
     public Food addFood(String name, FoodGroup category, NutritionDescriptor nutrition) {
+        logger.info("adding food called " + name + " of type " + category
+            + " with serving size=" + nutrition.getServingSize());
         Food food = new Food(Services.ID_SERVICE.getId(), name, category, nutrition);
         Services.FOOD_SERVICE.addFood(food);
         return food;
@@ -43,6 +50,7 @@ public class FoodController {
      * @return
      */
     public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) throws PantsNotFoundException{
+        logger.info("editing food " + id + " (now called " + name + ")");
         Food food = new Food(id, name, category, nutrition);
         Services.FOOD_SERVICE.editFood(food);
         return food;
@@ -54,6 +62,7 @@ public class FoodController {
      * @param id
      */
     public void removeFood(String id) throws PantsNotFoundException {
+        logger.info("removing food " + id);
         Services.FOOD_SERVICE.removeFood(id);
     }
 
@@ -63,6 +72,10 @@ public class FoodController {
      * @return
      */
     public List<Food> getFoods() {
-        return Services.FOOD_SERVICE.getFoods();
+        logger.info("getting all foods");
+        List<Food> foods = Services.FOOD_SERVICE.getFoods();
+        logger.info("got " + foods.size() + " foods");
+
+        return foods;
     }
 }
