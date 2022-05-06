@@ -41,7 +41,7 @@ public class NutritionPage extends Page {
                     modifyBtn.setBackground(Style.GREY_1);
                 }
 
-                PageManager.getActivePage().notifyChange("edit", null, null);
+                PageManager.getActivePage().notifyChange("modify", null, null);
                 break;
         }
     }

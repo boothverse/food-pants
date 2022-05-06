@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.NutritionInstance;
+import org.boothverse.foodpants.ui.PageManager;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.standard.StandardButton;
 import org.boothverse.foodpants.ui.components.standard.StandardPanel;
@@ -96,7 +97,19 @@ public class NutritionItem extends StandardPanel implements ActionListener {
 
             firePropertyChange("editItem", this, null);
         } else if (e.getSource() == deleteButton) {
-            System.out.println("deleting...");
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
+                "Are you sure?", JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.NO_OPTION) {
+                return;
+            }
+
+            try {
+                NutritionController nutritionController = new NutritionController();
+                nutritionController.removeItem(nutritionInstance.getId());
+            } catch (PantsNotFoundException pantsNotFoundException) {}
+
+            PageManager.getActivePage().notifyChange("remove", null, null);
             firePropertyChange("deleteItem", this, null);
         }
     }

@@ -42,6 +42,10 @@ public class AddNutritionForm extends AddFoodInstanceForm {
         dateField = new JFormattedTextField(dateFormat);
         addRightComponent(dateField, i);
 
+        initSubmitButton();
+    }
+
+    void initSubmitButton() {
         addSubmitButton(e -> {
             if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
                 try {

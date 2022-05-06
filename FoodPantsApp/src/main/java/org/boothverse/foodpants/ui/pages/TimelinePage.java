@@ -191,18 +191,16 @@ public class TimelinePage extends NutritionPage {
 
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
-        if (Objects.equals(message, "add")) {
-            setTimeLineView(timeType);
+        switch (message) {
+            case "add":
+            case "edit":
+            case "remove":
+                setTimeLineView(timeType);
+                break;
         }
-        else if (Objects.equals(message, "edit")) {
-            for (NutritionItem item : items) {
-                item.setModification(NutritionPage.isModifyingPage());
-            }
-        }
-        else if (Objects.equals(message, "update")) {
 
+        for (NutritionItem item : items) {
+            item.setModification(NutritionPage.isModifyingPage());
         }
-//        else if (Objects.equals(message, "remove")) {
-//        }
     }
 }

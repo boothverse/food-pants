@@ -4,9 +4,6 @@ import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.FoodSearchBar;
 import org.boothverse.foodpants.ui.components.standard.Notifiable;
-import org.boothverse.foodpants.ui.controllers.PantryController;
-import org.boothverse.foodpants.ui.pages.PantryPage;
-import org.boothverse.foodpants.ui.pages.RecipePage;
 
 import javax.swing.*;
 import java.awt.*;
