@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.business.services.util.UnitToString;
 import org.boothverse.foodpants.persistence.FoodInstance;
@@ -57,7 +58,7 @@ public class ConsumeForm extends StandardForm {
         addSubmitButton(e -> {
             try {
                 pantryController.consume(food.getId(), Quantities.getQuantity((Double) numEnter.getValue(),food.getQuantity().getUnit()));
-            } catch (PantsNotFoundException ex) {
+            } catch (PantsNotFoundException | PantsConversionFailedException ex) {
                 ex.printStackTrace();
             }
             PageManager.getActivePage().notifyChange("update", null, null);

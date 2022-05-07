@@ -3,6 +3,7 @@ package org.boothverse.foodpants.ui.controllers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
@@ -34,7 +35,7 @@ public class ShoppingController implements FoodInstanceController {
      * @return
      */
     @Override
-    public FoodInstance addItem(String foodId, Quantity<?> quantity) {
+    public FoodInstance addItem(String foodId, Quantity<?> quantity) throws PantsConversionFailedException {
         logger.info(foodId + " item added to shopping list");
         return Services.SHOPPING_SERVICE.addItem(foodId, quantity);
     }

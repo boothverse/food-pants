@@ -2,10 +2,12 @@ package org.boothverse.foodpants.business.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
+import javax.measure.UnconvertibleException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class PantryService extends FoodInstanceService {
      * @param foodId the id of the food being removed
      * @param quantity the quantity of that food to remove
      */
-    public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException {
+    public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException, PantsConversionFailedException {
         // TODO: test with quantities of diff types and units
         if (!items.containsKey(foodId)){
             logger.warn("Trying to remove a pantry item that does not exist with id " + foodId);
@@ -65,8 +67,12 @@ public class PantryService extends FoodInstanceService {
         }
 
         FoodInstance item = items.get(foodId);
-        quantity = item.getQuantity().subtract(quantity);
-
+        try {
+            quantity = item.getQuantity().subtract(quantity);
+        } catch (UnconvertibleException e) {
+            logger.error(e.getMessage());
+            throw new PantsConversionFailedException();
+        }
         if (quantity.getValue().doubleValue() > 0) {    // remove part
             logger.info("Removing " + item.getQuantity().subtract(quantity) + " of pantry item with id " + foodId + " leaving " + quantity);
             item.setQuantity(quantity);

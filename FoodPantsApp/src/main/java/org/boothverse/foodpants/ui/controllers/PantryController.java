@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.PantryService;
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
@@ -34,7 +35,7 @@ public class PantryController implements FoodInstanceController {
      * @return
      */
     @Override
-    public FoodInstance addItem(String foodId, Quantity<?> quantity) {
+    public FoodInstance addItem(String foodId, Quantity<?> quantity) throws PantsConversionFailedException {
         logger.info(foodId + " added to pantry");
         return Services.PANTRY_SERVICE.addItem(foodId, quantity);
     }
@@ -69,7 +70,7 @@ public class PantryController implements FoodInstanceController {
      * @param foodId
      * @param quantity
      */
-    public void consume(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
+    public void consume(String foodId, Quantity<?> quantity) throws PantsNotFoundException, PantsConversionFailedException {
         Services.PANTRY_SERVICE.removeItem(foodId, quantity);
 
         NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),

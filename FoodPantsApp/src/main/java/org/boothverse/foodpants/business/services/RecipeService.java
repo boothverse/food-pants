@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.RecipeDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.NutritionInstance;
@@ -160,7 +161,9 @@ public class RecipeService {
                     logger.info("Removing items from pantry used to make recipe with id " + recipeId);
                     pantryService.removeItem(ingredient.getId(), ingredient.getQuantity());
                 } catch (PantsNotFoundException e) {
-                    logger.info("Ingredient used to make recipe with id " + recipeId + " not found in pantry");
+                    logger.error("Ingredient used to make recipe with id " + recipeId + " not found in pantry");
+                } catch (PantsConversionFailedException e) {
+                    logger.error("Ingredient used to make recipe with id " + recipeId + " could not get removed from the pantry");
                 }
             }
         }
@@ -174,7 +177,11 @@ public class RecipeService {
         logger.info("Adding nutrition instance with id " + consumed.getId() + " to nutrition log");
         nutritionService.addItem(consumed);
         logger.info("Adding food instance with id " + leftover.getId() + " and quantity " + leftover.getQuantity() + " to pantry");
-        pantryService.addItem(leftover.getId(), leftover.getQuantity());
+        try {
+            pantryService.addItem(leftover.getId(), leftover.getQuantity());
+        } catch (PantsConversionFailedException e) {
+            logger.error("Could not add recipe to pantry... bad conversion, bad! :(");
+        }
     }
 
     /**
