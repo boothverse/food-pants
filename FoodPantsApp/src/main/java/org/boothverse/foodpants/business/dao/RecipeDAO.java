@@ -72,7 +72,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
                 SQLUtils.inQuote(data.getServings().toString())};
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            logger.info(data.getId() + " failed to convert to SQL format");
+            logger.error(data.getId() + " failed to convert to SQL format");
             return null;
         }
     }
@@ -93,6 +93,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
                 logger.info("descriptor correctly read from mapper");
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
+                logger.error("descriptor incorrectly read from mapper");
             }
             String instructions = rs.getString(5);
             List<FoodInstance> ingredients = stringToIngredients(rs.getString(6));

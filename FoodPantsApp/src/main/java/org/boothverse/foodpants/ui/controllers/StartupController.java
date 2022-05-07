@@ -31,7 +31,7 @@ public class StartupController {
             return true;
         }
         else {
-            logger.info("user does not exist");
+            logger.error("user does not exist");
             return false;
         }
     }

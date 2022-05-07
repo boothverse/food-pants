@@ -22,7 +22,7 @@ public class PantryController implements FoodInstanceController {
     @Override
     public List<FoodInstance> getItems() {
         PantryService pantryService = Services.PANTRY_SERVICE;
-        logger.info("items retrieved from pantry");
+        logger.debug("items retrieved from pantry");
         return Services.PANTRY_SERVICE.getItems();
     }
 
@@ -60,6 +60,7 @@ public class PantryController implements FoodInstanceController {
     @Override
     public void removeItem(String foodId) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId);
+        logger.info(foodId + " food item removed from pantry");
     }
 
     /**

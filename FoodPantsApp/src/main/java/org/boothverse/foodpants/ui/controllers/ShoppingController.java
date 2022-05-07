@@ -22,7 +22,7 @@ public class ShoppingController implements FoodInstanceController {
      */
     @Override
     public List<FoodInstance> getItems() {
-        logger.info("items retrieved ShoppingController");
+        logger.debug("items retrieved ShoppingController");
         return Services.SHOPPING_SERVICE.getItems();
     }
 
@@ -66,6 +66,7 @@ public class ShoppingController implements FoodInstanceController {
     }
 
     public void removeAllItems() {
+        logger.info("all items removed");
         Services.SHOPPING_SERVICE.removeAllItems();
     }
 

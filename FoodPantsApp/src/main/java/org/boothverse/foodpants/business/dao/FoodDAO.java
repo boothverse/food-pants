@@ -43,7 +43,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
                 SQLUtils.inQuote(mapper.writeValueAsString(data.getNutrition())),
             };
         } catch (JsonProcessingException e) {
-            logger.info("food " + data.getId() + " failed convert to SQL format");
+            logger.error("food " + data.getId() + " failed convert to SQL format");
             e.printStackTrace();
             return null;
         }
@@ -65,7 +65,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
                 logger.info("food " + id + " converted from SQL, added to map");
             }
         } catch (JsonProcessingException e) {
-            logger.info("food failed to convert from SQL");
+            logger.error("food failed to convert from SQL");
             e.printStackTrace();
         }
         return data;
