@@ -180,12 +180,10 @@ public class TimelinePage extends NutritionPage {
         List<NutritionInstance> nutritionInstances = nutritionController.getItems(startDate, endDate);
 
         for (NutritionInstance item : nutritionInstances) {
-            try {
-                NutritionItem nutritionItem = new NutritionItem(item, this);
+            NutritionItem nutritionItem = new NutritionItem(item, this);
 
-                items.add(nutritionItem);
-                panel.add(nutritionItem);
-            } catch (PantsNotFoundException e) {};
+            items.add(nutritionItem);
+            panel.add(nutritionItem);
         }
     }
 

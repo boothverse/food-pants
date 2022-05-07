@@ -1,7 +1,5 @@
 package org.boothverse.foodpants.ui.components;
 
-import lombok.NonNull;
-import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.NutritionInstance;
 import org.boothverse.foodpants.ui.PageManager;
@@ -30,7 +28,7 @@ public class NutritionItem extends StandardPanel implements ActionListener {
 
     Page parent;
 
-    public NutritionItem(@NonNull NutritionInstance nutritionInstance, Component parent) throws PantsNotFoundException {
+    public NutritionItem(NutritionInstance nutritionInstance, Component parent) {
         super();
 
         setLayout(new BorderLayout());
@@ -42,10 +40,15 @@ public class NutritionItem extends StandardPanel implements ActionListener {
         initComponents();
     }
 
-    protected void initComponents() throws PantsNotFoundException {
+    protected void initComponents() {
         FoodController foodController = new FoodController();
 
-        String name = foodController.getFood(nutritionInstance.getFoodId()).getName();
+        String name = "";
+
+        try {
+            name = foodController.getFood(nutritionInstance.getFoodId()).getName();
+        } catch (PantsNotFoundException e) {}
+
         Number amt = nutritionInstance.getQuantity().getValue();
 
         JPanel panel = new JPanel();

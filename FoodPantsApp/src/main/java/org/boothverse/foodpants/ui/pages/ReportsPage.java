@@ -9,12 +9,12 @@ import org.boothverse.foodpants.ui.forms.StandardForm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ReportsPage extends NutritionPage {
 
-    List<ReportPeriod> reportPeriods;
+    List<ReportsItem> reportsItems;
     JPanel panel;
 
     public ReportsPage() {
@@ -38,14 +38,21 @@ public class ReportsPage extends NutritionPage {
 
     void addReports() {
         panel.removeAll();
-        panel.setLayout(new FlowLayout());
+        panel.setLayout(new GridLayout(0, 2));
+
+        reportsItems = new ArrayList<>();
 
         NutritionController nutritionController = new NutritionController();
-        reportPeriods = nutritionController.getReports();
+        List<ReportPeriod> reportPeriods = nutritionController.getReports();
 
         // Add report items to reports page
         for (ReportPeriod reportPeriod : reportPeriods) {
-            panel.add(new ReportsItem(reportPeriod.getStartDate(), reportPeriod.getEndDate()));
+            ReportsItem item = new ReportsItem(reportPeriod, this);
+
+            if (item.hasNutritionalInfo()) {
+                reportsItems.add(item);
+                panel.add(item);
+            }
         }
 
         this.revalidate();
@@ -54,14 +61,15 @@ public class ReportsPage extends NutritionPage {
 
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
-        if (Objects.equals(message, "add")) {
-            addReports();
+        switch (message) {
+            case "add":
+            case "remove":
+                addReports();
+                break;
         }
-//        else if (Objects.equals(message, "remove")) {
-//        }
-//        else if (Objects.equals(message, "edit")) {
-//        }
-//        else if (Objects.equals(message, "update")) {
-//        }
+
+        for (ReportsItem item : reportsItems) {
+            item.setModification(NutritionPage.isModifyingPage());
+        }
     }
 }

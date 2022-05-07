@@ -1,6 +1,5 @@
 package org.boothverse.foodpants.ui.pages;
 
-
 import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.GoalItem;

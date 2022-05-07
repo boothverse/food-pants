@@ -64,29 +64,31 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         addRightComponent(quantityPanel, i);
         addRightComponent(new JPanel(),++i);
 
-        addSubmitButton(e -> {
-            if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
-                FoodInstance newFood;
-                if (controller != null) {
-                     newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
-                        .getId(), quantityPanel.getSelectedQuantity());
-                    PageManager.getActivePage().notifyChange("add", null, newFood);
-                }
-                else {
-                    newFood = ((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem())).createInstance(quantityPanel.getSelectedQuantity());
-                    if (AddRecipeForm.class.isAssignableFrom(parent.getClass())) {
-                        ((AddRecipeForm)parent).ingredients.add(new IngredientItem(newFood));
-                        parent.revalidate();
-                        parent.repaint();
-                    }
-                }
+        addSubmitButton(e -> submitForm());
+    }
 
-                dispose();
+    protected void submitForm() {
+        if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
+            FoodInstance newFood;
+            if (controller != null) {
+                newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                    .getId(), quantityPanel.getSelectedQuantity());
+                PageManager.getActivePage().notifyChange("add", null, newFood);
             }
             else {
-                JOptionPane.showMessageDialog(this, "Must select a food and quantity to be added", "Error", JOptionPane.ERROR_MESSAGE);
+                newFood = ((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem())).createInstance(quantityPanel.getSelectedQuantity());
+                if (AddRecipeForm.class.isAssignableFrom(parent.getClass())) {
+                    ((AddRecipeForm)parent).ingredients.add(new IngredientItem(newFood));
+                    parent.revalidate();
+                    parent.repaint();
+                }
             }
-        });
+
+            dispose();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Must select a food and quantity to be added", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
