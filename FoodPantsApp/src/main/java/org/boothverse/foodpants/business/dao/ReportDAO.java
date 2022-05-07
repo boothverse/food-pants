@@ -25,7 +25,7 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
 
     @Override
     protected String[] objToSQL(ReportPeriod data) {
-        logger.info(data.getId() + " converted to SQL format");
+        logger.debug(data.getId() + " converted to SQL format");
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             data.getStartDate().getTime() + "",
@@ -43,7 +43,7 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
                 Long endDate = rs.getLong(3);
 
                 data.put(id, new ReportPeriod(id, new Date(startDate), new Date(endDate)));
-                logger.info("report " + id + " converted from SQL, added to map");
+                logger.debug("report " + id + " converted from SQL, added to map");
             }
         return data;
     }

@@ -42,10 +42,10 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
             Boolean exists = executeExists(statement, condition);
             if (exists) {
                 executeUpdate(statement, objToSQL(data), condition);
-                logger.info(condition + " was updated in " + table);
+                logger.debug(condition + " was updated in " + table);
             } else {
                 executeInsert(statement, objToSQL(data));
-                logger.info(condition + " was added to " + table);
+                logger.debug(condition + " was added to " + table);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             ResultSet rs = executeGetAll(statement);
             data = SQLToObj(rs);
-            logger.info("data loaded into " + table);
+            logger.debug("data loaded into " + table);
         } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
             logger.error("data failed to load into " + table);
@@ -73,7 +73,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
     public void remove(String id) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             executeRemove(statement, id);
-            logger.info(id + " removed from table" + table);
+            logger.debug(id + " removed from table" + table);
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error(id + " failed to remove from table " + table);

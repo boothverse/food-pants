@@ -34,7 +34,7 @@ public abstract class JDBCDAO {
         this.path = "target/classes/sql/create_" + table + ".sql";
         if (!tableExists()) {
             createTable();
-            logger.info(table + " table created");
+            logger.debug(table + " table created");
         }
     }
 
@@ -51,14 +51,14 @@ public abstract class JDBCDAO {
         Connection dbConnection = null;
         try {
             Class.forName(DB_DRIVER);
-            logger.info("database driver successfully loaded");
+            logger.debug("database driver successfully loaded");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             logger.error("database driver failed to load");
         }
         try {
             dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-            logger.info("successful connection to database");
+            logger.debug("successful connection to database");
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("connection to database failed");
@@ -68,7 +68,7 @@ public abstract class JDBCDAO {
 
     protected void executeInsert(Statement statement, String[] data) throws SQLException {
         statement.execute("INSERT INTO " + table + " VALUES (" + String.join(", ", data) + ")");
-        logger.info("data inserted into " + table);
+        logger.debug("data inserted into " + table);
     }
 
     protected void executeUpdate(Statement statement, String[] data, String condition) throws SQLException {
@@ -86,23 +86,23 @@ public abstract class JDBCDAO {
         updateBuilder.append(data[i]);
 
         statement.execute("UPDATE " + table + " SET " + updateBuilder + " WHERE " + condition);
-        logger.info("data updated in " + table);
+        logger.debug("data updated in " + table);
     }
 
     protected ResultSet executeGetAll(Statement statement) throws SQLException {
-        logger.info("all data retrieved from " + table);
+        logger.debug("all data retrieved from " + table);
         return statement.executeQuery("SELECT * FROM " + table);
     }
 
     protected Boolean executeExists(Statement statement, String condition) throws SQLException {
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + condition);
-        logger.info(condition + " execution exists in " + table);
+        logger.debug(condition + " execution exists in " + table);
         return rs.next();
     }
 
     protected void executeRemove(Statement statement, String id) throws SQLException {
         statement.execute("DELETE FROM " + table + " WHERE ID='" + id + "'");
-        logger.info(id + " removed from " + table);
+        logger.debug(id + " removed from " + table);
     }
 
     protected boolean tableExists() {
@@ -110,7 +110,7 @@ public abstract class JDBCDAO {
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
             if (tables.next()) {
-                logger.info(table + " table exists");
+                logger.debug(table + " table exists");
                 return true;
             }
         } catch (SQLException e) {
@@ -122,13 +122,13 @@ public abstract class JDBCDAO {
 
     protected void createTable() {
         new JDBCUtils().executeScript(this.path);
-        logger.info("table created at path " + path);
+        logger.debug("table created at path " + path);
     }
 
     public void removeAll() {
         try (Connection conn = getDBConnection(); Statement statement = conn.createStatement()) {
             statement.execute("DELETE FROM " + table);
-            logger.info("all data removed from " + table);
+            logger.debug("all data removed from " + table);
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("failed to remove all data from " + table);

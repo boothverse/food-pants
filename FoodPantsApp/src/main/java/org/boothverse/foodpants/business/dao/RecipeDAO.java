@@ -40,7 +40,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         if(!ingredients.isEmpty()) {
             result = result.substring(0, result.length() - 1);
         }
-        logger.info("ingredients list converted to string");
+        logger.debug("ingredients list converted to string");
         return result;
 
     }
@@ -52,7 +52,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             String[] temp = s.split(":");
             list.add(new FoodInstance(temp[0], QuantityUtils.parse(temp[1])));
         }
-        logger.info("string converted to list of ingredients");
+        logger.debug("string converted to list of ingredients");
         return list;
     }
 
@@ -61,7 +61,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
         try {
-            logger.info(data.getId() + " recipe converted to SQL format");
+            logger.debug(data.getId() + " recipe converted to SQL format");
             return new String[]{
                 SQLUtils.inQuote(data.getId()),
                 SQLUtils.inQuote(data.getName()),
@@ -90,7 +90,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             NutritionDescriptor descriptor = null;
             try {
                 descriptor = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
-                logger.info("descriptor correctly read from mapper");
+                logger.debug("descriptor correctly read from mapper");
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 logger.error("descriptor incorrectly read from mapper");
@@ -100,7 +100,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             Double servings = rs.getDouble(7);
 
             map.put(id, new Recipe(id, name, group, descriptor, instructions, ingredients, servings));
-            logger.info("recipe " + id + " converted from SQL, added to map");
+            logger.debug("recipe " + id + " converted from SQL, added to map");
         }
 
         return map;

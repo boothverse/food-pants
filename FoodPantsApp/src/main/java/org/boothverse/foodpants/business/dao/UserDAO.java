@@ -29,7 +29,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
 
     @Override
     protected String[] objToSQL(User data) {
-        logger.info("user " + data.getName() + " converted to string");
+        logger.debug("user " + data.getName() + " converted to string");
         return new String[] {
             ID.toString(),
             SQLUtils.inQuote(data.getName()),
@@ -51,7 +51,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
             Quantity<Length> height;
             try {
                 height = (Quantity<Length>) QuantityUtils.parse(rs.getString(4));
-                logger.info("height successfully converted to Quantity UserDAO");
+                logger.debug("height successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 height = null;
                 logger.error("height convert to quantity unsuccessful UserDAO");
@@ -60,7 +60,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
             Quantity<Mass> weight;
             try {
                 weight = (Quantity<Mass>) QuantityUtils.parse(rs.getString(5));
-                logger.info("weight successfully converted to Quantity UserDAO");
+                logger.debug("weight successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 weight = null;
                 logger.error("weight convert to Quantity unsuccessful UserDAO");
@@ -69,14 +69,14 @@ public class UserDAO extends JDBCSingleDAO<User> {
             Date dob;
             try {
                 dob = new Date(rs.getLong(6));
-                logger.info("dob successfully created UserDAO");
+                logger.debug("dob successfully created UserDAO");
             } catch (Exception e) {
                 dob = null;
                 logger.error("dob conversion not successful");
             }
 
             data = new User(name, gender, height, weight, dob);
-            logger.info("new user created with name " + data.getName());
+            logger.debug("new user created with name " + data.getName());
         }
         return data;
     }
