@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.PantryService;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -11,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class PantryController implements FoodInstanceController {
+    private static Logger logger = LogManager.getLogger(PantryController.class);
     /**
      * Returns a list of all food instances.
      *
@@ -19,6 +22,7 @@ public class PantryController implements FoodInstanceController {
     @Override
     public List<FoodInstance> getItems() {
         PantryService pantryService = Services.PANTRY_SERVICE;
+        logger.info("items retrieved from pantry");
         return Services.PANTRY_SERVICE.getItems();
     }
 
@@ -31,6 +35,7 @@ public class PantryController implements FoodInstanceController {
      */
     @Override
     public FoodInstance addItem(String foodId, Quantity<?> quantity) {
+        logger.info(foodId + " added to pantry");
         return Services.PANTRY_SERVICE.addItem(foodId, quantity);
     }
 
@@ -43,6 +48,7 @@ public class PantryController implements FoodInstanceController {
      */
     @Override
     public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
+        logger.info(foodId + " food item edited in pantry");
         return Services.PANTRY_SERVICE.editItem(foodId, quantity);
     }
 
@@ -68,6 +74,7 @@ public class PantryController implements FoodInstanceController {
         NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),
             foodId, quantity, new Date());
         Services.NUTRITION_SERVICE.addItem(nutInstance);
+        logger.info(foodId + " item consumed");
     }
 
     /**
@@ -77,6 +84,7 @@ public class PantryController implements FoodInstanceController {
      * @return
      */
     public List<FoodInstance> searchByFoodName(String query) {
+        logger.info(query + " item searched in pantry");
         return Services.PANTRY_SERVICE.searchByFoodName(query);
     }
 }

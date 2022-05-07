@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.PantryService;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -8,6 +10,7 @@ import org.boothverse.foodpants.persistence.*;
 import java.util.List;
 
 public class RecipeController {
+    private static Logger logger = LogManager.getLogger(RecipeController.class);
     /**
      * Gets the specified recipe.
      *
@@ -16,6 +19,7 @@ public class RecipeController {
      * @throws PantsNotFoundException
      */
     public Recipe getRecipe(String id) throws PantsNotFoundException {
+        logger.info(id + " recipe retrieved");
         return Services.RECIPE_SERVICE.getRecipe(id);
     }
 
@@ -25,6 +29,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> getRecipes() {
+        logger.info("list of recipes retried");
         return Services.RECIPE_SERVICE.getRecipes();
     }
 
@@ -34,6 +39,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> getRecommendedRecipes() {
+        logger.info("list of recommended recipes retrieved");
         return Services.RECIPE_SERVICE.getRecommendedRecipes();
     }
 
@@ -44,6 +50,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> searchByRecipeName(String query) {
+        logger.info(query + " searched in recipes");
         return Services.RECIPE_SERVICE.getRecipesNameStartsWith(query);
     }
 
@@ -61,6 +68,7 @@ public class RecipeController {
             instructions, ingredients, servings);
         Services.RECIPE_SERVICE.addRecipe(recipe);
 
+        logger.info(recipe.getId() + " added to recipe list");
         return recipe;
     }
 
@@ -71,10 +79,12 @@ public class RecipeController {
      * @throws PantsNotFoundException
      */
     public void editRecipe(Recipe recipe) throws PantsNotFoundException {
+        logger.info(recipe.getId() + " recipe updated");
         Services.RECIPE_SERVICE.editRecipe(recipe);
     }
 
     public void removeRecipe(String id) throws PantsNotFoundException {
+        logger.info(id + " recipe removed");
         Services.RECIPE_SERVICE.removeRecipe(id);
     }
 
@@ -87,6 +97,7 @@ public class RecipeController {
     public void addIngredientsToCart(String recipeId) throws PantsNotFoundException {
         List<FoodInstance> ingredients = Services.RECIPE_SERVICE.getIngredients(recipeId);
         Services.SHOPPING_SERVICE.addItems(ingredients);
+        logger.info(recipeId + " recipe items added to cart");
     }
 
     /**
@@ -97,6 +108,7 @@ public class RecipeController {
      */
     public void addMissingIngredientsToCart(String recipeId) throws PantsNotFoundException {
         Services.RECIPE_SERVICE.addMissingIngredientsToCart(recipeId);
+        logger.info(" issing items from " + recipeId + " added to cart");
     }
 
     /**
@@ -113,15 +125,18 @@ public class RecipeController {
 
         Services.RECIPE_SERVICE.produceCookedRecipe(recipeId, isUsePantry,
             consumedServings, leftoverServings);
+        logger.info(recipeId +  " recipe cooked");
     }
 
     public List<FoodInstance> getMissingItems(Recipe recipe) {
         PantryService p =  new PantryService();
+        logger.info(recipe.getId() + " missing items added to cart from recipe");
         return p.getMissing(recipe.getIngredients());
     }
 
     public void addItemsToPantry(List<FoodInstance> itemsToAdd) {
         PantryService p = new PantryService();
         p.addItems(itemsToAdd);
+        logger.info("items added to pantry");
     }
 }
