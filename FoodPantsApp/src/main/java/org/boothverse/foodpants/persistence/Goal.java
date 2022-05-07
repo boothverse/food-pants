@@ -10,6 +10,10 @@ import org.boothverse.foodpants.ui.controllers.FoodController;
 
 import javax.measure.Quantity;
 
+/**
+ * An object representing a goal
+ * @param <Q> the quantity which the goal will center around
+ */
 @NoArgsConstructor
 @Getter @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -22,10 +26,10 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
     /**
      * Creates a new Goal
      *
-     * @param id
-     * @param goalType
-     * @param dailyQuantity
-     * @param nutritionType
+     * @param id the id of the goal
+     * @param goalType the type of the goal
+     * @param dailyQuantity the quantity of the goal
+     * @param nutritionType the nutrition value to be measured
      */
     public Goal(String id, GoalType goalType, Quantity<Q> dailyQuantity, NutritionType nutritionType) {
         super(id);
@@ -37,8 +41,8 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
     /**
      * Determines whether this goal has been attained
      *
-     * @param actualQuantity
-     * @return
+     * @param actualQuantity the actual value
+     * @return whether the actual value meets the goal
      */
     public boolean isAttained(Quantity<Q> actualQuantity) {
         logger.info("Checking whether goal of type " + goalType.name() + " and quantity " + dailyQuantity + " has been attained with " + actualQuantity);

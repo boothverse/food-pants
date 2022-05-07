@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.measure.Quantity;
 
+/**
+ * An object representing a physical food
+ */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class FoodInstance extends IdObject {
@@ -16,8 +19,8 @@ public class FoodInstance extends IdObject {
     /**
      * Creates a new FoodInstance
      *
-     * @param id
-     * @param quantity
+     * @param id the id of the food instance
+     * @param quantity the quantity of the food instance
      */
     public FoodInstance(String id, Quantity<?> quantity) {
         super(id);
