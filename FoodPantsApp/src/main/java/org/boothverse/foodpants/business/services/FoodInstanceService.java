@@ -1,9 +1,12 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.FoodInstanceDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
+import org.boothverse.foodpants.persistence.Recipe;
 
 import javax.measure.Quantity;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class FoodInstanceService {
+    private static Logger logger = LogManager.getLogger(FoodInstanceService.class);
     protected Map<String, FoodInstance> items;
     protected final ListDAO<FoodInstance> dao;
 
@@ -21,6 +25,7 @@ public abstract class FoodInstanceService {
      */
     public FoodInstanceService(String dbName) {
         dao = new FoodInstanceDAO(dbName);
+        logger.info("Loading food instances from " + dbName);
         items = dao.load();
     }
 
@@ -30,7 +35,8 @@ public abstract class FoodInstanceService {
      * @return the items tracked by the service
      */
     public List<FoodInstance> getItems() {
-       return new ArrayList<>(items.values());
+        logger.info("Getting all food instances as list");
+        return new ArrayList<>(items.values());
     }
 
     /**
@@ -43,13 +49,16 @@ public abstract class FoodInstanceService {
     public FoodInstance addItem(String id, Quantity<?> quantity) {
         FoodInstance item;
         if (items.containsKey(id)) {    // add to existing food
+            logger.info("Updating item with id " + id + " by adding new quantity " + quantity);
             Quantity curQuantity = items.get(id).getQuantity();
             item = new FoodInstance(id, quantity.add(curQuantity));
             items.replace(id, item);
         } else {                        // insert new food
+            logger.info("Inserting new item with id " + id + " and quantity " + quantity);
             item = new FoodInstance(id, quantity);
             items.put(id, item);
         }
+        logger.info("Saving item with id " + id + " in database");
         dao.save(item);
         return item;
     }
@@ -65,9 +74,12 @@ public abstract class FoodInstanceService {
             String id = itemToAdd.getId();
             if (items.containsKey(id)) {    // food already exists in pantry, just add more
                 Quantity curQuantity = items.get(id).getQuantity();
+                logger.info("Updating item with id " + id + " by adding new quantity " + itemToAdd.getQuantity());
                 itemToAdd.setQuantity(itemToAdd.getQuantity().add(curQuantity));
             }
+            logger.info("Inserting new item with id " + id + " and quantity " + itemToAdd.getQuantity());
             items.put(id, itemToAdd);
+            logger.info("Saving item with id " + id + " in database");
             dao.save(itemToAdd);
         });
     }
@@ -81,10 +93,14 @@ public abstract class FoodInstanceService {
      * @param quantity
      */
     public FoodInstance editItem(String id, Quantity<?> quantity) throws PantsNotFoundException {
-        if (!items.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
-
+        if (!items.containsKey(id)){
+            logger.warn("Trying to edit a food instance that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
+        logger.info("Updating item with id " + id + " by setting new quantity " + quantity);
         FoodInstance item = new FoodInstance(id, quantity);
         items.replace(id, item);
+        logger.info("Saving updated item with id " + id + " in database");
         dao.save(item);
         return item;
     }
@@ -96,9 +112,14 @@ public abstract class FoodInstanceService {
      * @param id
      */
     public void removeItem(String id) throws PantsNotFoundException {
-        if (!items.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+        if (!items.containsKey(id)){
+            logger.warn("Trying to remove a food instance that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
 
+        logger.info("Removing item with id " + id);
         items.remove(id);
+        logger.info("Removing item with id " + id + " from database");
         dao.remove(id);
     }
 }

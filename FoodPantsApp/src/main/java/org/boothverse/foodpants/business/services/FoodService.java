@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FoodService {
+    private static Logger logger = LogManager.getLogger(FoodService.class);
     protected Map<String, Food> foods;
     protected final ListDAO<Food> dao = new FoodDAO();
 
@@ -18,6 +21,7 @@ public class FoodService {
      * Loads the foods from the database.
      */
     public FoodService() {
+        logger.info("Loading foods from database");
         foods = dao.load();
     }
 
@@ -27,6 +31,7 @@ public class FoodService {
      * @return
      */
     public List<Food> getFoods() {
+        logger.info("Getting all foods as list");
         return foods.values().stream().toList();
     }
 
@@ -37,8 +42,11 @@ public class FoodService {
      * @return
      */
     public Food getFood(String id) throws PantsNotFoundException {
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
-
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to get a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
+        logger.info("Getting food with id " + id);
         return foods.get(id);
     }
 
@@ -47,7 +55,9 @@ public class FoodService {
      * @param food
      */
     public void addFood(Food food) {
+        logger.info("Adding food with id " + food.getId());
         foods.put(food.getId(), food);
+        logger.info("Saving food with id " + food.getId() + " in database");
         dao.save(food);
     }
 
@@ -60,9 +70,13 @@ public class FoodService {
      */
     public void editFood(Food food) throws PantsNotFoundException {
         String id = food.getId();
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
-
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to edit a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
+        logger.info("Updating food with id " + id);
         foods.replace(id, food);
+        logger.info("Saving updated food with id " + id + " in database");
         dao.save(food);
     }
 
@@ -73,9 +87,14 @@ public class FoodService {
      * @param id
      */
     public void removeFood(String id) throws PantsNotFoundException {
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to remove a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
 
+        logger.info("Removing food with id " + id);
         foods.remove(id);
+        logger.info("Removing food with id " + id + " from database");
         dao.remove(id);
     }
 
@@ -87,6 +106,7 @@ public class FoodService {
      * @return
      */
     public String getFoodName(String id) throws PantsNotFoundException {
+        logger.info("Getting food name with id " + id);
         return getFood(id).getName();
     }
 
@@ -96,6 +116,7 @@ public class FoodService {
      * @return
      */
     public String[] getFoodGroups() {
+        logger.info("Getting list of food groups");
         return EnumUtils.getEnumOptions(FoodGroup.class);
     }
 }

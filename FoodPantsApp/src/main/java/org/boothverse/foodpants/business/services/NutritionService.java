@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.GoalDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.NutritionInstanceDAO;
@@ -16,7 +18,7 @@ import java.util.*;
 import static tech.units.indriya.AbstractUnit.ONE;
 
 public class NutritionService {
-    // Map<id : String, i : NutritionInstance >
+    private static Logger logger = LogManager.getLogger(NutritionService.class);
     protected Map<String, NutritionInstance> items;
     protected Map<String, Goal> goals;
     protected Map<String, ReportPeriod> reportPeriods;
@@ -32,8 +34,11 @@ public class NutritionService {
      * Creates the NutritionService and loads data stored in database
      */
     public NutritionService() {
+        logger.info("Loading nutrition instances from database");
         items = nutritionInstanceDAO.load();
+        logger.info("Loading goals from database");
         goals = goalDAO.load();
+        logger.info("Loading report peiods from database");
         reportPeriods = reportPeriodDAO.load();
     }
 
@@ -45,11 +50,12 @@ public class NutritionService {
      * @return
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
+        logger.info("Getting nutritional instances between " + startDate + " and " + endDate);
         List<NutritionInstance> result = new ArrayList<>();
         for(NutritionInstance n: items.values()){
             if((n.getConsumedAt().after(startDate) || n.getConsumedAt().equals(startDate))
                     && n.getConsumedAt().before(endDate) ){
-
+                logger.info("Adding nutritional instance with id " + n.getId() + " and date " + n.getConsumedAt() + " to return list");
                 result.add(n);
             }
         }
@@ -62,7 +68,9 @@ public class NutritionService {
      * @param nutritionInstance
      */
     public void addItem(NutritionInstance nutritionInstance) {
+        logger.info("Adding nutritional item with id " + nutritionInstance.getId());
         items.put(nutritionInstance.getId(), nutritionInstance);
+        logger.info("Saving nutritional item with id " + nutritionInstance.getId() + " to database");
         nutritionInstanceDAO.save(nutritionInstance);
     }
 
@@ -72,8 +80,13 @@ public class NutritionService {
      * @param nutritionInstance
      */
     public void editItem(NutritionInstance nutritionInstance) throws PantsNotFoundException {
-        if (!items.containsKey(nutritionInstance.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
+        if (!items.containsKey(nutritionInstance.getId())) {
+            logger.warn("Trying to edit a nutrition instance that does not exist with id " + nutritionInstance.getId());
+            throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification.");
+        }
+        logger.info("Updating nutrition instance with id " + nutritionInstance.getId());
         items.replace(nutritionInstance.getId(), nutritionInstance);
+        logger.info("Saving updated nutrition instance with id " + nutritionInstance.getId() + " in database");
         nutritionInstanceDAO.save(nutritionInstance);
     }
 
@@ -83,8 +96,13 @@ public class NutritionService {
      * @param id
      */
     public void removeItem(String id) throws PantsNotFoundException {
-        if (!items.containsKey(id)) throw new PantsNotFoundException("nutrition instance " + id + " not found");
+        if (!items.containsKey(id)){
+            logger.warn("Trying to remove a nutrition instance that does not exist with id " + id);
+            throw new PantsNotFoundException("nutrition instance " + id + " not found");
+        }
+        logger.info("Removing nutrition instance with id " + id);
         items.remove(id);
+        logger.info("Removing food with id " + id + " from database");
         nutritionInstanceDAO.remove(id);
     }
 
