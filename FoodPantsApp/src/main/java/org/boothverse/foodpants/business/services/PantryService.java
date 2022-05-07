@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 
@@ -11,11 +13,12 @@ import java.util.List;
  * service dealing with processing food instances within the pantry
  */
 public class PantryService extends FoodInstanceService {
-
+    private static Logger logger = LogManager.getLogger(PantryService.class);
     private static final String DB_NAME = "PANTRY";
 
     public PantryService() {
         super(DB_NAME);
+        logger.info("Loaded pantry items from database");
     }
 
     /**
@@ -25,6 +28,7 @@ public class PantryService extends FoodInstanceService {
      * @return a new list of items on the list which are not in the pantry
      */
     public List<FoodInstance> getMissing(List<FoodInstance> itemsToCheck) {
+        logger.info("Getting missing items from pantry");
         List<FoodInstance> missing = new ArrayList<>();
 
         itemsToCheck.forEach(itemToCheck -> {
@@ -35,9 +39,11 @@ public class PantryService extends FoodInstanceService {
                 //  does not modify the quantity stored in the pantry!!
                 Quantity quantity = pantryItem.getQuantity().subtract((Quantity) itemToCheck.getQuantity());
                 if (quantity.getValue().doubleValue() < 0) {    // but we don't have enough of it
+                    logger.info("Item with id " + id + " does not have a sufficient quantity in pantry. Adding to missing list");
                     missing.add(new FoodInstance(id, quantity.multiply(-1)));
                 }
             } else {                                            // food does not exist in pantry
+                logger.info("Item with id " + id + " does not exist in pantry. Adding to missing list");
                 missing.add(itemToCheck);
             }
         });
@@ -53,16 +59,21 @@ public class PantryService extends FoodInstanceService {
      */
     public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException {
         // TODO: test with quantities of diff types and units
-        if (!items.containsKey(foodId)) throw new PantsNotFoundException("food " + foodId + " not found");
+        if (!items.containsKey(foodId)){
+            logger.warn("Trying to remove a pantry item that does not exist with id " + foodId);
+            throw new PantsNotFoundException("food " + foodId + " not found");
+        }
 
         FoodInstance item = items.get(foodId);
         quantity = item.getQuantity().subtract(quantity);
 
         if (quantity.getValue().doubleValue() > 0) {    // remove part
+            logger.info("Removing " + item.getQuantity().subtract(quantity) + " of pantry item with id " + foodId + " leaving " + quantity);
             item.setQuantity(quantity);
             items.replace(foodId, item);
             dao.save(item);
         } else {                                        // remove all
+            logger.info("Removing all of pantry item with id " + foodId);
             items.remove(foodId);
             dao.remove(foodId);
         }
@@ -75,6 +86,7 @@ public class PantryService extends FoodInstanceService {
      * @return whether the item was in the pantry of not
      */
     public Boolean contains(FoodInstance item) {
+        logger.info("Checking whether pantry contains item with id " + item.getId());
         return items.containsKey(item.getId());
     }
 
@@ -85,12 +97,14 @@ public class PantryService extends FoodInstanceService {
      * @return a list of foods related to the search key
      */
     public List<FoodInstance> searchByFoodName(String query) {
+        logger.info("Searching for food items in pantry starting with " + query);
         FoodService foodService = Services.FOOD_SERVICE;
         return items.values().stream()
             .filter(item -> {
                 try {
                     return foodService.getFood(item.getId()).getName().startsWith(query);
                 } catch (PantsNotFoundException e) {
+                    logger.info("No food items in pantry starting with " + query);
                     return false;
                 }
             })

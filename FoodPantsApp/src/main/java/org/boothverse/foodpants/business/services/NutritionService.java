@@ -17,9 +17,6 @@ import java.util.*;
 
 import static tech.units.indriya.AbstractUnit.ONE;
 
-/**
- * service dealing with processing nutrition instances
- */
 public class NutritionService {
     private static Logger logger = LogManager.getLogger(NutritionService.class);
     protected Map<String, NutritionInstance> items;
@@ -48,9 +45,9 @@ public class NutritionService {
     /**
      * Returns a list of NutritionInstance objects within the specified time range.
      *
-     * @param startDate the start date of the time frame
-     * @param endDate the end date of the time frame
-     * @return a list of nutrition instances which fall within the time frame
+     * @param startDate
+     * @param endDate
+     * @return
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
         logger.info("Getting nutritional instances between " + startDate + " and " + endDate);
@@ -68,7 +65,7 @@ public class NutritionService {
     /**
      * Adds the item to the service and database.
      *
-     * @param nutritionInstance the nutrition instance to be added
+     * @param nutritionInstance
      */
     public void addItem(NutritionInstance nutritionInstance) {
         logger.info("Adding nutritional item with id " + nutritionInstance.getId());
@@ -80,7 +77,7 @@ public class NutritionService {
     /**
      * Edits pr-existing item in service and database.
      *
-     * @param nutritionInstance the nutrition instance to be modified
+     * @param nutritionInstance
      */
     public void editItem(NutritionInstance nutritionInstance) throws PantsNotFoundException {
         if (!items.containsKey(nutritionInstance.getId())) {
@@ -96,7 +93,7 @@ public class NutritionService {
     /**
      * Removes the specified item from the service and database
      *
-     * @param id the id of the instance to be removed
+     * @param id
      */
     public void removeItem(String id) throws PantsNotFoundException {
         if (!items.containsKey(id)){
@@ -112,14 +109,14 @@ public class NutritionService {
     /**
      * Returns the goals map
      *
-     * @return the list of goals
+     * @return
      */
     public List<Goal> getGoals() { return new ArrayList<>(goals.values()); }
 
     /**
      * Computes the recommended calorie goal based on the Harris-Benedict formula
      *
-     * @return a recommended goal
+     * @return
      */
     public Goal<?> getRecommendedCalorieGoal() {
         UserService userService = Services.USER_SERVICE;
@@ -169,7 +166,7 @@ public class NutritionService {
     /**
      * Adds a goal to the service and database
      *
-     * @param goal the goal to be added
+     * @param goal
      */
     public void addGoal(Goal<?> goal) {
         goals.put(goal.getId(), goal);
@@ -179,7 +176,7 @@ public class NutritionService {
     /**
      * Changes the value of a goal in the service and database
      *
-     * @param goal the goal to be modified
+     * @param goal
      */
     public void editGoal(Goal<?> goal) throws PantsNotFoundException {
         String id = goal.getId();
@@ -191,7 +188,7 @@ public class NutritionService {
     /**
      * Removes a goal from the service and database
      *
-     * @param id the id of the goal top be removed
+     * @param id
      */
     public void removeGoal(String id) throws PantsNotFoundException {
         if (!goals.containsKey(id)) throw new PantsNotFoundException("goal " + id + " not found");
@@ -204,7 +201,7 @@ public class NutritionService {
     /**
      * Adds a report to the service and database
      *
-     * @param period the report to be added
+     * @param period
      */
     public void addReport(ReportPeriod period) {
         reportPeriods.put(period.getId(), period);
@@ -214,7 +211,7 @@ public class NutritionService {
     /**
      * Modifies an existing report in the service and database
      *
-     * @param period the report to be modified
+     * @param period
      */
     public void editReport(ReportPeriod period) throws PantsNotFoundException{
         String id = period.getId();
@@ -226,7 +223,7 @@ public class NutritionService {
     /**
      * Removes a report from the service and database
      *
-     * @param id the id of the report to be removed
+     * @param id
      */
     public void removeReport(String id) throws PantsNotFoundException {
         if (!reportPeriods.containsKey(id)) throw new PantsNotFoundException("report period " + id + " not found");
@@ -237,7 +234,7 @@ public class NutritionService {
     /**
      * Return a list of nutrition types.
      *
-     * @return a list of nutrition types
+     * @return
      */
     public String[] getNutritionTypes() {
         return EnumUtils.getEnumOptions(NutritionType.class);
