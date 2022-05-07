@@ -11,23 +11,20 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the food instance database
+ */
 public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
 
     /**
      * Constructor for FoodInstanceDAO
      *
-     * @param name
+     * @param name the name of the new food instance
      */
     public FoodInstanceDAO(String name) {
         super(name, new String[]{"id", "quantity"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(FoodInstance data) {
         return new String[]{
@@ -36,13 +33,6 @@ public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
         };
     }
 
-    /**
-     * Converts SQL to object data
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Map<String, FoodInstance> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, FoodInstance> data = new HashMap<>();

@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Manages connecting and interacting with the user database
+ */
 public class UserDAO extends JDBCSingleDAO<User> {
 
     /**
@@ -20,12 +23,6 @@ public class UserDAO extends JDBCSingleDAO<User> {
         super("users", new String[] {"id", "name", "gender", "height", "weight", "dob"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(User data) {
         return new String[] {
@@ -38,13 +35,6 @@ public class UserDAO extends JDBCSingleDAO<User> {
         };
     }
 
-    /**
-     * Converts SQL to object data
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     @SuppressWarnings("unchecked")
     protected User SQLToObj(ResultSet rs) throws SQLException {

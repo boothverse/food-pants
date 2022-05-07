@@ -11,13 +11,18 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * An abstract class which holds methods and attributes necessary for derby database connection
+ *
+ * @param <T> the type of object the dao is operating on
+ */
 abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDAO<T> {
 
     /**
      * Creates a new JDBCListDAO
      *
-     * @param table
-     * @param cols
+     * @param table a string representing a table
+     * @param cols the column names of the table
      */
     JDBCListDAO(String table, String[] cols) {
         super(table, cols);
@@ -26,11 +31,6 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
     protected abstract String[] objToSQL(T data);
     protected abstract Map<String, T> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException;
 
-    /**
-     * Saves the specified data in the DB
-     *
-     * @param data
-     */
     @Override
     public void save(T data) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
@@ -46,11 +46,6 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         }
     }
 
-    /**
-     * Loads the data in the DB
-     *
-     * @return
-     */
     @Override
     public Map<String, T> load() {
         Map<String, T> data = new HashMap<>();
@@ -65,11 +60,6 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         return data;
     }
 
-    /**
-     * Removes the specified data from the DB
-     *
-     * @param id
-     */
     @Override
     public void remove(String id) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {

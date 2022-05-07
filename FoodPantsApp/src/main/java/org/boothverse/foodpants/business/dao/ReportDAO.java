@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the report database
+ */
 public class ReportDAO extends JDBCListDAO<ReportPeriod> {
 
 
@@ -17,12 +20,6 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
      */
     public ReportDAO() { super("REPORTS", new String[]{"id", "startDate", "endDate"}); }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(ReportPeriod data) {
         return new String[]{
@@ -32,13 +29,6 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
         };
     }
 
-    /**
-     * Converts SQL data to object
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Map<String, ReportPeriod> SQLToObj(ResultSet rs) throws SQLException {
         Map<String, ReportPeriod> data = new HashMap<>();

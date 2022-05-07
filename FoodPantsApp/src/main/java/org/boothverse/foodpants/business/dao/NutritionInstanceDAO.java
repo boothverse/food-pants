@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the nutrition instance database
+ */
 public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
 
     /**
@@ -21,12 +24,6 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
         super("nutritionInstances", new String[]{"id", "foodId", "quantity", "consumedAt"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(NutritionInstance data) {
         return new String[]{
@@ -37,13 +34,6 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
         };
     }
 
-    /**
-     * Converts SQL to object data
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Map<String, NutritionInstance> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, NutritionInstance> data = new HashMap<>();

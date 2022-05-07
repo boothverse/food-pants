@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the recipe database
+ */
 public class RecipeDAO extends JDBCListDAO<Recipe> {
 
     /**
@@ -25,11 +28,6 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         super("recipes", new String[]{"id", "name", "foodGroup", "nutrition", "instructions", "ingredients", "servings"});
     }
 
-    /**
-     * created to convert a list to a string to store in database
-     * @param
-     * @return String result
-     */
     private String ingredientsToString(List<FoodInstance> ingredients) {
         String result = "";
         for (FoodInstance food : ingredients) {
@@ -42,11 +40,6 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
 
     }
 
-    /**
-     * created to convert string from database back into list
-     * @param
-     * @return List<FoodInstance> list
-     */
     private List<FoodInstance> stringToIngredients(String ingredients) throws PantsNotParsedException {
         List<FoodInstance> list = new ArrayList<>();
         String[] items = ingredients.split(",");
@@ -57,12 +50,6 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         return list;
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(Recipe data) {
         ObjectMapper mapper = new ObjectMapper();
@@ -82,12 +69,6 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         }
     }
 
-    /**
-     * Converts SQL data to object
-     *
-     * @param rs
-     * @return
-     */
     @Override
     protected Map<String, Recipe> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, Recipe> map = new HashMap<>();
