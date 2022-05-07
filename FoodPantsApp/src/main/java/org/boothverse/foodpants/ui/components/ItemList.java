@@ -68,13 +68,6 @@ public class ItemList extends JPanel implements PropertyChangeListener {
     }
 
     public void remove(StandardItem item) {
-        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
-            "Are you sure?", JOptionPane.YES_NO_OPTION);
-
-        if (option == JOptionPane.NO_OPTION) {
-            return;
-        }
-
         listDisplay.remove(item);
         item.removePropertyChangeListener(this);
         items.remove(item);
@@ -98,6 +91,13 @@ public class ItemList extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (Objects.equals(evt.getPropertyName(), "deleteItem")) {
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
+                "Are you sure?", JOptionPane.YES_NO_OPTION);
+
+            if (option == JOptionPane.NO_OPTION) {
+                return;
+            }
+
             System.out.println("delete " + evt.getOldValue());
             remove((StandardItem) evt.getOldValue());
         }
