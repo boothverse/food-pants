@@ -16,12 +16,13 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionListener;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
 public class ShoppingPage extends Page {
-    private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New"};
+    private static final String[] labels = {"+", "Modify", "Export", "Mark All", "New", "Purchase"};
 
     protected ShoppingController shoppingController = new ShoppingController();
 
@@ -90,6 +91,20 @@ public class ShoppingPage extends Page {
                 StandardForm form = new AddFoodInstanceForm("Add Item", shoppingController, this);
                 form.setLocationRelativeTo(this);
                 form.setVisible(true);
+            }
+            else if (e.getActionCommand().equals("Purchase")) {
+                List<String> items = new ArrayList<>();
+                for (StandardItem listItem : itemDisplay.getItems()) {
+                    if (((ShoppingItem)listItem).getCheckBox().getModel().isSelected()) {
+                        items.add(listItem.getFoodInstance().getId());
+                    }
+                }
+                try {
+                    shoppingController.purchaseItems(items);
+                    updateList();
+                } catch (PantsNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         };
 

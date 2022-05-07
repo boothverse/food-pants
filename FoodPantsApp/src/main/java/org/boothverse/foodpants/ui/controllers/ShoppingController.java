@@ -7,7 +7,9 @@ import org.boothverse.foodpants.persistence.FoodInstance;
 
 import javax.measure.Quantity;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShoppingController implements FoodInstanceController {
     /**
@@ -70,7 +72,9 @@ public class ShoppingController implements FoodInstanceController {
     public Integer purchaseItems(List<String> foodIds) throws PantsNotFoundException {
         List<FoodInstance> items = Services.SHOPPING_SERVICE.getItems();
         Services.SHOPPING_SERVICE.removeItems(foodIds);
-        Services.PANTRY_SERVICE.addItems(items);
+
+        List<FoodInstance> pantry_add = items.stream().filter(f -> foodIds.contains(f.getId())).collect(Collectors.toList());
+        Services.PANTRY_SERVICE.addItems(pantry_add);
 
         return items.size();
     }
