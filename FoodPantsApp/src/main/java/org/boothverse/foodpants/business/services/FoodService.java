@@ -78,6 +78,7 @@ public class FoodService {
             logger.warn("Trying to edit a food that does not exist with id " + id);
             throw new PantsNotFoundException("food " + id + " not found");
         }
+
         logger.info("Updating food with id " + id);
         foods.replace(id, food);
         logger.info("Saving updated food with id " + id + " in database");
