@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.util.*;
 import org.boothverse.foodpants.persistence.ReportPeriod;
 
@@ -11,6 +13,7 @@ import java.util.Map;
 
 public class ReportDAO extends JDBCListDAO<ReportPeriod> {
 
+    private static Logger logger = LogManager.getLogger(ReportDAO.class);
 
     /**
      * Constructor for ReportDAO
@@ -25,6 +28,7 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
      */
     @Override
     protected String[] objToSQL(ReportPeriod data) {
+        logger.info(data.getId() + " converted to SQL format");
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             data.getStartDate().getTime() + "",
@@ -49,6 +53,7 @@ public class ReportDAO extends JDBCListDAO<ReportPeriod> {
                 Long endDate = rs.getLong(3);
 
                 data.put(id, new ReportPeriod(id, new Date(startDate), new Date(endDate)));
+                logger.info("report " + id + " converted from SQL, added to map");
             }
         return data;
     }

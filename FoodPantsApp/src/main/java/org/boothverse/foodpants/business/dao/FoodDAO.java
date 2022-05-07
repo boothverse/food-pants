@@ -2,6 +2,8 @@ package org.boothverse.foodpants.business.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.business.dao.util.*;
@@ -15,6 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FoodDAO extends JDBCListDAO<Food> {
+
+    private static Logger logger = LogManager.getLogger(FoodDAO.class);
 
     /**
      * Creates a new FoodDAO
@@ -34,6 +38,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
         try {
+            logger.info("food " + data.getId() + " converted to SQL format");
             return new String[]{
                 SQLUtils.inQuote(data.getId()),
                 SQLUtils.inQuote(data.getName()),
@@ -41,6 +46,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
                 SQLUtils.inQuote(mapper.writeValueAsString(data.getNutrition())),
             };
         } catch (JsonProcessingException e) {
+            logger.info("food " + data.getId() + " failed convert to SQL format");
             e.printStackTrace();
             return null;
         }
@@ -66,8 +72,10 @@ public class FoodDAO extends JDBCListDAO<Food> {
                 NutritionDescriptor nutrition = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
 
                 data.put(id, new Food(id, name, group, nutrition));
+                logger.info("food " + id + " converted from SQL, added to map");
             }
         } catch (JsonProcessingException e) {
+            logger.info("food failed to convert from SQL");
             e.printStackTrace();
         }
         return data;

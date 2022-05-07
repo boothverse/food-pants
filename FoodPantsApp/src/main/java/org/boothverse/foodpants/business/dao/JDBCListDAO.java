@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.persistence.IdObject;
 import org.boothverse.foodpants.business.dao.util.*;
@@ -12,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDAO<T> {
+
+    Logger logger = LogManager.getLogger(JDBCListDAO.class);
 
     /**
      * Creates a new JDBCListDAO
@@ -38,11 +42,14 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
             Boolean exists = executeExists(statement, condition);
             if (exists) {
                 executeUpdate(statement, objToSQL(data), condition);
+                logger.info(condition + " was updated in " + table);
             } else {
                 executeInsert(statement, objToSQL(data));
+                logger.info(condition + " was added to " + table);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.info("save failed in " + table);
         }
     }
 
@@ -58,8 +65,10 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             ResultSet rs = executeGetAll(statement);
             data = SQLToObj(rs);
+            logger.info("data loaded into " + table);
         } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
+            logger.info("data failed to load into " + table);
         }
 
         return data;
@@ -74,8 +83,10 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
     public void remove(String id) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             executeRemove(statement, id);
+            logger.info(id + " removed from table" + table);
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.info(id + " failed to remove from table " + table);
         }
     }
 }

@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.business.dao.util.QuantityUtils;
 import org.boothverse.foodpants.business.dao.util.SQLUtils;
@@ -12,6 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
+
+    private static Logger logger = LogManager.getLogger(FoodInstanceDAO.class);
 
     /**
      * Constructor for FoodInstanceDAO
@@ -30,6 +34,7 @@ public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
      */
     @Override
     protected String[] objToSQL(FoodInstance data) {
+        logger.info("food instance " + data.getId() + " converted to SQL format");
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             SQLUtils.inQuote(QuantityUtils.toString(data.getQuantity()))
@@ -53,6 +58,7 @@ public class FoodInstanceDAO extends JDBCListDAO<FoodInstance> {
             quantity = QuantityUtils.parse(rs.getString(2));
 
             data.put(id, new FoodInstance(id, quantity));
+            logger.info("food instance" + id + " converted from SQL format, added to map");
         }
         return data;
     }

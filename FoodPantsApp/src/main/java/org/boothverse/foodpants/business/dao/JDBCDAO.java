@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.util.JDBCUtils;
 
 import java.io.*;
@@ -15,6 +17,8 @@ public abstract class JDBCDAO {
     protected final String[] cols;
     protected final String path;
 
+    private static Logger logger = LogManager.getLogger(JDBCDAO.class);
+
     /**
      * Creates a new JDBCDAO
      *
@@ -27,6 +31,7 @@ public abstract class JDBCDAO {
         this.path = "target/classes/sql/create_" + table + ".sql";
         if (!tableExists()) {
             createTable();
+            logger.info(table + " table created");
         }
     }
 
@@ -45,13 +50,17 @@ public abstract class JDBCDAO {
         Connection dbConnection = null;
         try {
             Class.forName(DB_DRIVER);
+            logger.info("database driver successfully loaded");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            logger.info("database driver failed to load");
         }
         try {
             dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+            logger.info("successful connection to database");
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.info("connection to database failed");
         }
         return dbConnection;
     }
@@ -65,6 +74,7 @@ public abstract class JDBCDAO {
      */
     protected void executeInsert(Statement statement, String[] data) throws SQLException {
         statement.execute("INSERT INTO " + table + " VALUES (" + String.join(", ", data) + ")");
+        logger.info("data inserted into " + table);
     }
 
     /**
@@ -90,6 +100,7 @@ public abstract class JDBCDAO {
         updateBuilder.append(data[i]);
 
         statement.execute("UPDATE " + table + " SET " + updateBuilder + " WHERE " + condition);
+        logger.info("data updated in " + table);
     }
 
     /**
@@ -100,6 +111,7 @@ public abstract class JDBCDAO {
      * @throws SQLException
      */
     protected ResultSet executeGetAll(Statement statement) throws SQLException {
+        logger.info("all data retrieved from " + table);
         return statement.executeQuery("SELECT * FROM " + table);
     }
 
@@ -113,6 +125,7 @@ public abstract class JDBCDAO {
      */
     protected Boolean executeExists(Statement statement, String condition) throws SQLException {
         ResultSet rs = statement.executeQuery("SELECT * FROM " + table + " WHERE " + condition);
+        logger.info(condition + " execution exists in " + table);
         return rs.next();
     }
 
@@ -125,6 +138,7 @@ public abstract class JDBCDAO {
      */
     protected void executeRemove(Statement statement, String id) throws SQLException {
         statement.execute("DELETE FROM " + table + " WHERE ID='" + id + "'");
+        logger.info(id + " removed from " + table);
     }
 
     /**
@@ -137,10 +151,12 @@ public abstract class JDBCDAO {
             DatabaseMetaData dbm = connection.getMetaData();
             ResultSet tables = dbm.getTables(null, null, table.toUpperCase(), null);
             if (tables.next()) {
+                logger.info(table + " table exists");
                 return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.info(table + " table does not exist");
         }
         return false;
     }
@@ -153,13 +169,16 @@ public abstract class JDBCDAO {
      */
     protected void createTable() {
         new JDBCUtils().executeScript(this.path);
+        logger.info("table created at path " + path);
     }
 
     public void removeAll() {
         try (Connection conn = getDBConnection(); Statement statement = conn.createStatement()) {
             statement.execute("DELETE FROM " + table);
+            logger.info("all data removed from " + table);
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.info("failed to remove all data from " + table);
         }
     }
 }

@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.persistence.User;
 import org.boothverse.foodpants.business.dao.util.*;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class UserDAO extends JDBCSingleDAO<User> {
+
+    private static Logger logger = LogManager.getLogger(UserDAO.class);
 
     /**
      * Constructs UserDAO
@@ -28,6 +32,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
      */
     @Override
     protected String[] objToSQL(User data) {
+        logger.info("user " + data.getName() + " converted to string");
         return new String[] {
             ID.toString(),
             SQLUtils.inQuote(data.getName()),
@@ -56,25 +61,32 @@ public class UserDAO extends JDBCSingleDAO<User> {
             Quantity<Length> height;
             try {
                 height = (Quantity<Length>) QuantityUtils.parse(rs.getString(4));
+                logger.info("height successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 height = null;
+                logger.info("height convert to quantity unsuccessful UserDAO");
             }
 
             Quantity<Mass> weight;
             try {
                 weight = (Quantity<Mass>) QuantityUtils.parse(rs.getString(5));
+                logger.info("weight successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 weight = null;
+                logger.info("weight convert to Quantity unsuccessful UserDAO");
             }
 
             Date dob;
             try {
                 dob = new Date(rs.getLong(6));
+                logger.info("dob successfully created UserDAO");
             } catch (Exception e) {
                 dob = null;
+                logger.info("dob conversion not successful");
             }
 
             data = new User(name, gender, height, weight, dob);
+            logger.info("new user created with name " + data.getName());
         }
         return data;
     }

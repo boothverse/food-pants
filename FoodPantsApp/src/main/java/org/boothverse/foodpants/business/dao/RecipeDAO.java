@@ -2,6 +2,8 @@ package org.boothverse.foodpants.business.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.exceptions.PantsNotParsedException;
 import org.boothverse.foodpants.business.dao.serialization.QuantityMixin;
 import org.boothverse.foodpants.business.dao.util.QuantityUtils;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class RecipeDAO extends JDBCListDAO<Recipe> {
+
+    private static Logger logger = LogManager.getLogger(RecipeDAO.class);
 
     /**
      * Creates a new RecipeDAO
@@ -38,6 +42,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         if(!ingredients.isEmpty()) {
             result = result.substring(0, result.length() - 1);
         }
+        logger.info("ingredients list converted to string");
         return result;
 
     }
@@ -54,6 +59,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             String[] temp = s.split(":");
             list.add(new FoodInstance(temp[0], QuantityUtils.parse(temp[1])));
         }
+        logger.info("string converted tp list of ingredients");
         return list;
     }
 
@@ -68,6 +74,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
         try {
+            logger.info(data.getId() + " recipe converted to SQL format");
             return new String[]{
                 SQLUtils.inQuote(data.getId()),
                 SQLUtils.inQuote(data.getName()),
@@ -78,6 +85,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
                 SQLUtils.inQuote(data.getServings().toString())};
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            logger.info(data.getId() + " failed to convert to SQL format");
             return null;
         }
     }
@@ -101,6 +109,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             NutritionDescriptor descriptor = null;
             try {
                 descriptor = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
+                logger.info("descriptor correctly read from mapper");
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -109,6 +118,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             Double servings = rs.getDouble(7);
 
             map.put(id, new Recipe(id, name, group, descriptor, instructions, ingredients, servings));
+            logger.info("recipe " + id + " converted from SQL, added to map");
         }
 
         return map;
