@@ -1,14 +1,14 @@
 -- preset foods
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JA', 'Banana', 'FRUIT', '{"nutritionInfo":{"CALORIES":"105"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JB', 'Chicken', 'MEAT', '{"nutritionInfo":{"CALORIES":"300"},"servingSize":"0.25 oz"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JC', 'Whipped Cream', 'DAIRY', '{"nutritionInfo":{"CALORIES":"1000"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JD', 'Pepper', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JE', 'Cinnamon', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JF', 'Czech Pivo', 'OTHER', '{"nutritionInfo":{"CALORIES":"805"},"servingSize":"0.5 l"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JG', 'Peach', 'FRUIT', '{"nutritionInfo":{"CALORIES":"79"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JH', 'Eggplant', 'VEGETABLE', '{"nutritionInfo":{"CALORIES":"120"},"servingSize":"1"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JI', 'Bacon', 'MEAT', '{"nutritionInfo":{"CALORIES":"500"},"servingSize":"3"}');
-INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JJ', 'Cheese', 'DAIRY', '{"nutritionInfo":{"CALORIES":"205"},"servingSize":"1 oz"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JA', 'Banana', 'FRUIT', '{"nutritionInfo":{"CALORIES":"105 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JB', 'Chicken', 'MEAT', '{"nutritionInfo":{"CALORIES":"300 (J*4184)/1000"},"servingSize":"0.25 oz"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JC', 'Whipped Cream', 'DAIRY', '{"nutritionInfo":{"CALORIES":"1000 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JD', 'Pepper', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JE', 'Cinnamon', 'FLAVORING', '{"nutritionInfo":{"CALORIES":"0 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JF', 'Czech Pivo', 'OTHER', '{"nutritionInfo":{"CALORIES":"805 (J*4184)/1000"},"servingSize":"0.5 l"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JG', 'Peach', 'FRUIT', '{"nutritionInfo":{"CALORIES":"79 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JH', 'Eggplant', 'VEGETABLE', '{"nutritionInfo":{"CALORIES":"120 (J*4184)/1000"},"servingSize":"1"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JI', 'Bacon', 'MEAT', '{"nutritionInfo":{"CALORIES":"500 (J*4184)/1000"},"servingSize":"3"}');
+INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('ja2f039jawoiefj029JJ', 'Cheese', 'DAIRY', '{"nutritionInfo":{"CALORIES":"205 (J*4184)/1000"},"servingSize":"1 oz"}');
 INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('lFGjNQn5rwZePSYeMlqD', 'Granda Cernys Syntactic Sugar Cookies', 'SUGAR', '{"nutritionInfo":{"TOTAL_CARBOHYDRATE":"50 g","TRANS_FAT":"1 g","DIETARY_FIBER":"10 g","SODIUM":"0.5 g","CALORIES":"500 (J*4184)/1000","TOTAL_FAT":"10 g","TOTAL_SUGAR":"900 g","SATURATED_FAT":"10 g","PROTEIN":"10 g","CHOLESTEROL":"0.1 g"},"servingSize":"100 g"}');
 INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('GhCag0eWD6Q2LKC4iA8K', 'Syntactic Sugars', 'SUGAR', '{"nutritionInfo":{"TOTAL_CARBOHYDRATE":"0 g","TRANS_FAT":"0 g","DIETARY_FIBER":"0 g","SODIUM":"0 g","CALORIES":"0 (J*4184)/1000","TOTAL_FAT":"0 g","TOTAL_SUGAR":"0 g","SATURATED_FAT":"0 g","PROTEIN":"0 g","CHOLESTEROL":"0 g"},"servingSize":"0"}');
 INSERT INTO FOODS (ID, NAME, FOODGROUP, NUTRITION) VALUES ('mkPII2K9WbQls6cJxPVA', 'Cookie Person', 'MEAT', '{"nutritionInfo":{"TOTAL_CARBOHYDRATE":"0 g","TRANS_FAT":"0 g","DIETARY_FIBER":"0 g","SODIUM":"0 g","CALORIES":"0 (J*4184)/1000","TOTAL_FAT":"0 g","TOTAL_SUGAR":"0 g","SATURATED_FAT":"0 g","PROTEIN":"0 g","CHOLESTEROL":"0 g"},"servingSize":"0"}');

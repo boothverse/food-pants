@@ -47,7 +47,7 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info("save failed in " + table);
+            logger.error("save failed in " + table);
         }
     }
 
@@ -61,7 +61,7 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
             logger.info("data loaded into " + table);
         } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
-            logger.info("data failed to laod into " + table);
+            logger.error("data failed to laod into " + table);
         }
 
         return data;

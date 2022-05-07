@@ -17,7 +17,7 @@ public class LoadPresets {
     /** Set to true if you wanna use the presets */
     private static final boolean USER_PRESETS = true;
     private static final boolean FOOD_PRESETS = true;
-    private static final boolean PANTRY_PRESETS = false;
+    private static final boolean PANTRY_PRESETS = true;
     private static final boolean SHOPPING_LIST_PRESETS = true;
     private static final boolean GOAL_PRESETS = true;
     private static final boolean NUTRITION_INSTANCE_PRESETS = true;

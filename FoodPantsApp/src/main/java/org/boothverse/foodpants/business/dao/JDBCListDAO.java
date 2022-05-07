@@ -49,7 +49,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info("save failed in " + table);
+            logger.error("save failed in " + table);
         }
     }
 
@@ -63,7 +63,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
             logger.info("data loaded into " + table);
         } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
-            logger.info("data failed to load into " + table);
+            logger.error("data failed to load into " + table);
         }
 
         return data;
@@ -76,7 +76,7 @@ abstract class JDBCListDAO<T extends IdObject> extends JDBCDAO implements ListDA
             logger.info(id + " removed from table" + table);
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info(id + " failed to remove from table " + table);
+            logger.error(id + " failed to remove from table " + table);
         }
     }
 }

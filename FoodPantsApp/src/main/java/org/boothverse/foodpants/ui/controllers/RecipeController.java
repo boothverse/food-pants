@@ -19,7 +19,7 @@ public class RecipeController {
      * @throws PantsNotFoundException
      */
     public Recipe getRecipe(String id) throws PantsNotFoundException {
-        logger.info(id + " recipe retrieved");
+        logger.debug(id + " recipe retrieved");
         return Services.RECIPE_SERVICE.getRecipe(id);
     }
 
@@ -29,7 +29,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> getRecipes() {
-        logger.info("list of recipes retried");
+        logger.debug("list of recipes retried");
         return Services.RECIPE_SERVICE.getRecipes();
     }
 
@@ -39,7 +39,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> getRecommendedRecipes() {
-        logger.info("list of recommended recipes retrieved");
+        logger.debug("list of recommended recipes retrieved");
         return Services.RECIPE_SERVICE.getRecommendedRecipes();
     }
 
@@ -50,7 +50,7 @@ public class RecipeController {
      * @return
      */
     public List<Recipe> searchByRecipeName(String query) {
-        logger.info(query + " searched in recipes");
+        logger.debug(query + " searched in recipes");
         return Services.RECIPE_SERVICE.getRecipesNameStartsWith(query);
     }
 

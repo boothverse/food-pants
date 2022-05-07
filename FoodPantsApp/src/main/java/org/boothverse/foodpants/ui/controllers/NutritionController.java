@@ -82,7 +82,7 @@ public class NutritionController {
      * @return
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
-        logger.info("items retrieved between " + startDate.toString() + " and " + endDate.toString());
+        logger.debug("items retrieved between " + startDate.toString() + " and " + endDate.toString());
         return Services.NUTRITION_SERVICE.getItems(startDate, endDate);
     }
 
@@ -137,7 +137,7 @@ public class NutritionController {
     }
 
     public List<ReportPeriod> getReports() {
-        logger.info("retrieved list of reports");
+        logger.debug("retrieved list of reports");
         return Services.NUTRITION_SERVICE.getReports();
     }
 

@@ -54,14 +54,14 @@ public abstract class JDBCDAO {
             logger.info("database driver successfully loaded");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            logger.info("database driver failed to load");
+            logger.error("database driver failed to load");
         }
         try {
             dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             logger.info("successful connection to database");
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info("connection to database failed");
+            logger.error("connection to database failed");
         }
         return dbConnection;
     }
@@ -115,7 +115,7 @@ public abstract class JDBCDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info(table + " table does not exist");
+            logger.error(table + " table does not exist");
         }
         return false;
     }
@@ -131,7 +131,7 @@ public abstract class JDBCDAO {
             logger.info("all data removed from " + table);
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.info("failed to remove all data from " + table);
+            logger.error("failed to remove all data from " + table);
         }
     }
 }
