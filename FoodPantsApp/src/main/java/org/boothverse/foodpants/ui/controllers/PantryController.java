@@ -18,7 +18,6 @@ public class PantryController implements FoodInstanceController {
      */
     @Override
     public List<FoodInstance> getItems() {
-        PantryService pantryService = Services.PANTRY_SERVICE;
         return Services.PANTRY_SERVICE.getItems();
     }
 
