@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the goal database
+ */
 public class GoalDAO extends JDBCListDAO<Goal> {
     private static Logger logger = LogManager.getLogger(GoalDAO.class);
     /**
@@ -24,12 +27,6 @@ public class GoalDAO extends JDBCListDAO<Goal> {
         super("goals", new String[]{"id", "goalType", "dailyQuantity", "nutritionType"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(Goal data) {
         logger.info("goal " + data.getId() + " converted to SQL format");
@@ -41,13 +38,6 @@ public class GoalDAO extends JDBCListDAO<Goal> {
         };
     }
 
-    /**
-     * Converts SQL to object data
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Map<String, Goal> SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException {
         Map<String, Goal> data = new HashMap<>();

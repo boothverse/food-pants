@@ -9,6 +9,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * An abstract class which holds methods and attributes necessary for derby database connection
+ *
+ * @param <T> the type of object the dao is operating on
+ */
 abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
 
     private static Logger logger = LogManager.getLogger(JDBCSingleDAO.class);
@@ -18,8 +23,8 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
     /**
      * Creates a new JDBCSingleDAO
      *
-     * @param table
-     * @param cols
+     * @param table a string representing a table
+     * @param cols the column names of the table
      */
     JDBCSingleDAO(String table, String[] cols) {
         super(table, cols);
@@ -28,11 +33,6 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
     protected abstract String[] objToSQL(T data);
     protected abstract T SQLToObj(ResultSet rs) throws SQLException, PantsNotParsedException;
 
-    /**
-     * Saves the specified data in the DB
-     *
-     * @param data
-     */
     @Override
     public void save(T data) {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
@@ -51,11 +51,6 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
         }
     }
 
-    /**
-     * Loads data from the DB
-     *
-     * @return
-     */
     @Override
     public T load() {
         T data = null;

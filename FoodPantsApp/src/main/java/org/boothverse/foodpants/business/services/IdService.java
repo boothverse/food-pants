@@ -6,11 +6,16 @@ import java.util.Set;
 
 import lombok.NonNull;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.*;
 import org.boothverse.foodpants.persistence.*;
 
+/**
+ * service dealing with processing ids
+ */
 public class IdService {
-
+    private static Logger logger = LogManager.getLogger(IdService.class);
     /** Holds all IDs registered by the service. */
     protected final Set<String> ids = new HashSet<>();
 
@@ -18,6 +23,7 @@ public class IdService {
      * Loads all IdObjects from the database and registers all IDs to the service.
      */
     public IdService() {
+        logger.info("Adding all ids from database");
         registerIds(new FoodDAO().load());
         registerIds(new GoalDAO().load());
         registerIds(new NutritionInstanceDAO().load());
@@ -35,7 +41,9 @@ public class IdService {
         String id;
         do {
             id = RandomStringUtils.randomAlphanumeric(20);
+            logger.info("Generated a random id " + id);
         } while (ids.contains(id));
+        logger.info("Id " + id + " is unique and is being added to list of ids");
         ids.add(id);
         return id;
     }
@@ -47,6 +55,7 @@ public class IdService {
      * @param <T> the type
      */
     private <T extends IdObject> void registerIds(@NonNull Map<String, T> data) {
+        logger.info("Adding all ids from given object");
         ids.addAll(data.keySet());
     }
 

@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
+/**
+ * Manages connecting and interacting with the user database
+ */
 public class UserDAO extends JDBCSingleDAO<User> {
 
     private static Logger logger = LogManager.getLogger(UserDAO.class);
@@ -24,12 +27,6 @@ public class UserDAO extends JDBCSingleDAO<User> {
         super("users", new String[] {"id", "name", "gender", "height", "weight", "dob"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(User data) {
         logger.info("user " + data.getName() + " converted to string");
@@ -43,13 +40,6 @@ public class UserDAO extends JDBCSingleDAO<User> {
         };
     }
 
-    /**
-     * Converts SQL to object data
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     @SuppressWarnings("unchecked")
     protected User SQLToObj(ResultSet rs) throws SQLException {

@@ -7,6 +7,9 @@ import javax.measure.Quantity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * service dealing with processing food instances within the pantry
+ */
 public class PantryService extends FoodInstanceService {
 
     private static final String DB_NAME = "PANTRY";
@@ -18,8 +21,8 @@ public class PantryService extends FoodInstanceService {
     /**
      * Returns a list of ingredients missing from the pantry which are in the given list
      *
-     * @param itemsToCheck
-     * @return
+     * @param itemsToCheck a list of items from a recipe which may or may not be in the pantry
+     * @return a new list of items on the list which are not in the pantry
      */
     public List<FoodInstance> getMissing(List<FoodInstance> itemsToCheck) {
         List<FoodInstance> missing = new ArrayList<>();
@@ -45,8 +48,8 @@ public class PantryService extends FoodInstanceService {
     /**
      * Removes the given item from the pantry
      *
-     * @param foodId
-     * @param quantity
+     * @param foodId the id of the food being removed
+     * @param quantity the quantity of that food to remove
      */
     public void removeItem(String foodId, Quantity quantity) throws PantsNotFoundException {
         // TODO: test with quantities of diff types and units
@@ -68,8 +71,8 @@ public class PantryService extends FoodInstanceService {
     /**
      * Determines whether the given item is in the pantry
      *
-     * @param item
-     * @return
+     * @param item the food instance to be tested
+     * @return whether the item was in the pantry of not
      */
     public Boolean contains(FoodInstance item) {
         return items.containsKey(item.getId());
@@ -78,8 +81,8 @@ public class PantryService extends FoodInstanceService {
     /**
      * Produces a list of foods based on the given string
      *
-     * @param query
-     * @return
+     * @param query a string being used as a search key
+     * @return a list of foods related to the search key
      */
     public List<FoodInstance> searchByFoodName(String query) {
         FoodService foodService = Services.FOOD_SERVICE;

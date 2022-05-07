@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.FoodDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -10,7 +12,11 @@ import org.boothverse.foodpants.persistence.FoodGroup;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A service dealing with processing food
+ */
 public class FoodService {
+    private static Logger logger = LogManager.getLogger(FoodService.class);
     protected Map<String, Food> foods;
     protected final ListDAO<Food> dao = new FoodDAO();
 
@@ -18,36 +24,44 @@ public class FoodService {
      * Loads the foods from the database.
      */
     public FoodService() {
+        logger.info("Loading foods from database");
         foods = dao.load();
     }
 
     /**
      * Returns all foods tracked by the service.
      *
-     * @return
+     * @return a list of foods from the database
      */
     public List<Food> getFoods() {
+        logger.info("Getting all foods as list");
         return foods.values().stream().toList();
     }
 
     /**
      * Returns the food of the given id.
      *
-     * @param id
-     * @return
+     * @param id the id of the desired food
+     * @return the desired food
      */
     public Food getFood(String id) throws PantsNotFoundException {
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
-
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to get a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
+        logger.info("Getting food with id " + id);
         return foods.get(id);
     }
 
     /**
      * Adds a food to the service and the database.
-     * @param food
+     *
+     * @param food the food to be added
      */
     public void addFood(Food food) {
+        logger.info("Adding food with id " + food.getId());
         foods.put(food.getId(), food);
+        logger.info("Saving food with id " + food.getId() + " in database");
         dao.save(food);
     }
 
@@ -56,13 +70,17 @@ public class FoodService {
      * Should throw a custom exception if the food's ID does not correspond with a food registered
      * in the service.
      *
-     * @param food
+     * @param food the new version of the modified food
      */
     public void editFood(Food food) throws PantsNotFoundException {
         String id = food.getId();
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
-
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to edit a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
+        logger.info("Updating food with id " + id);
         foods.replace(id, food);
+        logger.info("Saving updated food with id " + id + " in database");
         dao.save(food);
     }
 
@@ -70,12 +88,17 @@ public class FoodService {
      * Removes the given food from the service and the database.
      * Should throw a custom exception if the food is not found.
      *
-     * @param id
+     * @param id the id of the food to be removed
      */
     public void removeFood(String id) throws PantsNotFoundException {
-        if (!foods.containsKey(id)) throw new PantsNotFoundException("food " + id + " not found");
+        if (!foods.containsKey(id)){
+            logger.warn("Trying to remove a food that does not exist with id " + id);
+            throw new PantsNotFoundException("food " + id + " not found");
+        }
 
+        logger.info("Removing food with id " + id);
         foods.remove(id);
+        logger.info("Removing food with id " + id + " from database");
         dao.remove(id);
     }
 
@@ -83,19 +106,21 @@ public class FoodService {
      * Returns the name of the given food.
      * Should throw a custom exception if the food is not found.
      *
-     * @param id
-     * @return
+     * @param id the id of the food
+     * @return the name of the food with the specified id
      */
     public String getFoodName(String id) throws PantsNotFoundException {
+        logger.info("Getting food name with id " + id);
         return getFood(id).getName();
     }
 
     /**
      * Return a list of food groups.
      *
-     * @return
+     * @return a list of food groups
      */
     public String[] getFoodGroups() {
+        logger.info("Getting list of food groups");
         return EnumUtils.getEnumOptions(FoodGroup.class);
     }
 }

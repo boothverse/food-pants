@@ -10,6 +10,9 @@ import org.boothverse.foodpants.persistence.Recipe;
 
 import java.util.*;
 
+/**
+ * service dealing with processing recipes
+ */
 public class RecipeService {
 
     @NonNull
@@ -26,7 +29,7 @@ public class RecipeService {
     /**
      * Returns a list of stored recipes.
      *
-     * @return
+     * @return the list of stored recipes
      */
     public List<Recipe> getRecipes() {
         return new ArrayList<>(recipes.values());
@@ -35,8 +38,8 @@ public class RecipeService {
     /**
      * Gets the recipe with the specified id from the service
      *
-     * @param id
-     * @return
+     * @param id the id of the desired recipe
+     * @return the desired recipe
      */
     public Recipe getRecipe(String id) throws PantsNotFoundException {
         if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
@@ -46,8 +49,8 @@ public class RecipeService {
     /**
      * Gets a list of recipes based on the given list of ingredients
      *
-     * @param ingredients
-     * @return
+     * @param ingredients the given list of ingredients
+     * @return a list of recipes
      */
     public List<Recipe> getRecipesByIngredients(List<FoodInstance> ingredients) {
         return recipes.values().stream()
@@ -63,8 +66,8 @@ public class RecipeService {
     /**
      * Get a list of recipes names based on a given string
      *
-     * @param query
-     * @return
+     * @param query a given string
+     * @return a list of recipes names
      */
     public List<Recipe> getRecipesNameStartsWith(String query) {
         return recipes.values().stream()
@@ -75,7 +78,7 @@ public class RecipeService {
     /**
      * Adds a recipe to the service and database
      *
-     * @param recipe
+     * @param recipe the recipe to be added
      */
     public void addRecipe(Recipe recipe) {
         recipes.put(recipe.getId(), recipe);
@@ -85,7 +88,7 @@ public class RecipeService {
     /**
      * Modifies the given recipe in the database and service
      *
-     * @param recipe
+     * @param recipe the recipe to be modified
      */
     public void editRecipe(Recipe recipe) throws PantsNotFoundException {
         String id = recipe.getId();
@@ -95,6 +98,12 @@ public class RecipeService {
         dao.save(recipe);
     }
 
+    /**
+     * Removes a recipe from the database and service
+     *
+     * @param id the id of the recipe to be removed
+     * @throws PantsNotFoundException
+     */
     public void removeRecipe(String id) throws PantsNotFoundException {
         if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
 
@@ -105,8 +114,8 @@ public class RecipeService {
     /**
      * Get a list of ingredients for the given recipe
      *
-     * @param recipeId
-     * @return
+     * @param recipeId the given recipe
+     * @return the list of ingredients
      */
     public List<FoodInstance> getIngredients(String recipeId) throws PantsNotFoundException {
         return getRecipe(recipeId).getIngredients();
@@ -115,10 +124,10 @@ public class RecipeService {
     /**
      * Takes a recipe and logs the recipe in the food log and pantry
      *
-     * @param recipeId
-     * @param isUsingPantry
-     * @param consumedServings
-     * @param leftoverServings
+     * @param recipeId the id of the recipe
+     * @param isUsingPantry whether pantry ingredients are being used
+     * @param consumedServings the amount of servings being eaten after the recipe is prepared
+     * @param leftoverServings the amount of servings left over after the recipe is made
      */
     public void produceCookedRecipe(String recipeId, Boolean isUsingPantry, Double consumedServings, Double leftoverServings) throws PantsNotFoundException {
         PantryService pantryService = Services.PANTRY_SERVICE;
@@ -147,7 +156,7 @@ public class RecipeService {
     /**
      * Produces a list of recipes for the user
      *
-     * @return
+     * @return a list of recipes for the user
      */
     public List<Recipe> getRecommendedRecipes() {
         return getRecipesByIngredients(Services.PANTRY_SERVICE.getItems());

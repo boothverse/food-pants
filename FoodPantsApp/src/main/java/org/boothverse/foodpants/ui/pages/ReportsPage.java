@@ -64,6 +64,7 @@ public class ReportsPage extends NutritionPage {
         switch (message) {
             case "add":
             case "remove":
+            case "edit":
                 addReports();
                 break;
         }

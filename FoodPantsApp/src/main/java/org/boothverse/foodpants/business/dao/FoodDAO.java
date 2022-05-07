@@ -16,6 +16,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages connecting and interacting with the food database
+ */
 public class FoodDAO extends JDBCListDAO<Food> {
 
     private static Logger logger = LogManager.getLogger(FoodDAO.class);
@@ -27,12 +30,6 @@ public class FoodDAO extends JDBCListDAO<Food> {
         super("foods", new String[]{"id", "name", "foodGroup", "nutrition"});
     }
 
-    /**
-     * Converts object data to SQL
-     *
-     * @param data
-     * @return
-     */
     @Override
     protected String[] objToSQL(Food data) {
         ObjectMapper mapper = new ObjectMapper();
@@ -52,13 +49,6 @@ public class FoodDAO extends JDBCListDAO<Food> {
         }
     }
 
-    /**
-     * Converts SQL data to object
-     *
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
     @Override
     protected Map<String, Food> SQLToObj(ResultSet rs) throws SQLException {
         Map<String, Food> data = new HashMap<>();

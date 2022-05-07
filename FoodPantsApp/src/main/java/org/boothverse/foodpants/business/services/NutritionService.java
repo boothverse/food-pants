@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.GoalDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.NutritionInstanceDAO;
@@ -15,8 +17,11 @@ import java.util.*;
 
 import static tech.units.indriya.AbstractUnit.ONE;
 
+/**
+ * service dealing with processing nutrition instances
+ */
 public class NutritionService {
-    // Map<id : String, i : NutritionInstance >
+    private static Logger logger = LogManager.getLogger(NutritionService.class);
     protected Map<String, NutritionInstance> items;
     protected Map<String, Goal> goals;
     protected Map<String, ReportPeriod> reportPeriods;
@@ -32,24 +37,28 @@ public class NutritionService {
      * Creates the NutritionService and loads data stored in database
      */
     public NutritionService() {
+        logger.info("Loading nutrition instances from database");
         items = nutritionInstanceDAO.load();
+        logger.info("Loading goals from database");
         goals = goalDAO.load();
+        logger.info("Loading report peiods from database");
         reportPeriods = reportPeriodDAO.load();
     }
 
     /**
      * Returns a list of NutritionInstance objects within the specified time range.
      *
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param startDate the start date of the time frame
+     * @param endDate the end date of the time frame
+     * @return a list of nutrition instances which fall within the time frame
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
+        logger.info("Getting nutritional instances between " + startDate + " and " + endDate);
         List<NutritionInstance> result = new ArrayList<>();
         for(NutritionInstance n: items.values()){
             if((n.getConsumedAt().after(startDate) || n.getConsumedAt().equals(startDate))
                     && n.getConsumedAt().before(endDate) ){
-
+                logger.info("Adding nutritional instance with id " + n.getId() + " and date " + n.getConsumedAt() + " to return list");
                 result.add(n);
             }
         }
@@ -59,46 +68,58 @@ public class NutritionService {
     /**
      * Adds the item to the service and database.
      *
-     * @param nutritionInstance
+     * @param nutritionInstance the nutrition instance to be added
      */
     public void addItem(NutritionInstance nutritionInstance) {
+        logger.info("Adding nutritional item with id " + nutritionInstance.getId());
         items.put(nutritionInstance.getId(), nutritionInstance);
+        logger.info("Saving nutritional item with id " + nutritionInstance.getId() + " to database");
         nutritionInstanceDAO.save(nutritionInstance);
     }
 
     /**
      * Edits pr-existing item in service and database.
      *
-     * @param nutritionInstance
+     * @param nutritionInstance the nutrition instance to be modified
      */
     public void editItem(NutritionInstance nutritionInstance) throws PantsNotFoundException {
-        if (!items.containsKey(nutritionInstance.getId())) { throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification."); }
+        if (!items.containsKey(nutritionInstance.getId())) {
+            logger.warn("Trying to edit a nutrition instance that does not exist with id " + nutritionInstance.getId());
+            throw new PantsNotFoundException("Failed to find specified NutritionInstance for modification.");
+        }
+        logger.info("Updating nutrition instance with id " + nutritionInstance.getId());
         items.replace(nutritionInstance.getId(), nutritionInstance);
+        logger.info("Saving updated nutrition instance with id " + nutritionInstance.getId() + " in database");
         nutritionInstanceDAO.save(nutritionInstance);
     }
 
     /**
      * Removes the specified item from the service and database
      *
-     * @param id
+     * @param id the id of the instance to be removed
      */
     public void removeItem(String id) throws PantsNotFoundException {
-        if (!items.containsKey(id)) throw new PantsNotFoundException("nutrition instance " + id + " not found");
+        if (!items.containsKey(id)){
+            logger.warn("Trying to remove a nutrition instance that does not exist with id " + id);
+            throw new PantsNotFoundException("nutrition instance " + id + " not found");
+        }
+        logger.info("Removing nutrition instance with id " + id);
         items.remove(id);
+        logger.info("Removing food with id " + id + " from database");
         nutritionInstanceDAO.remove(id);
     }
 
     /**
      * Returns the goals map
      *
-     * @return
+     * @return the list of goals
      */
     public List<Goal> getGoals() { return new ArrayList<>(goals.values()); }
 
     /**
      * Computes the recommended calorie goal based on the Harris-Benedict formula
      *
-     * @return
+     * @return a recommended goal
      */
     public Goal<?> getRecommendedCalorieGoal() {
         UserService userService = Services.USER_SERVICE;
@@ -148,7 +169,7 @@ public class NutritionService {
     /**
      * Adds a goal to the service and database
      *
-     * @param goal
+     * @param goal the goal to be added
      */
     public void addGoal(Goal<?> goal) {
         goals.put(goal.getId(), goal);
@@ -158,7 +179,7 @@ public class NutritionService {
     /**
      * Changes the value of a goal in the service and database
      *
-     * @param goal
+     * @param goal the goal to be modified
      */
     public void editGoal(Goal<?> goal) throws PantsNotFoundException {
         String id = goal.getId();
@@ -170,7 +191,7 @@ public class NutritionService {
     /**
      * Removes a goal from the service and database
      *
-     * @param id
+     * @param id the id of the goal top be removed
      */
     public void removeGoal(String id) throws PantsNotFoundException {
         if (!goals.containsKey(id)) throw new PantsNotFoundException("goal " + id + " not found");
@@ -183,7 +204,7 @@ public class NutritionService {
     /**
      * Adds a report to the service and database
      *
-     * @param period
+     * @param period the report to be added
      */
     public void addReport(ReportPeriod period) {
         reportPeriods.put(period.getId(), period);
@@ -193,7 +214,7 @@ public class NutritionService {
     /**
      * Modifies an existing report in the service and database
      *
-     * @param period
+     * @param period the report to be modified
      */
     public void editReport(ReportPeriod period) throws PantsNotFoundException{
         String id = period.getId();
@@ -205,7 +226,7 @@ public class NutritionService {
     /**
      * Removes a report from the service and database
      *
-     * @param id
+     * @param id the id of the report to be removed
      */
     public void removeReport(String id) throws PantsNotFoundException {
         if (!reportPeriods.containsKey(id)) throw new PantsNotFoundException("report period " + id + " not found");
@@ -216,7 +237,7 @@ public class NutritionService {
     /**
      * Return a list of nutrition types.
      *
-     * @return
+     * @return a list of nutrition types
      */
     public String[] getNutritionTypes() {
         return EnumUtils.getEnumOptions(NutritionType.class);
