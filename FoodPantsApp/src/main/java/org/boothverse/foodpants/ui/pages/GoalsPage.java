@@ -3,6 +3,7 @@ package org.boothverse.foodpants.ui.pages;
 import org.boothverse.foodpants.persistence.Goal;
 import org.boothverse.foodpants.ui.Style;
 import org.boothverse.foodpants.ui.components.GoalItem;
+import org.boothverse.foodpants.ui.components.ReportsItem;
 import org.boothverse.foodpants.ui.controllers.NutritionController;
 import org.boothverse.foodpants.ui.forms.AddGoalForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
@@ -10,12 +11,14 @@ import org.boothverse.foodpants.ui.forms.StandardForm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class GoalsPage extends NutritionPage {
 
     JPanel contentPanel;
+    List<GoalItem> items;
 
     public GoalsPage() {
         JPanel listWrapper = new JPanel(new FlowLayout());
@@ -47,24 +50,31 @@ public class GoalsPage extends NutritionPage {
         contentPanel.setLayout(new GridLayout(0, 2));
         NutritionController nutritionController = new NutritionController();
 
+        items = new ArrayList<>();
+
         List<Goal> goals = nutritionController.getGoals();
         for (Goal goal : goals) {
-            contentPanel.add(new GoalItem(goal));
+            GoalItem item = new GoalItem(goal);
+
+            items.add(item);
+            contentPanel.add(item);
         }
     }
 
     @Override
     public void notifyChange(String message, Object oldValue, Object newValue) {
-        if (Objects.equals(message, "add")) {
-            addAllGoals();
-            revalidate();
-            repaint();
+        switch (message) {
+            case "add":
+            case "remove":
+            case "edit":
+                addAllGoals();
+                revalidate();
+                repaint();
+                break;
         }
-//        else if (Objects.equals(message, "remove")) {
-//        }
-//        else if (Objects.equals(message, "edit")) {
-//        }
-//        else if (Objects.equals(message, "update")) {
-//        }
+
+        for (GoalItem item : items) {
+            item.setModification(NutritionPage.isModifyingPage());
+        }
     }
 }

@@ -36,7 +36,7 @@ public class EditReportForm extends AddReportForm {
             Date endDate = finalFormat.parse(endField.getText());
 
             nutritionController.editReport(reportPeriod.getId(), startDate, endDate);
-            PageManager.getActivePage().notifyChange("add", null, null);
+            PageManager.getActivePage().notifyChange("edit", null, null);
             dispose();
         } catch (ParseException | PantsNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Must specify a date in MM/dd/yyyy format.",
