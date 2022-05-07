@@ -11,6 +11,9 @@ import org.boothverse.foodpants.ui.controllers.FoodController;
 import javax.measure.Quantity;
 import java.util.Date;
 
+/**
+ * An object representing a nutrition instance
+ */
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NutritionInstance extends FoodInstance {
@@ -23,10 +26,10 @@ public class NutritionInstance extends FoodInstance {
     /**
      * Creates a new NutritionInstance
      *
-     * @param id
-     * @param foodId
-     * @param quantity
-     * @param consumedAt
+     * @param id the id of the nutrition instance
+     * @param foodId the nam of the food the nutrition instance i associated with
+     * @param quantity the quantity of the nutrition instance
+     * @param consumedAt when the food was consumed at
      */
     public NutritionInstance(String id, String foodId, Quantity<?> quantity, Date consumedAt) {
         super(id, quantity);
@@ -37,7 +40,7 @@ public class NutritionInstance extends FoodInstance {
     /**
      * Returns the NutritionInstance in a String format
      *
-     * @return
+     * @return a string representing the instance
      */
     @Override
     public String toString() {
