@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.persistence.User;
 
@@ -10,6 +12,8 @@ import java.util.Date;
 import java.util.Map;
 
 public class StartupController {
+    private static Logger logger = LogManager.getLogger(StartupController.class);
+
     /**
      * Registers the user.
      *
@@ -18,13 +22,16 @@ public class StartupController {
      */
     public void register(String name, String gender, Quantity<Length> height, Quantity<Mass> weight, Date dob) {
         Services.USER_SERVICE.register(name, gender, height, weight, dob);
+        logger.info(name + " registered");
     }
 
     public boolean userExists() {
         if (Services.USER_SERVICE.getUser() != null) {
+            logger.info("user exists");
             return true;
         }
         else {
+            logger.error("user does not exist");
             return false;
         }
     }

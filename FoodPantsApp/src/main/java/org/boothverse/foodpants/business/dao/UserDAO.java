@@ -54,7 +54,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
                 logger.info("height successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 height = null;
-                logger.info("height convert to quantity unsuccessful UserDAO");
+                logger.error("height convert to quantity unsuccessful UserDAO");
             }
 
             Quantity<Mass> weight;
@@ -63,7 +63,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
                 logger.info("weight successfully converted to Quantity UserDAO");
             } catch (PantsNotParsedException e) {
                 weight = null;
-                logger.info("weight convert to Quantity unsuccessful UserDAO");
+                logger.error("weight convert to Quantity unsuccessful UserDAO");
             }
 
             Date dob;
@@ -72,7 +72,7 @@ public class UserDAO extends JDBCSingleDAO<User> {
                 logger.info("dob successfully created UserDAO");
             } catch (Exception e) {
                 dob = null;
-                logger.info("dob conversion not successful");
+                logger.error("dob conversion not successful");
             }
 
             data = new User(name, gender, height, weight, dob);

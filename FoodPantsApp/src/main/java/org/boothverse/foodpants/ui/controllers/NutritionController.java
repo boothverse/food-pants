@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.*;
@@ -10,12 +12,15 @@ import java.util.List;
 
 public class NutritionController {
 
+    private static Logger logger = LogManager.getLogger(NutritionController.class);
+
     /**
      * Returns a list of all nutrition goals
      *
      * @return
      */
     public List<Goal> getGoals() {
+        logger.info("goals retrieved");
         return Services.NUTRITION_SERVICE.getGoals();
     }
 
@@ -32,6 +37,8 @@ public class NutritionController {
 
         Goal goal = new Goal(Services.ID_SERVICE.getId(), goalType, quantity, nutritionType);
         Services.NUTRITION_SERVICE.addGoal(goal);
+
+        logger.info(goalType.name() + " goal added");
 
         return goal;
     }
@@ -52,6 +59,7 @@ public class NutritionController {
         Goal goal = new Goal(id, goalType, quantity, nutritionType);
         Services.NUTRITION_SERVICE.editGoal(goal);
 
+        logger.info(goal.getGoalType() + " goal modified");
         return goal;
     }
 
@@ -63,6 +71,7 @@ public class NutritionController {
      */
     public void removeGoal(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeGoal(id);
+        logger.info(id + " goal removed");
     }
 
     /**
@@ -73,6 +82,7 @@ public class NutritionController {
      * @return
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
+        logger.debug("items retrieved between " + startDate.toString() + " and " + endDate.toString());
         return Services.NUTRITION_SERVICE.getItems(startDate, endDate);
     }
 
@@ -90,6 +100,7 @@ public class NutritionController {
         NutritionInstance nutInstance = new NutritionInstance(Services.ID_SERVICE.getId(),
             foodId, quantity, consumedAt);
         Services.NUTRITION_SERVICE.addItem(nutInstance);
+        logger.info(nutInstance.getId() + " added to nutrition");
 
         return nutInstance;
     }
@@ -109,6 +120,8 @@ public class NutritionController {
         NutritionInstance nutInstance = new NutritionInstance(id, foodId, quantity, consumedAt);
         Services.NUTRITION_SERVICE.editItem(nutInstance);
 
+        logger.info(nutInstance.getId() + " nutrition item updated");
+
         return nutInstance;
     }
 
@@ -120,9 +133,13 @@ public class NutritionController {
      */
     public void removeItem(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeItem(id);
+        logger.info(id + " nutrition removed");
     }
 
-    public List<ReportPeriod> getReports() { return Services.NUTRITION_SERVICE.getReports(); }
+    public List<ReportPeriod> getReports() {
+        logger.debug("retrieved list of reports");
+        return Services.NUTRITION_SERVICE.getReports();
+    }
 
     /**
      * Adds a report to the system
@@ -135,6 +152,8 @@ public class NutritionController {
         ReportPeriod reportPeriod = new ReportPeriod(Services.ID_SERVICE.getId(),
             startDate, endDate);
         Services.NUTRITION_SERVICE.addReport(reportPeriod);
+
+        logger.info(reportPeriod.getId() + " report added");
 
         return reportPeriod;
     }
@@ -150,6 +169,7 @@ public class NutritionController {
     public void editReport(String id, Date startDate, Date endDate) throws PantsNotFoundException {
         ReportPeriod period = new ReportPeriod(id, startDate, endDate);
         Services.NUTRITION_SERVICE.editReport(period);
+        logger.info(id + " report updated");
     }
 
     /**
@@ -160,5 +180,6 @@ public class NutritionController {
      */
     public void removeReport(String id) throws PantsNotFoundException {
         Services.NUTRITION_SERVICE.removeReport(id);
+        logger.info(id + " report removed");
     }
 }

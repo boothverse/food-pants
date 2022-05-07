@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.ui.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
 import org.boothverse.foodpants.business.services.exceptions.PantsExportShoppingListException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ShoppingController implements FoodInstanceController {
+    private static Logger logger = LogManager.getLogger(ShoppingController.class);
     /**
      * Returns a list of shopping items.
      *
@@ -19,6 +22,7 @@ public class ShoppingController implements FoodInstanceController {
      */
     @Override
     public List<FoodInstance> getItems() {
+        logger.debug("items retrieved ShoppingController");
         return Services.SHOPPING_SERVICE.getItems();
     }
 
@@ -31,6 +35,7 @@ public class ShoppingController implements FoodInstanceController {
      */
     @Override
     public FoodInstance addItem(String foodId, Quantity<?> quantity) {
+        logger.info(foodId + " item added to shopping list");
         return Services.SHOPPING_SERVICE.addItem(foodId, quantity);
     }
 
@@ -44,6 +49,7 @@ public class ShoppingController implements FoodInstanceController {
      */
     @Override
     public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
+        logger.info(foodId + " item updated");
         return Services.SHOPPING_SERVICE.editItem(foodId, quantity);
     }
 
@@ -55,10 +61,12 @@ public class ShoppingController implements FoodInstanceController {
      */
     @Override
     public void removeItem(String foodId) throws PantsNotFoundException {
+        logger.info(foodId + " item removed");
         Services.SHOPPING_SERVICE.removeItem(foodId);
     }
 
     public void removeAllItems() {
+        logger.info("all items removed");
         Services.SHOPPING_SERVICE.removeAllItems();
     }
 
@@ -76,6 +84,8 @@ public class ShoppingController implements FoodInstanceController {
         List<FoodInstance> pantry_add = items.stream().filter(f -> foodIds.contains(f.getId())).collect(Collectors.toList());
         Services.PANTRY_SERVICE.addItems(pantry_add);
 
+        logger.info("items purchased from ShoppingController");
+
         return items.size();
     }
 
@@ -87,5 +97,6 @@ public class ShoppingController implements FoodInstanceController {
      */
     public void export(Path destination) throws PantsExportShoppingListException {
         Services.SHOPPING_SERVICE.export(destination);
+        logger.info("Shopping List exported to " + destination.toString());
     }
 }
