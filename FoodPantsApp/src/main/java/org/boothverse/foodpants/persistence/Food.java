@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.boothverse.foodpants.ui.controllers.FoodController;
 
 import javax.measure.Quantity;
 import java.util.Objects;
@@ -11,6 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Food extends IdObject {
+    private static Logger logger = LogManager.getLogger(Food.class);
     @Getter
     protected String name;
     @Getter
@@ -34,6 +38,7 @@ public class Food extends IdObject {
     }
 
     public FoodInstance createInstance(Quantity<?> quantity) {
+        logger.info("Creating instance of food with id " + id + " and quantity " + quantity);
         return new FoodInstance(id, quantity);
     }
 }

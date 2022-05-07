@@ -4,7 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.services.Services;
+import org.boothverse.foodpants.ui.controllers.FoodController;
 import tech.units.indriya.AbstractUnit;
 import tech.units.indriya.quantity.Quantities;
 
@@ -19,6 +22,7 @@ import static tech.units.indriya.AbstractUnit.ONE;
 @Getter @Setter
 @EqualsAndHashCode(callSuper = true)
 public class Recipe extends Food {
+    private static Logger logger = LogManager.getLogger(Recipe.class);
     private String instructions;
     private List<FoodInstance> ingredients;
     private Double servings;
@@ -57,6 +61,7 @@ public class Recipe extends Food {
      * @return
      */
     public FoodInstance createFoodInstance(Double instanceServings) {
+        logger.info("Creating food instance of " + this.getName() + " with id " + this.getId() + " and " + instanceServings + " servings");
         if(instanceServings == null){ return null; }
         Quantity quantity = Quantities.getQuantity(instanceServings * this.nutrition.getServingSize().getValue().doubleValue(), this.nutrition.getServingSize().getUnit());
         return new FoodInstance(id, quantity);
@@ -69,6 +74,7 @@ public class Recipe extends Food {
      * @return
      */
     public NutritionInstance createNutritionInstance(Double instanceServings) {
+        logger.info("Creating nutrition instance of " + this.getName() + " with id " + this.getId() + " and " + instanceServings + " servings");
         if(instanceServings == null){ return null; }
         String id = Services.ID_SERVICE.getId();
         String foodId = this.id;

@@ -4,6 +4,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.boothverse.foodpants.ui.controllers.FoodController;
 
 import javax.measure.Quantity;
 
@@ -11,7 +14,7 @@ import javax.measure.Quantity;
 @Getter @Setter
 @EqualsAndHashCode(callSuper = true)
 public class Goal<Q extends Quantity<Q>> extends IdObject {
-
+    private static Logger logger = LogManager.getLogger(Goal.class);
     private GoalType goalType;
     private Quantity<Q> dailyQuantity;
     private NutritionType nutritionType;
@@ -38,6 +41,7 @@ public class Goal<Q extends Quantity<Q>> extends IdObject {
      * @return
      */
     public boolean isAttained(Quantity<Q> actualQuantity) {
+        logger.info("Checking whether goal of type " + goalType.name() + " and quantity " + dailyQuantity + " has been attained with " + actualQuantity);
         if(actualQuantity == null){
             return false;
         }
