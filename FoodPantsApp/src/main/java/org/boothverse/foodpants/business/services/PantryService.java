@@ -39,10 +39,15 @@ public class PantryService extends FoodInstanceService {
                 FoodInstance pantryItem = items.get(id);
                 // TODO: make sure that getQuantity().subtract()
                 //  does not modify the quantity stored in the pantry!!
-                Quantity quantity = pantryItem.getQuantity().subtract((Quantity) itemToCheck.getQuantity());
-                if (quantity.getValue().doubleValue() < 0) {    // but we don't have enough of it
-                    logger.info("Item with id " + id + " does not have a sufficient quantity in pantry. Adding to missing list");
-                    missing.add(new FoodInstance(id, quantity.multiply(-1)));
+                try {
+                    Quantity quantity = pantryItem.getQuantity().subtract((Quantity) itemToCheck.getQuantity());
+                    if (quantity.getValue().doubleValue() < 0) {    // but we don't have enough of it
+                        logger.info("Item with id " + id + " does not have a sufficient quantity in pantry. Adding to missing list");
+                        missing.add(new FoodInstance(id, quantity.multiply(-1)));
+                    }
+                } catch (UnconvertibleException e) {
+                    logger.error(e.getMessage());
+                    missing.add(itemToCheck);
                 }
             } else {                                            // food does not exist in pantry
                 logger.info("Item with id " + id + " does not exist in pantry. Adding to missing list");
