@@ -1,6 +1,8 @@
 package org.boothverse.foodpants.business.services;
 
 import lombok.NonNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.ListDAO;
 import org.boothverse.foodpants.business.dao.RecipeDAO;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
@@ -14,6 +16,7 @@ import java.util.*;
  * service dealing with processing recipes
  */
 public class RecipeService {
+    private static Logger logger = LogManager.getLogger(RecipeService.class);
 
     @NonNull
     protected Map<String, Recipe> recipes;
@@ -23,6 +26,7 @@ public class RecipeService {
      * Loads the recipes from the database.
      */
     public RecipeService() {
+        logger.info("Loading recipes from database");
         recipes = dao.load();
     }
 
@@ -32,6 +36,7 @@ public class RecipeService {
      * @return the list of stored recipes
      */
     public List<Recipe> getRecipes() {
+        logger.info("Getting all recipes as list");
         return new ArrayList<>(recipes.values());
     }
 
@@ -42,7 +47,11 @@ public class RecipeService {
      * @return the desired recipe
      */
     public Recipe getRecipe(String id) throws PantsNotFoundException {
-        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
+        if (!recipes.containsKey(id)){
+            logger.warn("Trying to get a recipe that does not exist with id " + id);
+            throw new PantsNotFoundException("recipe " + id + " not found");
+        }
+        logger.info("Getting recipe with id " + id);
         return recipes.get(id);
     }
 
@@ -53,10 +62,11 @@ public class RecipeService {
      * @return a list of recipes
      */
     public List<Recipe> getRecipesByIngredients(List<FoodInstance> ingredients) {
+        logger.info("Getting recipes sorted by frequency of specific ingredients");
         return recipes.values().stream()
             .sorted(Comparator.comparingDouble(recipe -> {
                 long count = recipe.getIngredients().stream().filter(ingredients::contains).count();
-                System.out.println(count + " matches");
+                logger.info("Recipe with id " + recipe.getId() + " has " + count + " matches");
                 return (double) recipe.getIngredients().size() / count;
             }))
             .limit(recipes.size() / 3 + 1)
@@ -70,6 +80,7 @@ public class RecipeService {
      * @return a list of recipes names
      */
     public List<Recipe> getRecipesNameStartsWith(String query) {
+        logger.info("Getting recipes that start with " + query);
         return recipes.values().stream()
             .filter(recipe -> recipe.getName().startsWith(query))
             .toList();
@@ -81,7 +92,9 @@ public class RecipeService {
      * @param recipe the recipe to be added
      */
     public void addRecipe(Recipe recipe) {
+        logger.info("Adding recipe with id " + recipe.getId());
         recipes.put(recipe.getId(), recipe);
+        logger.info("Saving recipe with id " + recipe.getId() + " in database");
         dao.save(recipe);
     }
 
@@ -92,22 +105,26 @@ public class RecipeService {
      */
     public void editRecipe(Recipe recipe) throws PantsNotFoundException {
         String id = recipe.getId();
-        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
+        if (!recipes.containsKey(id)){
+            logger.warn("Trying to edit a recipe that does not exist with id " + id);
+            throw new PantsNotFoundException("recipe " + id + " not found");
+        }
 
+        logger.info("Updating recipe with id " + id);
         recipes.replace(id, recipe);
+        logger.info("Saving updated recipe with id " + id + " in database");
         dao.save(recipe);
     }
 
-    /**
-     * Removes a recipe from the database and service
-     *
-     * @param id the id of the recipe to be removed
-     * @throws PantsNotFoundException
-     */
     public void removeRecipe(String id) throws PantsNotFoundException {
-        if (!recipes.containsKey(id)) throw new PantsNotFoundException("recipe " + id + " not found");
+        if (!recipes.containsKey(id)){
+            logger.warn("Trying to remove a recipe that does not exist with id " + id);
+            throw new PantsNotFoundException("recipe " + id + " not found");
+        }
 
+        logger.info("Removing recipe with id " + id);
         recipes.remove(id);
+        logger.info("Removing recipe with id " + id + " from database");
         dao.remove(id);
     }
 
@@ -118,6 +135,7 @@ public class RecipeService {
      * @return the list of ingredients
      */
     public List<FoodInstance> getIngredients(String recipeId) throws PantsNotFoundException {
+        logger.info("Getting list of ingredients from recipe with id " + recipeId);
         return getRecipe(recipeId).getIngredients();
     }
 
@@ -130,6 +148,7 @@ public class RecipeService {
      * @param leftoverServings the amount of servings left over after the recipe is made
      */
     public void produceCookedRecipe(String recipeId, Boolean isUsingPantry, Double consumedServings, Double leftoverServings) throws PantsNotFoundException {
+        logger.info("Producing recipe with id " + recipeId + " into food item with " + leftoverServings + " leftover and a nutritional item with " + consumedServings + " consumed");
         PantryService pantryService = Services.PANTRY_SERVICE;
         NutritionService nutritionService = Services.NUTRITION_SERVICE;
         Recipe recipe = getRecipe(recipeId);
@@ -138,18 +157,23 @@ public class RecipeService {
         if (isUsingPantry) {
             for (FoodInstance ingredient : recipe.getIngredients()) {
                 try {
+                    logger.info("Removing items from pantry used to make recipe with id " + recipeId);
                     pantryService.removeItem(ingredient.getId(), ingredient.getQuantity());
                 } catch (PantsNotFoundException e) {
-                    e.printStackTrace();
+                    logger.info("Ingredient used to make recipe with id " + recipeId + " not found in pantry");
                 }
             }
         }
 
+        logger.info("Making nutrition instance with " + consumedServings + " consumed servings of recipe with id " + recipeId);
         NutritionInstance consumed = recipe.createNutritionInstance(consumedServings);
+        logger.info("Making food instance with " + leftoverServings + " leftover servings of recipe with id " + recipeId);
         FoodInstance leftover = recipe.createFoodInstance(leftoverServings);
 
         // Add cooked products to the nutrition log and pantry
+        logger.info("Adding nutrition instance with id " + consumed.getId() + " to nutrition log");
         nutritionService.addItem(consumed);
+        logger.info("Adding food instance with id " + leftover.getId() + " and quantity " + leftover.getQuantity() + " to pantry");
         pantryService.addItem(leftover.getId(), leftover.getQuantity());
     }
 
@@ -159,14 +183,22 @@ public class RecipeService {
      * @return a list of recipes for the user
      */
     public List<Recipe> getRecommendedRecipes() {
+        logger.info("Getting recipes with highest frequency of ingredients in pantry");
         return getRecipesByIngredients(Services.PANTRY_SERVICE.getItems());
     }
 
+    /**
+     * Takes a recipe and adds ingredients not in pantry to shopping list
+     *
+     * @param recipeId the id of the recipe
+     */
     public void addMissingIngredientsToCart(String recipeId) throws PantsNotFoundException {
         PantryService pantryService = Services.PANTRY_SERVICE;
         ShoppingService shoppingService = Services.SHOPPING_SERVICE;
 
+        logger.info("Getting ingredients from recipe with id " + recipeId + " not in pantry");
         List<FoodInstance> missingIngredients = pantryService.getMissing(getIngredients(recipeId));
+        logger.info("Adding missing ingredients from recipe with id " + recipeId + " to shopping list");
         shoppingService.addItems(missingIngredients);
     }
 }

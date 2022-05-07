@@ -2,6 +2,7 @@ package org.boothverse.foodpants.ui.forms;
 
 import org.boothverse.foodpants.ui.PageRunner;
 import org.boothverse.foodpants.ui.controllers.StartupController;
+import org.jdesktop.swingx.JXDatePicker;
 import systems.uom.unicode.CLDR;
 import tech.units.indriya.quantity.Quantities;
 
@@ -11,19 +12,21 @@ import javax.measure.quantity.Mass;
 import javax.swing.*;
 import java.awt.*;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class NewUserForm extends StandardForm {
     private int numRows = 0;
-    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)", "Age"};
+    private final String[] labels = {"Name", "Gender", "Height (ft/in)", "Weight (lb)", "DOB"};
 
     private JTextField name;
     private JComboBox<String> gender;
     private JPanel heightPanel;
     private JFormattedTextField weight;
-    private JSpinner age;
+    private JXDatePicker dobPicker;
 
     private JSpinner feet;
     private JSpinner in;
@@ -57,7 +60,12 @@ public class NewUserForm extends StandardForm {
         weightFormat.setGroupingUsed(false);
 
         weight = new JFormattedTextField(weightFormat);
-        age = new JSpinner(new SpinnerNumberModel(20, 0, 150, 1));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -25);
+        dobPicker = new JXDatePicker();
+        dobPicker.setDate(cal.getTime());
+        dobPicker.setFormats(new SimpleDateFormat("dd.MM.yyyy"));
 
         JPanel spacer = new JPanel();
         spacer.setBackground(getBackground());
@@ -77,7 +85,7 @@ public class NewUserForm extends StandardForm {
         addRightComponent(weight, numRows);
 
         addLeftComponent(new JLabel(labels[4]), ++numRows);
-        addRightComponent(age, numRows);
+        addRightComponent(dobPicker, numRows);
 
         addMiddleComponent(spacer, ++numRows);
 
@@ -90,9 +98,7 @@ public class NewUserForm extends StandardForm {
                 String genderVal = (String) gender.getSelectedItem();
                 Quantity<Length> heightVal = Quantities.getQuantity(heightInFeet, CLDR.FOOT);
                 Quantity<Mass> weightVal = Quantities.getQuantity(Double.valueOf(weight.getText()), CLDR.POUND);
-                // Sorry I'm cranky
-                // TODO: @Austin can u set this date val
-                Date dobVal = null;
+                Date dobVal = dobPicker.getDate();
 
                 controller.register(nameVal, genderVal, heightVal, weightVal, dobVal);
                 dispose();
