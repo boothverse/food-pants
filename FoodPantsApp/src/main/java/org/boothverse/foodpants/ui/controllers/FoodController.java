@@ -10,14 +10,17 @@ import org.boothverse.foodpants.persistence.NutritionDescriptor;
 
 import java.util.List;
 
+/**
+ * A controller which handles user events related to food
+ */
 public class FoodController {
 
     private static Logger logger = LogManager.getLogger(FoodController.class);
     /**
      * Gets the food with the specified id
      *
-     * @param id
-     * @return
+     * @param id the id of the desired food
+     * @return the desired food
      */
     public Food getFood(String id) throws PantsNotFoundException {
         logger.info("getting food " + id);
@@ -27,10 +30,10 @@ public class FoodController {
     /**
      * Adds a new food item to the system
      *
-     * @param name
-     * @param category
-     * @param nutrition
-     * @return
+     * @param name the name of the food
+     * @param category the foods category
+     * @param nutrition the nutritional info of the food
+     * @return the newly created food
      */
     public Food addFood(String name, FoodGroup category, NutritionDescriptor nutrition) {
         logger.info("adding food called " + name + " of type " + category
@@ -43,11 +46,12 @@ public class FoodController {
     /**
      * Modifies the specified food item with the specified information
      *
-     * @param id
-     * @param name
-     * @param category
-     * @param nutrition
-     * @return
+     * @param id the id of the food
+     * @param name the name of the food
+     * @param category the category of the food
+     * @param nutrition the nutritional info of the food
+     * @return the modified food
+     * @throws PantsNotFoundException
      */
     public Food editFood(String id, String name, FoodGroup category, NutritionDescriptor nutrition) throws PantsNotFoundException{
         logger.info("editing food " + id + " (now called " + name + ")");
@@ -59,7 +63,7 @@ public class FoodController {
     /**
      * Removes the specified food item
      *
-     * @param id
+     * @param id the id of the food to be removed
      */
     public void removeFood(String id) throws PantsNotFoundException {
         logger.info("removing food " + id);
@@ -69,7 +73,7 @@ public class FoodController {
     /**
      * Gets a list of all food items
      *
-     * @return
+     * @return a list of the foods in the database/service
      */
     public List<Food> getFoods() {
         logger.info("getting all foods");
