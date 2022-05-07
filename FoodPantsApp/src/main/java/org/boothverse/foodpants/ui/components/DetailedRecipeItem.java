@@ -109,6 +109,7 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
                 form.setVisible(true);
                 form.setLocationRelativeTo(PageRunner.getFrame());
                 parent.notifyChange("edit", this, null);
+                break;
             case "Delete Recipe":
                 int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?",
                     "Are you sure?", JOptionPane.YES_NO_OPTION);

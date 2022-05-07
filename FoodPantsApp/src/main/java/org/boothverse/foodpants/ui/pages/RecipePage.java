@@ -108,7 +108,7 @@ public class RecipePage extends Page {
             updateList(recipeController.searchByRecipeName((String)newValue));
         }
         else if (Objects.equals(message, "remove")) {
-            
+
         }
         else if (Objects.equals(message, "update")) {
             if (searchBtn != null) {
