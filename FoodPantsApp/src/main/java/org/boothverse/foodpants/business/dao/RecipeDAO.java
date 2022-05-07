@@ -52,7 +52,7 @@ public class RecipeDAO extends JDBCListDAO<Recipe> {
             String[] temp = s.split(":");
             list.add(new FoodInstance(temp[0], QuantityUtils.parse(temp[1])));
         }
-        logger.info("string converted tp list of ingredients");
+        logger.info("string converted to list of ingredients");
         return list;
     }
 
