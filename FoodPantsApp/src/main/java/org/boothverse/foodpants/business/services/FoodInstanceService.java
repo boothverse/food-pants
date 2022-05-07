@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * An abstract class dealing with food instances which other services which deal with food instances use
+ */
 public abstract class FoodInstanceService {
     private static Logger logger = LogManager.getLogger(FoodInstanceService.class);
     protected Map<String, FoodInstance> items;
@@ -21,7 +24,7 @@ public abstract class FoodInstanceService {
     /**
      * Loads the items from the database.
      *
-     * @param dbName
+     * @param dbName the name of the database
      */
     public FoodInstanceService(String dbName) {
         dao = new FoodInstanceDAO(dbName);
@@ -42,8 +45,8 @@ public abstract class FoodInstanceService {
     /**
      * Adds an item to the service and the database.
      *
-     * @param id
-     * @param quantity
+     * @param id the id of the food to be added
+     * @param quantity the quantity of the food instance
      * @return the newly created item
      */
     public FoodInstance addItem(String id, Quantity<?> quantity) {
@@ -67,7 +70,7 @@ public abstract class FoodInstanceService {
      * Adds the list of items to the service and the database.
      * If the service already has the given food, just add the specified amount to the service.
      *
-     * @param itemsToAdd
+     * @param itemsToAdd a list of food instances to add
      */
     public void addItems(List<FoodInstance> itemsToAdd) {
         itemsToAdd.forEach(itemToAdd -> {
@@ -89,8 +92,8 @@ public abstract class FoodInstanceService {
      * and updates the database accordingly.
      * Should throw a custom exception if the item is not found.
      *
-     * @param id
-     * @param quantity
+     * @param id the id of the food to be edited
+     * @param quantity the new quantity of the food instance
      */
     public FoodInstance editItem(String id, Quantity<?> quantity) throws PantsNotFoundException {
         if (!items.containsKey(id)){
@@ -109,7 +112,7 @@ public abstract class FoodInstanceService {
      * Removes the given item from the service and the database.
      * Should throw a custom exception if the item is not found.
      *
-     * @param id
+     * @param id the id of the food to be removed
      */
     public void removeItem(String id) throws PantsNotFoundException {
         if (!items.containsKey(id)){

@@ -11,6 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.*;
 import org.boothverse.foodpants.persistence.*;
 
+/**
+ * service dealing with processing ids
+ */
 public class IdService {
     private static Logger logger = LogManager.getLogger(IdService.class);
     /** Holds all IDs registered by the service. */

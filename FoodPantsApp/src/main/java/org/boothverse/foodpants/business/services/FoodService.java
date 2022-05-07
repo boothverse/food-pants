@@ -12,6 +12,9 @@ import org.boothverse.foodpants.persistence.FoodGroup;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A service dealing with processing food
+ */
 public class FoodService {
     private static Logger logger = LogManager.getLogger(FoodService.class);
     protected Map<String, Food> foods;
@@ -28,7 +31,7 @@ public class FoodService {
     /**
      * Returns all foods tracked by the service.
      *
-     * @return
+     * @return a list of foods from the database
      */
     public List<Food> getFoods() {
         logger.info("Getting all foods as list");
@@ -38,8 +41,8 @@ public class FoodService {
     /**
      * Returns the food of the given id.
      *
-     * @param id
-     * @return
+     * @param id the id of the desired food
+     * @return the desired food
      */
     public Food getFood(String id) throws PantsNotFoundException {
         if (!foods.containsKey(id)){
@@ -52,7 +55,8 @@ public class FoodService {
 
     /**
      * Adds a food to the service and the database.
-     * @param food
+     *
+     * @param food the food to be added
      */
     public void addFood(Food food) {
         logger.info("Adding food with id " + food.getId());
@@ -66,7 +70,7 @@ public class FoodService {
      * Should throw a custom exception if the food's ID does not correspond with a food registered
      * in the service.
      *
-     * @param food
+     * @param food the new version of the modified food
      */
     public void editFood(Food food) throws PantsNotFoundException {
         String id = food.getId();
@@ -84,7 +88,7 @@ public class FoodService {
      * Removes the given food from the service and the database.
      * Should throw a custom exception if the food is not found.
      *
-     * @param id
+     * @param id the id of the food to be removed
      */
     public void removeFood(String id) throws PantsNotFoundException {
         if (!foods.containsKey(id)){
@@ -102,8 +106,8 @@ public class FoodService {
      * Returns the name of the given food.
      * Should throw a custom exception if the food is not found.
      *
-     * @param id
-     * @return
+     * @param id the id of the food
+     * @return the name of the food with the specified id
      */
     public String getFoodName(String id) throws PantsNotFoundException {
         logger.info("Getting food name with id " + id);
@@ -113,7 +117,7 @@ public class FoodService {
     /**
      * Return a list of food groups.
      *
-     * @return
+     * @return a list of food groups
      */
     public String[] getFoodGroups() {
         logger.info("Getting list of food groups");

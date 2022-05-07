@@ -10,10 +10,16 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * service dealing with processing food instances within the shopping list
+ */
 public class ShoppingService extends FoodInstanceService {
     private static Logger logger = LogManager.getLogger(ShoppingService.class);
     private static final String DB_NAME = "shoppingList";
 
+    /**
+     * Creates a new shopping service object
+     */
     public ShoppingService() {
         super(DB_NAME);
         logger.info("Loaded shopping list from database");
@@ -22,7 +28,7 @@ public class ShoppingService extends FoodInstanceService {
     /**
      * Removes the specified item from the shopping service.
      *
-     * @param foodIds
+     * @param foodIds the specified item
      * @throws PantsNotFoundException
      */
     public void removeItems(List<String> foodIds) throws PantsNotFoundException {
@@ -32,6 +38,9 @@ public class ShoppingService extends FoodInstanceService {
         }
     }
 
+    /**
+     * Removes all items from the service and database
+     */
     public void removeAllItems() {
         List<String> ids = items.keySet().stream().toList();
         logger.info("Removing all items from shopping list");
@@ -45,7 +54,7 @@ public class ShoppingService extends FoodInstanceService {
     /**
      * Translates the shopping list into a pdf.
      *
-     * @param destination
+     * @param destination the destination of the created pdf
      * @throws PantsExportShoppingListException
      */
     public void export(Path destination) throws PantsExportShoppingListException {

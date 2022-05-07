@@ -1,5 +1,8 @@
 package org.boothverse.foodpants.business.services;
 
+/**
+ * Creates all the applications services
+ */
 public class Services {
     public static final UserService USER_SERVICE = new UserService();
     public static final IdService ID_SERVICE = new IdService();

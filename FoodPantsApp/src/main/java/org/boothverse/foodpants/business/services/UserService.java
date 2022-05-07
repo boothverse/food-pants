@@ -16,6 +16,9 @@ import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import java.util.Date;
 
+/**
+ * service dealing with processing users
+ */
 public class UserService {
     private static Logger logger = LogManager.getLogger(UserService.class);
     private final SingleDAO<User> dao = new UserDAO();
@@ -35,12 +38,11 @@ public class UserService {
      * creates a new user from input
      * Saves new user to database
      *
-     * @param name
-     * @param gender
-     * @param height
-     * @param weight
-     * @param dob
-     * @return
+     * @param name the name of the user
+     * @param gender the gender of the user
+     * @param height the height of the user
+     * @param weight the weight of the user
+     * @param dob the date of birth of the user
      */
     public void register(String name, String gender, Quantity<Length> height, Quantity<Mass> weight, Date dob) {
         logger.info("Registering new user with name " + name + ", gender " + gender + ", height " + height + ", weight " + weight + ", and date of birth " + dob);
