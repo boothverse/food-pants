@@ -7,6 +7,9 @@ import javax.measure.quantity.Length;
 import javax.measure.quantity.Mass;
 import java.util.Date;
 
+/**
+ * An object representing a user
+ */
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @ToString
