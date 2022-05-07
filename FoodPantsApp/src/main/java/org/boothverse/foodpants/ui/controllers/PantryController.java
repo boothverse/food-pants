@@ -12,12 +12,15 @@ import javax.measure.Quantity;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A controller which handles user events related to the pantry
+ */
 public class PantryController implements FoodInstanceController {
     private static Logger logger = LogManager.getLogger(PantryController.class);
     /**
      * Returns a list of all food instances.
      *
-     * @return
+     * @return a list of all pantry items
      */
     @Override
     public List<FoodInstance> getItems() {
@@ -29,9 +32,9 @@ public class PantryController implements FoodInstanceController {
     /**
      * Adds a food instance to the system.
      *
-     * @param foodId
-     * @param quantity
-     * @return
+     * @param foodId the id of the food instance
+     * @param quantity the quantity of the food instance
+     * @return the newly created food instance
      */
     @Override
     public FoodInstance addItem(String foodId, Quantity<?> quantity) {
@@ -42,9 +45,10 @@ public class PantryController implements FoodInstanceController {
     /**
      * Modifies the specified food instance with the given info.
      *
-     * @param foodId
-     * @param quantity
-     * @return
+     * @param foodId the id of the food instance
+     * @param quantity the quantity of the food instance
+     * @return the modified food instance
+     * @throws PantsNotFoundException
      */
     @Override
     public FoodInstance editItem(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
@@ -55,7 +59,7 @@ public class PantryController implements FoodInstanceController {
     /**
      * Removes the specified food instance.
      *
-     * @param foodId
+     * @param foodId the id of the food
      */
     @Override
     public void removeItem(String foodId) throws PantsNotFoundException {
@@ -66,8 +70,8 @@ public class PantryController implements FoodInstanceController {
     /**
      * Removes the specified food instance and generates a nutrition instance
      *
-     * @param foodId
-     * @param quantity
+     * @param foodId the id of the food
+     * @param quantity the quantity to be consumed
      */
     public void consume(String foodId, Quantity<?> quantity) throws PantsNotFoundException {
         Services.PANTRY_SERVICE.removeItem(foodId, quantity);
@@ -81,8 +85,8 @@ public class PantryController implements FoodInstanceController {
     /**
      * Returns a list of food instances given a specific name.
      *
-     * @param query
-     * @return
+     * @param query a string being used as a search key
+     * @return a list of foods related to the search key
      */
     public List<FoodInstance> searchByFoodName(String query) {
         logger.info(query + " item searched in pantry");

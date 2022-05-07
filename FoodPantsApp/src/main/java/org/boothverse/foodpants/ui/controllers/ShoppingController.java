@@ -13,12 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A controller which handles user events related to the shopping list
+ */
 public class ShoppingController implements FoodInstanceController {
     private static Logger logger = LogManager.getLogger(ShoppingController.class);
     /**
      * Returns a list of shopping items.
      *
-     * @return
+     * @return a list of food instances
      */
     @Override
     public List<FoodInstance> getItems() {
@@ -29,9 +32,9 @@ public class ShoppingController implements FoodInstanceController {
     /**
      * Adds an item to the shopping list.
      *
-     * @param foodId
-     * @param quantity
-     * @return
+     * @param foodId the food id
+     * @param quantity the quantity to buy
+     * @return the newly created food instance
      */
     @Override
     public FoodInstance addItem(String foodId, Quantity<?> quantity) {
@@ -42,9 +45,9 @@ public class ShoppingController implements FoodInstanceController {
     /**
      * Modifies an item with the given information.
      *
-     * @param foodId
-     * @param quantity
-     * @return
+     * @param foodId the food id
+     * @param quantity the quantity to buy
+     * @return the modified item
      * @throws PantsNotFoundException
      */
     @Override
@@ -56,7 +59,7 @@ public class ShoppingController implements FoodInstanceController {
     /**
      * Removes the specified item from the list.
      *
-     * @param foodId
+     * @param foodId the food id
      * @throws PantsNotFoundException
      */
     @Override
@@ -65,6 +68,9 @@ public class ShoppingController implements FoodInstanceController {
         Services.SHOPPING_SERVICE.removeItem(foodId);
     }
 
+    /**
+     * Removes all items from the shopping list
+     */
     public void removeAllItems() {
         logger.info("all items removed");
         Services.SHOPPING_SERVICE.removeAllItems();
@@ -73,8 +79,8 @@ public class ShoppingController implements FoodInstanceController {
     /**
      * Removes the list of items from the shopping list and adds them to the pantry.
      *
-     * @param foodIds
-     * @return
+     * @param foodIds the list of food ids
+     * @return the number of items on the list
      * @throws PantsNotFoundException
      */
     public Integer purchaseItems(List<String> foodIds) throws PantsNotFoundException {
@@ -92,7 +98,7 @@ public class ShoppingController implements FoodInstanceController {
     /**
      * Exports the shopping list as a pdf.
      *
-     * @param destination
+     * @param destination the destination of the created pdf
      * @throws PantsExportShoppingListException
      */
     public void export(Path destination) throws PantsExportShoppingListException {
