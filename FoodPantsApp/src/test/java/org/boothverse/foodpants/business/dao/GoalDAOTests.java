@@ -65,6 +65,11 @@ public class GoalDAOTests {
         System.out.println(liters);
    }
 
+   @AfterAll
+   static void clear(){
+        dao.removeAll();
+   }
+
     @Test
     @Order(1)
     void goalSaveTest() throws IOException {
