@@ -17,11 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class NutritionInstanceDAOTests {
+    static ListDAO<NutritionInstance> dao = new NutritionInstanceDAO();
+
+    @AfterAll
+    static void clear(){
+        dao.removeAll();
+    }
 
     @Test
     @Order(1)
     void nutritionInstanceSaveTest() throws IOException {
-        ListDAO<NutritionInstance> dao = new NutritionInstanceDAO();
 
         String id = "aebfilnjefapin34quv", foodId = "Banana";
         Quantity<Mass> quantity = Quantities.getQuantity(50, Units.GRAM);
@@ -35,7 +40,6 @@ public class NutritionInstanceDAOTests {
     @Test
     @Order(2)
     void nutritionInstanceLoadTest() throws IOException {
-        ListDAO<NutritionInstance> dao = new NutritionInstanceDAO();
         String id = "aebfilnjefapin34quv", foodId = "Banana";
         Quantity<Mass> quantity = Quantities.getQuantity(50, Units.GRAM);
         Date date = new Date(2020, 1, 1);

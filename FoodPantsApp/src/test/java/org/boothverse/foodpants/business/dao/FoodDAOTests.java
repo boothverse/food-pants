@@ -23,6 +23,11 @@ public class FoodDAOTests extends BaseDAOTests {
         setup(dao);
     }
 
+    @AfterAll
+    static void clear(){
+        dao.removeAll();
+    }
+
     @Test
     @Order(1)
     void foodSaveTest() {
