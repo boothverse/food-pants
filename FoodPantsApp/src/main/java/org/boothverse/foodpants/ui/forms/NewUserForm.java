@@ -101,6 +101,10 @@ public class NewUserForm extends StandardForm {
                 Date dobVal = dobPicker.getDate();
 
                 controller.register(nameVal, genderVal, heightVal, weightVal, dobVal);
+                PageRunner.getFrame().setVisible(true);
+                PageRunner.getFrame().setEnabled(true);
+                this.setVisible(false);
+                this.setEnabled(false);
                 dispose();
             }
             else {
