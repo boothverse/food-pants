@@ -1,0 +1,17 @@
+org.boothverse.foodpants
+org.boothverse.foodpants.business
+org.boothverse.foodpants.business.dao
+org.boothverse.foodpants.business.dao.exceptions
+org.boothverse.foodpants.business.dao.serialization
+org.boothverse.foodpants.business.dao.util
+org.boothverse.foodpants.business.services
+org.boothverse.foodpants.business.services.exceptions
+org.boothverse.foodpants.business.services.util
+org.boothverse.foodpants.persistence
+org.boothverse.foodpants.ui
+org.boothverse.foodpants.ui.components
+org.boothverse.foodpants.ui.components.standard
+org.boothverse.foodpants.ui.controllers
+org.boothverse.foodpants.ui.forms
+org.boothverse.foodpants.ui.pages
+org.boothverse.foodpants.ui.themes
