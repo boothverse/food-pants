@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.ui.forms;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.ui.PageManager;
@@ -71,9 +72,13 @@ public class AddFoodInstanceForm extends StandardForm implements ItemListener, A
         if (foodSearchBar.getSelectedItem() != null && !quantityPanel.isEmpty()) {
             FoodInstance newFood;
             if (controller != null) {
-                newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
-                    .getId(), quantityPanel.getSelectedQuantity());
-                PageManager.getActivePage().notifyChange("add", null, newFood);
+                try {
+                    newFood = controller.addItem(((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem()))
+                        .getId(), quantityPanel.getSelectedQuantity());
+                    PageManager.getActivePage().notifyChange("add", null, newFood);
+                } catch (PantsConversionFailedException e) {
+                    JOptionPane.showMessageDialog(this, "ERROR: failed to add food instance due to incompatible units");
+                }
             }
             else {
                 newFood = ((Food) Objects.requireNonNull(foodSearchBar.getSelectedItem())).createInstance(quantityPanel.getSelectedQuantity());

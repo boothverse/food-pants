@@ -35,7 +35,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
         ObjectMapper mapper = new ObjectMapper();
         mapper.addMixIn(Quantity.class, QuantityMixin.class);
         try {
-            logger.info("food " + data.getId() + " converted to SQL format");
+            logger.debug("food " + data.getId() + " converted to SQL format");
             return new String[]{
                 SQLUtils.inQuote(data.getId()),
                 SQLUtils.inQuote(data.getName()),
@@ -62,7 +62,7 @@ public class FoodDAO extends JDBCListDAO<Food> {
                 NutritionDescriptor nutrition = mapper.readValue(rs.getString(4), NutritionDescriptor.class);
 
                 data.put(id, new Food(id, name, group, nutrition));
-                logger.info("food " + id + " converted from SQL, added to map");
+                logger.debug("food " + id + " converted from SQL, added to map");
             }
         } catch (JsonProcessingException e) {
             logger.error("food failed to convert from SQL");

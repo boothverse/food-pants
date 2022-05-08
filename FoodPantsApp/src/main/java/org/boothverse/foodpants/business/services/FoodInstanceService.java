@@ -4,11 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.boothverse.foodpants.business.dao.FoodInstanceDAO;
 import org.boothverse.foodpants.business.dao.ListDAO;
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.FoodInstance;
 import org.boothverse.foodpants.persistence.Recipe;
 
 import javax.measure.Quantity;
+import javax.measure.UnconvertibleException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -49,13 +51,18 @@ public abstract class FoodInstanceService {
      * @param quantity the quantity of the food instance
      * @return the newly created item
      */
-    public FoodInstance addItem(String id, Quantity<?> quantity) {
+    public FoodInstance addItem(String id, Quantity<?> quantity) throws PantsConversionFailedException {
         FoodInstance item;
         if (items.containsKey(id)) {    // add to existing food
             logger.info("Updating item with id " + id + " by adding new quantity " + quantity);
             Quantity curQuantity = items.get(id).getQuantity();
-            item = new FoodInstance(id, quantity.add(curQuantity));
-            items.replace(id, item);
+            try {
+                item = new FoodInstance(id, quantity.add(curQuantity));
+                items.replace(id, item);
+            } catch (UnconvertibleException e) {
+                logger.error(e.getStackTrace());
+                throw new PantsConversionFailedException("could not add " + quantity);
+            }
         } else {                        // insert new food
             logger.info("Inserting new item with id " + id + " and quantity " + quantity);
             item = new FoodInstance(id, quantity);

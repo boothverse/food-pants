@@ -10,6 +10,9 @@ import javax.measure.Quantity;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * A controller which handles user events related to nutritional info
+ */
 public class NutritionController {
 
     private static Logger logger = LogManager.getLogger(NutritionController.class);
@@ -17,7 +20,7 @@ public class NutritionController {
     /**
      * Returns a list of all nutrition goals
      *
-     * @return
+     * @return a list of all the goals
      */
     public List<Goal> getGoals() {
         logger.info("goals retrieved");
@@ -27,10 +30,10 @@ public class NutritionController {
     /**
      * Adds a goal to the system
      *
-     * @param goalType
-     * @param quantity
-     * @param nutritionType
-     * @return
+     * @param goalType the goals type
+     * @param quantity the quantity the goal is centered around
+     * @param nutritionType the nutritional type the goal measures
+     * @return the newly create goal
      */
     public Goal addGoal(GoalType goalType,
                         Quantity quantity, NutritionType nutritionType) {
@@ -46,11 +49,11 @@ public class NutritionController {
     /**
      * Edits the specified goal with the given information
      *
-     * @param id
-     * @param goalType
-     * @param quantity
-     * @param nutritionType
-     * @return
+     * @param id the id of the goal
+     * @param goalType the goals type
+     * @param quantity the quantity the goal is centered around
+     * @param nutritionType the nutritional type the goal measures
+     * @return the modified goal
      * @throws PantsNotFoundException
      */
     public Goal editGoal(String id, GoalType goalType,
@@ -66,7 +69,7 @@ public class NutritionController {
     /**
      * Removes the specified goal.
      *
-     * @param id
+     * @param id the id of the goal to be removed
      * @throws PantsNotFoundException
      */
     public void removeGoal(String id) throws PantsNotFoundException {
@@ -77,8 +80,8 @@ public class NutritionController {
     /**
      * Gets a list of all nutrition items
      *
-     * @param startDate
-     * @param endDate
+     * @param startDate the beginning date of the period
+     * @param endDate the end date of the report period
      * @return
      */
     public List<NutritionInstance> getItems(Date startDate, Date endDate) {
@@ -89,10 +92,10 @@ public class NutritionController {
     /**
      * Adds a nutrition item to the system.
      *
-     * @param foodId
-     * @param quantity
-     * @param consumedAt
-     * @return
+     * @param foodId the name associated with the food
+     * @param quantity the quantity of the food consumed
+     * @param consumedAt the time at which the food is consumed
+     * @return the newly created nutrition instance
      */
     public NutritionInstance addItem(String foodId, Quantity quantity,
                                      Date consumedAt) {
@@ -108,11 +111,11 @@ public class NutritionController {
     /**
      * Modifies the specified item with the given information.
      *
-     * @param id
-     * @param foodId
-     * @param quantity
-     * @param consumedAt
-     * @return
+     * @param id the id of the item
+     * @param foodId the name associated with the food
+     * @param quantity the quantity of the food consumed
+     * @param consumedAt the time at which the food is consumed
+     * @return the modified nutrition instance
      * @throws PantsNotFoundException
      */
     public NutritionInstance editItem(String id, String foodId, Quantity quantity, Date consumedAt) throws PantsNotFoundException {
@@ -128,7 +131,7 @@ public class NutritionController {
     /**
      * Removes the specified item.
      *
-     * @param id
+     * @param id the id of the item to be removed
      * @throws PantsNotFoundException
      */
     public void removeItem(String id) throws PantsNotFoundException {
@@ -144,9 +147,9 @@ public class NutritionController {
     /**
      * Adds a report to the system
      *
-     * @param startDate
-     * @param endDate
-     * @return
+     * @param startDate the beginning date for the report
+     * @param endDate the end date for the report
+     * @return the newly created report
      */
     public ReportPeriod addReport(Date startDate, Date endDate) {
         ReportPeriod reportPeriod = new ReportPeriod(Services.ID_SERVICE.getId(),
@@ -161,9 +164,9 @@ public class NutritionController {
     /**
      * Modifies the specified report with the given info.
      *
-     * @param id
-     * @param startDate
-     * @param endDate
+     * @param id the id of the report
+     * @param startDate the beginning date for the report
+     * @param endDate the end date for the report
      * @throws PantsNotFoundException
      */
     public void editReport(String id, Date startDate, Date endDate) throws PantsNotFoundException {
@@ -175,7 +178,7 @@ public class NutritionController {
     /**
      * Removes the specified report.
      *
-     * @param id
+     * @param id the id of the report to be removed
      * @throws PantsNotFoundException
      */
     public void removeReport(String id) throws PantsNotFoundException {

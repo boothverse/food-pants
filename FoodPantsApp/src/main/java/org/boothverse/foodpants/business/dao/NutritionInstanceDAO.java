@@ -30,7 +30,7 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
 
     @Override
     protected String[] objToSQL(NutritionInstance data) {
-        logger.info("nutrition instance " + data.getId() + " converted to SQL format");
+        logger.debug("nutrition instance " + data.getId() + " converted to SQL format");
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             SQLUtils.inQuote(data.getFoodId()),
@@ -50,7 +50,7 @@ public class NutritionInstanceDAO extends JDBCListDAO<NutritionInstance> {
             Long consumedAt = rs.getLong(4);
 
             data.put(id, new NutritionInstance(id, foodId, quantity, new Date(consumedAt)));
-            logger.info("nutrition instance " + id + " converted from SQL, added to map");
+            logger.debug("nutrition instance " + id + " converted from SQL, added to map");
         }
         return data;
     }

@@ -29,7 +29,7 @@ public class GoalDAO extends JDBCListDAO<Goal> {
 
     @Override
     protected String[] objToSQL(Goal data) {
-        logger.info("goal " + data.getId() + " converted to SQL format");
+        logger.debug("goal " + data.getId() + " converted to SQL format");
         return new String[]{
             SQLUtils.inQuote(data.getId()),
             SQLUtils.inQuote(data.getGoalType().toString()),
@@ -49,7 +49,7 @@ public class GoalDAO extends JDBCListDAO<Goal> {
             NutritionType nutritionType = NutritionType.valueOf(rs.getString(4));
 
             data.put(id, new Goal(id, goalType, quantity, nutritionType));
-            logger.info("goal " + id + " converted from SQL format, added to map");
+            logger.debug("goal " + id + " converted from SQL format, added to map");
         }
         return data;
     }

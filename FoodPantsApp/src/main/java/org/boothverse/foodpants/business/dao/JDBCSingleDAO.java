@@ -40,10 +40,10 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
             Boolean exists = executeExists(statement, condition);
             if (exists) {
                 executeUpdate(statement, objToSQL(data), condition);
-                logger.info(condition + " was updated in " + table);
+                logger.debug(condition + " was updated in " + table);
             } else {
                 executeInsert(statement, objToSQL(data));
-                logger.info(condition + " was added to " + table);
+                logger.debug(condition + " was added to " + table);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +58,7 @@ abstract class JDBCSingleDAO<T> extends JDBCDAO implements SingleDAO<T> {
         try (Connection con = getDBConnection(); Statement statement = con.createStatement()) {
             ResultSet rs = executeGetAll(statement);
             data = SQLToObj(rs);
-            logger.info("data loaded into " + table);
+            logger.debug("data loaded into " + table);
         } catch (SQLException | PantsNotParsedException e) {
             e.printStackTrace();
             logger.error("data failed to laod into " + table);

@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.services;
 
+import org.boothverse.foodpants.business.services.exceptions.PantsConversionFailedException;
 import org.boothverse.foodpants.business.services.exceptions.PantsNotFoundException;
 import org.boothverse.foodpants.persistence.Food;
 import org.boothverse.foodpants.persistence.FoodGroup;
@@ -49,10 +50,9 @@ public class PantryServiceTests {
 
     @Test
     @Order(2)
-    public void addItemTest(){
+    public void addItemTest() throws PantsConversionFailedException {
         service.addItem(food.getId(), Quantities.getQuantity(5, Units.KILOGRAM));
-        Assertions.assertTrue(service.getItems().get(0).equals(food.createInstance(Quantities.getQuantity(5, Units.KILOGRAM))));
-
+        Assertions.assertEquals(service.getItems().get(0), food.createInstance(Quantities.getQuantity(5, Units.KILOGRAM)));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PantryServiceTests {
         FoodInstance instance1Old = food.createInstance(Quantities.getQuantity(5, Units.KILOGRAM));
         try {
             service.removeItem(food.getId(), Quantities.getQuantity(1, Units.KILOGRAM));
-        } catch (PantsNotFoundException e) {
+        } catch (PantsNotFoundException | PantsConversionFailedException e) {
             Assertions.fail();
         }
         Assertions.assertTrue(service.getItems().contains(instance1));
