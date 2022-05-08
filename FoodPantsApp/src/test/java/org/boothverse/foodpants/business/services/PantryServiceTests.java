@@ -22,6 +22,7 @@ public class PantryServiceTests {
     static FoodService foodService = Services.FOOD_SERVICE;
     static Food foodItem1 = new Food("fwjadjda", "Apple", FoodGroup.FRUIT, nd);
     Food foodItem2 = new Food("eqvhjdbj", "Orange", FoodGroup.FRUIT, nd);
+    Food foodItem3 = new Food("fdiujkda", "Apple2", FoodGroup.FRUIT, nd);
 
     @BeforeAll
     public static void init(){
@@ -40,6 +41,7 @@ public class PantryServiceTests {
     @AfterAll
     public static void clear(){
         service.dao.removeAll();
+        foodService.dao.removeAll();
     }
 
     @Test
@@ -175,6 +177,80 @@ public class PantryServiceTests {
     @Order(13)
     public void searchByFoodNameFalseTest(){
         Assertions.assertTrue(service.searchByFoodName("Banana").isEmpty());
+    }
+
+    @Test
+    @Order(14)
+    public void searchByFoodNameMultipleTest(){
+        foodService.addFood(foodItem3);
+        try {
+            service.addItem(foodItem3.getId(), Quantities.getQuantity(5, Units.KILOGRAM));
+        } catch (PantsConversionFailedException e) {
+            Assertions.fail();
+        }
+        Assertions.assertTrue(service.searchByFoodName("Apple").contains(foodItem1.createInstance(Quantities.getQuantity(2, Units.KILOGRAM))));
+        Assertions.assertTrue(service.searchByFoodName("Apple2").contains(foodItem3.createInstance(Quantities.getQuantity(5, Units.KILOGRAM))));
+    }
+
+    @Test
+    @Order(15)
+    public void addIncompleteItemTest() throws PantsConversionFailedException {
+        service.addItem(food.getId(), null);
+        FoodInstance inst = food.createInstance(null);
+        Assertions.assertFalse(service.getItems().contains(inst));
+    }
+
+    @Test
+    @Order(16)
+    public void addExistingItemTest() throws PantsConversionFailedException {
+        FoodInstance total = foodItem1.createInstance(Quantities.getQuantity(4, Units.KILOGRAM));
+        service.addItem(foodItem1.getId(), Quantities.getQuantity(2, Units.KILOGRAM));
+        Assertions.assertTrue(service.getItems().contains(total));
+    }
+
+    @Test
+    @Order(17)
+    public void removeMultipleItemWithQuantityTest(){
+        FoodInstance instance1 = foodItem1.createInstance(Quantities.getQuantity(1, Units.KILOGRAM));
+        FoodInstance instance1Old = foodItem1.createInstance(Quantities.getQuantity(4, Units.KILOGRAM));
+        try {
+            service.removeItem(foodItem1.getId(), Quantities.getQuantity(3, Units.KILOGRAM));
+        } catch (PantsNotFoundException | PantsConversionFailedException e) {
+            Assertions.fail();
+        }
+        Assertions.assertTrue(service.getItems().contains(instance1));
+        Assertions.assertFalse(service.getItems().contains(instance1Old));
+
+    }
+
+    @Test
+    @Order(18)
+    public void removeAllItemWithQuantityTest(){
+        FoodInstance instance1 = foodItem1.createInstance(Quantities.getQuantity(0, Units.KILOGRAM));
+        FoodInstance instance1Old = foodItem1.createInstance(Quantities.getQuantity(1, Units.KILOGRAM));
+        try {
+            service.removeItem(foodItem1.getId(), Quantities.getQuantity(1, Units.KILOGRAM));
+        } catch (PantsNotFoundException | PantsConversionFailedException e) {
+            Assertions.fail();
+        }
+        Assertions.assertFalse(service.getItems().contains(instance1));
+        Assertions.assertFalse(service.getItems().contains(instance1Old));
+
+    }
+
+    @Test
+    @Order(19)
+    public void removeMoreItemWithQuantityTest(){
+        FoodInstance instance1 = foodItem2.createInstance(Quantities.getQuantity(0, Units.KILOGRAM));
+        FoodInstance instance1Old = foodItem2.createInstance(Quantities.getQuantity(1, Units.KILOGRAM));
+        try {
+            service.removeItem(foodItem2.getId(), Quantities.getQuantity(10, Units.KILOGRAM));
+        } catch (PantsNotFoundException | PantsConversionFailedException e) {
+            Assertions.fail();
+        }
+        Assertions.assertFalse(service.getItems().contains(instance1));
+        Assertions.assertFalse(service.getItems().contains(instance1Old));
+
     }
 
 }

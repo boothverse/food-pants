@@ -64,7 +64,7 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
     public void makeRecipe(Recipe recipe) {
         ArrayList<FoodInstance> items = (ArrayList<FoodInstance>) recipeController.getMissingItems(recipe);
         if (items.size() > 0) {
-            Object[] options = { "Add Missing To Cart", "Make Recipe" };
+            Object[] options = { "Add Missing To Cart", "Add All Ingredients To Cart", "Make Recipe" };
             int result = JOptionPane.showOptionDialog(null,
                 "You're missing some ingredients.", "Missing Ingredients",
                 JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
@@ -80,6 +80,13 @@ public class DetailedRecipeItem extends RecipeItem implements ActionListener {
                     }
                     break;
                 case 1:
+                    try {
+                        recipeController.addIngredientsToCart(recipe.getId());
+                    } catch (PantsNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
                     recipeController.addItemsToPantry(items);
                     CookedRecipeForm form = new CookedRecipeForm("Cooked Recipe", this, recipe, false);
                     form.setLocationRelativeTo(this);

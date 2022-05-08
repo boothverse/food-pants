@@ -53,4 +53,6 @@ public class UserServiceTests {
     public void getHeightCmTest(){
         Assertions.assertEquals(service.getHeightCm(), 154);
     }
+
+    //GET AGE TEST
 }

@@ -42,6 +42,13 @@ public class NutritionServiceTests {
         editedReportPeriod = new ReportPeriod("wtohjbnahb", Date.from(Instant.now()), Date.from(Instant.now().plus(5, ChronoUnit.DAYS)));
     }
 
+    @AfterAll
+    public static void clean(){
+        service.goalDAO.removeAll();;
+        service.nutritionInstanceDAO.removeAll();
+        service.reportPeriodDAO.removeAll();
+    }
+
     @Test
     @Order(1)
     public void addItemTest(){
@@ -55,7 +62,7 @@ public class NutritionServiceTests {
         Calendar today = Calendar.getInstance();
         today.set(Calendar.HOUR_OF_DAY, 0);
         Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DATE, 1);
+        tomorrow.add(Calendar.DATE, 2);
         tomorrow.set(Calendar.HOUR_OF_DAY, 0);
         Date begin = today.getTime();
         Date end = tomorrow.getTime();

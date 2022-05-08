@@ -52,7 +52,10 @@ public abstract class FoodInstanceService {
      * @return the newly created item
      */
     public FoodInstance addItem(String id, Quantity<?> quantity) throws PantsConversionFailedException {
-        FoodInstance item;
+        FoodInstance item = null;
+        if(quantity == null){
+            return item;
+        }
         if (items.containsKey(id)) {    // add to existing food
             logger.info("Updating item with id " + id + " by adding new quantity " + quantity);
             Quantity curQuantity = items.get(id).getQuantity();
