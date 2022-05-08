@@ -8,13 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Preset data is in "src/main/resources/sql/preset_[TABLE].sql"
- * Make your own additional preset files if you want more data, and set the relevant
- * boolean variable below to true.
+ * Helper class for loading preset data
  */
 public class LoadPresets {
 
-    /** Set to true if you wanna use the presets */
+    /**
+     * Preset data is in "src/main/resources/sql/preset_[TABLE].sql"
+     * Make your own additional preset files if you want more data, and set the relevant
+     * boolean variable below to true.
+     *
+     * Set to true if you wanna use the presets
+     */
     private static final boolean USER_PRESETS = true;
     private static final boolean FOOD_PRESETS = true;
     private static final boolean PANTRY_PRESETS = true;

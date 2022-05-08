@@ -1,7 +1,7 @@
 package org.boothverse.foodpants.persistence;
 
 /**
- * a.k.a. `Nutrient` from Iteration2 class diagram
+ * Label for a nutrition type
  */
 public enum NutritionType {
     CALORIES,
