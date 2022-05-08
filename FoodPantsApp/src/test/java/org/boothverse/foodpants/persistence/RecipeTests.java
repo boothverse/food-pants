@@ -6,15 +6,16 @@ import tech.units.indriya.quantity.Quantities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import static tech.units.indriya.AbstractUnit.ONE;
 
 public class RecipeTests {
-    NutritionDescriptor nd = new NutritionDescriptor();
+    NutritionDescriptor nd = new NutritionDescriptor(new HashMap<>(), Quantities.getQuantity(1, ONE));
     List<FoodInstance> ingredients = new ArrayList<>();
     Recipe recipe = new Recipe("dkgjcjad", "Good stuff", FoodGroup.OTHER, nd, "Make", ingredients, 5d);
-    FoodInstance instance = new FoodInstance("dkgjcjad", Quantities.getQuantity(1, ONE));
+    FoodInstance instance = new FoodInstance("dkgjcjad", Quantities.getQuantity(5, ONE));
     @Test
     public void createFoodInstance(){
         Assertions.assertTrue(recipe.createFoodInstance(5d).equals(instance));
@@ -32,7 +33,7 @@ public class RecipeTests {
         Calendar today = Calendar.getInstance();
         cal.setTime(nutritionInstance.getConsumedAt());
         Assertions.assertTrue(nutritionInstance.getFoodId().equals(recipe.getId()));
-        Assertions.assertTrue(nutritionInstance.getQuantity().equals(Quantities.getQuantity(1, ONE)));
+        Assertions.assertTrue(nutritionInstance.getQuantity().equals(Quantities.getQuantity(5, ONE)));
         Assertions.assertEquals(cal.get(Calendar.DAY_OF_YEAR), today.get(Calendar.DAY_OF_YEAR));
     }
 
