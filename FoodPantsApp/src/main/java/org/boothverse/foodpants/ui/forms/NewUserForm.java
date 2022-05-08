@@ -100,11 +100,14 @@ public class NewUserForm extends StandardForm {
                 Quantity<Mass> weightVal = Quantities.getQuantity(Double.valueOf(weight.getText()), CLDR.POUND);
                 Date dobVal = dobPicker.getDate();
 
-                controller.register(nameVal, genderVal, heightVal, weightVal, dobVal);
-                PageRunner.getFrame().setVisible(true);
-                PageRunner.getFrame().setEnabled(true);
                 this.setVisible(false);
                 this.setEnabled(false);
+
+                controller.register(nameVal, genderVal, heightVal, weightVal, dobVal);
+
+                PageRunner.getFrame().setVisible(true);
+                PageRunner.getFrame().setEnabled(true);
+
                 dispose();
             }
             else {
