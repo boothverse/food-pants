@@ -1,5 +1,7 @@
 package org.boothverse.foodpants.business.services;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,12 +10,18 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class ShoppingServiceTests {
-    ShoppingService service;
+    static ShoppingService service;
 
-    @BeforeEach
-    void init() {
+    @BeforeAll
+    static void init() {
         service = new ShoppingService();
     }
+
+    @AfterAll
+    static void clear(){
+        service.dao.removeAll();
+    }
+
 
     @Test
     void exportTest() {
