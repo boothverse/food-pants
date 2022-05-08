@@ -10,6 +10,7 @@ import org.boothverse.foodpants.ui.components.ItemList;
 import org.boothverse.foodpants.ui.components.standard.StandardItem;
 import org.boothverse.foodpants.ui.controllers.ShoppingController;
 import org.boothverse.foodpants.ui.forms.AddFoodInstanceForm;
+import org.boothverse.foodpants.ui.forms.EditFoodInstanceForm;
 import org.boothverse.foodpants.ui.forms.StandardForm;
 
 import javax.swing.*;
@@ -134,6 +135,10 @@ public class ShoppingPage extends Page {
                 System.out.println("Austin is bad at frontend");
                 e.printStackTrace();
             }
+        }
+        else if (Objects.equals(message, "edit")) {
+            StandardForm editItemForm = new EditFoodInstanceForm(((StandardItem) oldValue).getFoodInstance(), shoppingController, this);
+            editItemForm.setVisible(true);
         }
         else if (Objects.equals(message, "update")) {
             updateList();
