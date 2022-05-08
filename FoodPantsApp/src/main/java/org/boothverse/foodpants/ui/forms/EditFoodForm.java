@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static tech.units.indriya.AbstractUnit.ONE;
+
 public class EditFoodForm extends AddFoodForm {
     private FoodController foodController;
     private Food food;
@@ -48,8 +50,14 @@ public class EditFoodForm extends AddFoodForm {
                 j++;
             }
             else {
-                q.getQuantityValueField().setValue(nutritionInfo.get(nutritionNames[i]).getValue());
-                q.getQuantityUnitBox().setSelectedItem(nutritionInfo.get(nutritionNames[i]).getUnit());
+                Quantity<?> quantity;
+                if (nutritionInfo.containsKey(nutritionNames[i])) {
+                    quantity = nutritionInfo.get(nutritionNames[i]);
+                } else {
+                    quantity = Quantities.getQuantity(0, ONE);
+                }
+                q.getQuantityValueField().setValue(quantity.getValue());
+                q.getQuantityUnitBox().setSelectedItem(quantity.getUnit());
                 i++;
             }
         }

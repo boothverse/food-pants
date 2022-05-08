@@ -17,6 +17,9 @@ public class PageRunner {
     private static PageViewer pageFrame;
     private static StartupController startupController = new StartupController();
 
+    @Getter
+    private static Navbar nav;
+
     private static void setupWindow() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +32,7 @@ public class PageRunner {
 
     private static void setupChildren() {
         // Add Navbar
-        Navbar nav = new Navbar();
+        nav = new Navbar();
         frame.add(nav, BorderLayout.WEST);
 
         // Add Interface Panel (scroll pane)
@@ -49,14 +52,7 @@ public class PageRunner {
     }
 
     private static void registerUser() {
-        if (!startupController.userExists()) {
-            NewUserForm form = new NewUserForm();
-            form.setLocationRelativeTo(frame);
-            form.setVisible(true);
-        }
-        else {
-            frame.setVisible(true);
-        }
+        startupController.beginRegistration();
     }
 
     public static PageViewer getPageViewer() {
