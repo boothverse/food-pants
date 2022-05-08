@@ -1,10 +1,7 @@
 package org.boothverse.foodpants.business.dao;
 
 import org.boothverse.foodpants.persistence.*;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
@@ -20,11 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RecipeDAOTests {
+    static ListDAO<Recipe> dao = new RecipeDAO();
+
+    @AfterAll
+    static void clear(){
+        dao.removeAll();
+    }
 
     @Test
     @Order(1)
     void recipeSaveTest() throws IOException {
-        ListDAO<Recipe> dao = new RecipeDAO();
 
         String id = "aebfilnjefapin34quv", name = "Yummy Soup";
         FoodGroup foodGroup = FoodGroup.OTHER;
@@ -45,7 +47,6 @@ public class RecipeDAOTests {
     @Test
     @Order(2)
     void recipeLoadTest() throws IOException {
-        ListDAO<Recipe> dao = new RecipeDAO();
         String id = "aebfilnjefapin34quv", name = "Yummy Soup";
         FoodGroup foodGroup = FoodGroup.OTHER;
         Map<NutritionType, Quantity<?>> nutritionDescriptorMap = new LinkedHashMap<>();

@@ -1,5 +1,6 @@
 package org.boothverse.foodpants.business.dao;
 
+import org.boothverse.foodpants.persistence.Recipe;
 import org.boothverse.foodpants.persistence.ReportPeriod;
 import org.junit.jupiter.api.*;
 
@@ -10,11 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ReportPeriodDAOTests {
+    static ListDAO<ReportPeriod> dao = new ReportDAO();
+
+    @AfterAll
+    static void clear(){
+        dao.removeAll();
+    }
 
     @Test
     @Order(1)
     void reportPeriodSaveTest() throws IOException {
-        ListDAO<ReportPeriod> dao = new ReportDAO();
 
         Date startDate = new Date(2020, 1, 1) , endDate = new Date(2021, 1, 1);
 
@@ -26,7 +32,6 @@ public class ReportPeriodDAOTests {
     @Test
     @Order(2)
     void reportPeriodLoadTest() throws IOException {
-        ListDAO<ReportPeriod> dao = new ReportDAO();
         Date startDate = new Date(2020, 1, 1) , endDate = new Date(2021, 1, 1);
 
         Map<String, ReportPeriod> reportPeriods = dao.load();

@@ -51,20 +51,22 @@ public class ShoppingListExporter {
         logger.info("Adding shopping list items to file");
         Font font = FontFactory.getFont(FONT, 12, BaseColor.BLACK);
         items.forEach(item -> {
-            PdfPCell quantity = new PdfPCell();
-            quantity.setBorderColor(BaseColor.WHITE);
-            Phrase p1 = new Phrase(item.quantity);
-            p1.setFont(font);
-            quantity.setPhrase(p1);
-            table.addCell(quantity);
+            if(item != null) {
+                PdfPCell quantity = new PdfPCell();
+                quantity.setBorderColor(BaseColor.WHITE);
+                Phrase p1 = new Phrase(item.quantity);
+                p1.setFont(font);
+                quantity.setPhrase(p1);
+                table.addCell(quantity);
 
-            PdfPCell name = new PdfPCell();
-            name.setBorderColor(BaseColor.WHITE);
-            Phrase p2 = new Phrase(item.name);
-            p2.setFont(font);
-            name.setPhrase(p2);
-            table.addCell(name);
-            logger.info("Added " + item.name + " to file");
+                PdfPCell name = new PdfPCell();
+                name.setBorderColor(BaseColor.WHITE);
+                Phrase p2 = new Phrase(item.name);
+                p2.setFont(font);
+                name.setPhrase(p2);
+                table.addCell(name);
+                logger.info("Added " + item.name + " to file");
+            }
         });
     }
 

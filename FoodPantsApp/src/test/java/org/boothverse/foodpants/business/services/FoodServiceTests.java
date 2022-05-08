@@ -8,10 +8,16 @@ import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FoodServiceTests {
-    FoodService service = new FoodService();
+    static FoodService service = new FoodService();
     NutritionDescriptor nd = new NutritionDescriptor();
     Food food = new Food("sfkjsfks", "Banana", FoodGroup.FRUIT, nd);
     Food foodEdited = new Food("sfkjsfks", "Apple", FoodGroup.FRUIT, nd);
+
+    @AfterAll
+    public static void cleanUp(){
+        service.dao.removeAll();
+    }
+
     @Test
     @Order(1)
     public void addFoodTest(){

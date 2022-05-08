@@ -24,6 +24,11 @@ public class FoodInstanceDAOTests extends BaseDAOTests {
         executeScript("pantry_01.sql");
     }
 
+    @AfterAll
+    static void clear(){
+        pantry.removeAll();
+    }
+
     @Test
     @Order(1)
     void foodInstanceSaveTest() {
